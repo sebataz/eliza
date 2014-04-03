@@ -75,7 +75,7 @@ if (isset($_GET['q'])) {
         </div>
         <div id="search">
             <form name"searchForm" id="searchForm" action='.' method="GET">
-                <input type="text" class="search" name="q" /><span class="search" onClick="searchForm.submit();">search</span>
+                <input type="text" class="search" name="q" /><span class="search" onClick="searchForm.submit();">sebarch</span>
             </form>
             <div class="tag-cloud">
                 <?php foreach ($issue_type as $type): ?>
@@ -90,6 +90,7 @@ if (isset($_GET['q'])) {
         </div>
         <div id="content">
             <div id="knowledge-base">
+                <a href="editor.php"><div class="kb"><span class="new">+ create kb</span></div></a>
                 <?php foreach($kb as $Issue): ?>
                     <?php include 'issue.php'; ?>
                 <?php endforeach; ?>

@@ -151,7 +151,7 @@ div.tag-cloud {
 div.tag-cloud a {
     padding: .2em;
     letter-spacing: -.1em;
-    color: #77ba9b;
+    color: #b6a754;
     margin: 5px 0;
     font-weight: bold;
     text-decoration: none;
@@ -214,12 +214,16 @@ div.kb div.solution {
 }   
 
 div.kb div.solution.even {
-    background-color: rgba(0,0,0,.2); 
     background-color: #639bf1;
+    background-color: rgba(255,255,255,.2); 
+    background-color: rgba(0,0,0,.2); 
 }
 
 div.kb div.solution.odd {
     background-color: #77ba9b;
+    background-color: rgba(255,255,255,.4); 
+    background-color: rgba(255,255,255,.2); 
+    background-color: rgba(0,0,0,.1); 
 }
 
 div.kb p {
