@@ -1,0 +1,230 @@
+/** Base theme definition **/
+
+body {
+    font-family: tahoma;
+    background-color: #ddd;
+}
+
+a {
+    color: #999;
+}
+
+a:hover {
+    color: #bbb;
+}
+
+div#utilities {
+    top: 0;
+    position: absolute;
+    padding: .5em;
+}
+
+div#container {
+    width: 100%;
+    position: absolute;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear {    
+    clear: both;
+}
+
+/** kb layout **/
+div.kb.form {
+    margin-top: 7em;
+}
+
+div.input {
+    position:relative;
+}
+
+div.captcha {
+    padding-left: 100px;
+}
+
+div.input input, div.input textarea, div.input select, div.cke, div.suggestion-box {
+    width: 600px;
+    margin-left: 150px;
+}
+
+div.suggestion-box {
+    padding: 1em;
+}
+
+div.suggestion-box span {
+    line-height: 1.5em;
+    margin: .5em;
+    background-color: #eee;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div.input textarea {
+    width: 40em;
+    height: 10em;
+}
+
+div.input label {
+    position:absolute;
+    display: inline-block;
+}
+
+div.tag-cloud {
+    margin: 4em auto;
+    margin-bottom: 2em;
+    min-width: 40em;
+    max-width: 60em;
+    padding: 1.5em; 
+    
+    text-align: center;
+    
+    background-color: rgba(255,255,255,.5); 
+}
+
+div.tag-cloud a {
+    margin: 5px 0;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div.kb {
+
+    margin: 0 auto;
+    min-width: 40em;
+    max-width: 60em;
+    
+    margin-bottom: 5em;
+    
+    padding: 1.5em;
+    
+    background-color: #fff;
+    
+    border: 1px solid #999;
+    box-shadow: 0 0 10px #999;
+    
+    font-size: .8em;
+}
+
+div.kb div.type {
+    float: left;
+    font-weight: bold;
+}
+
+div.kb div.tags {
+    float: right;
+}
+
+div.kb div.clear {
+    clear: both;
+    height: .3em;
+    border-bottom: 1px solid #bbb;
+}
+
+div.kb div.issue {
+    margin-top: 1.5em;
+}
+
+div.kb div.checklist {
+    padding-bottom: 1em;
+    border-bottom: 1px solid #bbb;
+}
+
+div.kb img {
+    max-width: 100%;
+    margin: .3em;
+}
+
+div.kb a img {
+    padding: 1px;
+    border: 1px solid #999;
+}
+
+div.kb div.solution {
+    padding: .3em;
+    margin-top: 1em;
+}   
+
+div.kb div.solution.even {
+    background-color: #ddd;
+}
+
+div.kb div.solution.odd {
+    background-color: #eee;
+}
+
+div.kb p {
+    margin-bottom: 1em;
+}
+
+/** Fonts and Texts **/
+h3 {
+    clear: both;
+    text-decoration: underline;
+    margin-bottom: 1em;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+h2 {
+    clear: both;
+    padding-top: 2em;
+    margin-bottom: 1.2em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+h1 {
+    clear: both;
+    font-size: 1.5em;
+    font-weight: bold;    
+    text-decoration: underline;
+}
+
+li {
+    margin: .5em;
+    margin-left: 2em;
+}
+
+ul {
+    list-style: square;
+}
+
+ol {
+    list-style: lower-alpha;
+}
+
+kbd {
+    background-color: #ddd;
+    font-family: "courier";
+}
+
+strong {
+    font-weight: bold;
+}
+
+/** SyntaxHighligther theme adaptation **/
+
+.syntaxhighlighter {
+    max-width: 60em;
+    margin: .7em auto;
+    padding: .2em;
+    border: 1px solid #ddd;
+    font-size: .8em;
+}
+
+.syntaxhighlighter  .gutter .line{
+    padding-right: .2em;
+    text-align: right;
+}
+
+.syntaxhighlighter  .code .container {
+    font-family: courier;
+    padding-left: 1em;
+}
