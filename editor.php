@@ -61,7 +61,7 @@ $kb_to_edit = $issue_id != null? $kb[0] : array('Type' => '',
             
         
         </div>
-        <div id="container">
+        <div id="content">
             <div id="knowledge-base">
                 <div class="kb form">
                     <div id="edit" class="form">

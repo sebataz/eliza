@@ -3,7 +3,7 @@ include 'lib/service.php';
 
 $issue_type = array('FAQ', 'Issue', 'Warning', 'Error', 'Catastrophe');
 
-$kb = Get::kb(isset($_GET['id'])?$_GET['id']:null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
+$kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
 $tag_cloud = Get::tags($kb);
 
 
@@ -42,24 +42,6 @@ if (isset($_GET['q'])) {
         <script type="text/javascript">        
             SyntaxHighlighter.defaults['toolbar'] = false;
             SyntaxHighlighter.all();
-            
-            $.fn.minimize = function () {
-                return this.each(function() {
-                    var container = $(this)
-                
-                    container.find(".description").hide();
-                    container.find(".checklist").hide();
-                    container.find(".solution").hide();
-                    
-                    container.find("h1").css("cursor", "pointer");
-                    container.find("h1").click(function () {
-                        container.find(".description").toggle();
-                        container.find(".checklist").toggle();
-                        container.find(".solution").toggle();
-                    });
-                });
-            }
-            
             $(document).ready(function () {
                 $(".kb").minimize();
             });
@@ -75,25 +57,34 @@ if (isset($_GET['q'])) {
         </div>
         <div id="search">
             <form name"searchForm" id="searchForm" action='.' method="GET">
-                <input type="text" class="search" name="q" /><span class="search" onClick="searchForm.submit();">sebarch</span>
+                <input type="text" class="search" name="q" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>"/><span class="search" onClick="searchForm.submit();">sebarch</span>
             </form>
-            <div class="tag-cloud">
+            <div class="tag-cloud type">
                 <?php foreach ($issue_type as $type): ?>
                     <a href="?ty=<?php echo $type; ?>" style="font-size: 2em;"><?php echo $type; ?></a>&nbsp;&nbsp;
                 <?php endforeach; ?>
             </div>
-            <div class="tag-cloud">
-                <?php foreach ($tag_cloud as $tag): ?>
-                        <a href="?t[]=<?php echo $tag['Tag'] . $tag_querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
-                    <?php endforeach; ?>
+            <div class="list">
+                <?php foreach($kb as $Issue): ?>
+                    <a href="?id=<?php echo $Issue['File']['Title'] . $tag_querystring; ?>"><div class="kb">#<?php echo $Issue['File']['Title']; ?>: <?php echo $Issue['Issue']; ?></div></a>
+                <?php endforeach; ?>
             </div>
         </div>
         <div id="content">
             <div id="knowledge-base">
                 <a href="editor.php"><div class="kb"><span class="new">+ create new</span></div></a>
-                <?php foreach($kb as $Issue): ?>
+                <?php if (isset($_GET['id'])): $Issue = reset(Get::kb($_GET['id'])); ?>
                     <?php include 'issue.php'; ?>
-                <?php endforeach; ?>
+                <?php elseif (count($kb)==1): $Issue = $kb[0]; ?>
+                    <?php include 'issue.php'; ?>
+                <?php else: ?>
+                
+            <div class="tag-cloud">
+                <?php foreach (Get::tags($kb) as $tag): ?>
+                        <a href="?t[]=<?php echo $tag['Tag'] . $tag_querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
+                    <?php endforeach; ?>
+            </div>
+                <?php endif; ?>
             </div>
         </div>
         <div id="utilities">

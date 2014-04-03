@@ -59,6 +59,7 @@ div#background div#background-bottom div.title {
 
 div#search {
     width: 31%;
+    height: 100%;
     position: fixed;
     right: 0;
     margin: 1.3em;
@@ -148,6 +149,10 @@ div.tag-cloud {
     
 }
 
+div.tag-cloud.type {
+    display:block;
+}
+
 div.tag-cloud a {
     padding: .2em;
     letter-spacing: -.1em;
@@ -158,7 +163,21 @@ div.tag-cloud a {
     font-family: "Arial Black";
 }
 
-div.kb {
+div#search div.kb {
+    margin: .5em;
+    padding: 1em;
+    
+    background-color: #4c6aa9; 
+    color: #b6a754;
+    font-size: .8em;
+}
+
+div#search div.list {
+    max-height:55%;
+    overflow-y: scroll;
+}
+
+div#content div.kb {
 
     margin: 2.5em auto;
     min-width: 40em;
