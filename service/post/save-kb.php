@@ -1,7 +1,7 @@
 <?php
 
 function save_kb($_type, $_tags, $_issue, $_description, $_checklist, $_solution, $_id) {
-    $issue_location = 'kb' . DS . 'issues' . DS;
+    $issue_location = 'issues' . DS;
     $issue_id = $_id;
     $issue_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<kb>\n"
                . "\t<type>" . utf8_encode($_type) . "</type>\n"
@@ -21,5 +21,5 @@ function save_kb($_type, $_tags, $_issue, $_description, $_checklist, $_solution
             $issue_xml .= "\t<solution><![CDATA[" . utf8_encode($solution) . "]]></solution>\n";
     }
             
-    post('save-file', array($issue_location . $issue_id . '.xml', $issue_xml . "</kb>"));
+    Post::save_file($issue_location . $issue_id . '.xml', $issue_xml . "</kb>");
 }

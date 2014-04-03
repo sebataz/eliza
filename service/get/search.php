@@ -7,7 +7,7 @@ function search($_callback_collection, $_search, $_case_sensitive = false) {
                 if (in_item($_term, $_subitem)) return true;
             }
         } else {
-            return (bool)preg_match('/' . $_term . '/' . ($_case_sensitive ? '' : 'i'), $_item);
+            return (bool)preg_match('/\b' . $_term . '\b/' . ($_case_sensitive ? '' : 'i'), $_item);
         }
     }
     

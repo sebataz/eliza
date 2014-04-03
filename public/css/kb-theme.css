@@ -1,27 +1,20 @@
 /** Base theme definition **/
 
 body {
+    color: #ffffff;
     font-family: tahoma;
-    background-color: #ddd;
 }
 
 a {
-    color: #999;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Verdana;
+    color: rgba(255,255,255,.4); 
 }
 
 a:hover {
-    color: #bbb;
-}
-
-div#utilities {
-    top: 0;
-    position: absolute;
-    padding: .5em;
-}
-
-div#container {
-    width: 100%;
-    position: absolute;
+    color: #ffffff;
+    color: rgba(255,255,255,.6); 
 }
 
 .float-left {
@@ -37,6 +30,75 @@ div#container {
 }
 
 /** kb layout **/
+div#background { position: fixed; height: 100%; width: 100%;}
+div#background div#background-top {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    background-color: #3b5998;
+}
+
+div#background div#background-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 13%;
+    
+    background-color: #293e64;
+}
+
+div#background div#background-bottom div.title {
+    margin-top: -.8em;
+    margin-right: 1em;
+    font-size: 3em;
+    font-family: "Arial Black";
+    color: #293e64;
+    text-align: right;
+}
+
+div#search {
+    width: 31%;
+    position: fixed;
+    right: 0;
+    margin: 1.3em;
+}
+
+div#search input.search {
+float:left;
+    padding: .2em;
+    width: 70%;
+    background-color: #4c6aa9; 
+    color: rgba(255,255,255,.4);
+    border: none;
+    font-family: "Arial Black";
+    font-size: 1.5em;
+    border-right: solid .3em #77ba9b;
+}
+
+div#search span.search {
+    letter-spacing: -.1em;
+    margin-left: -.3em;
+    padding: .2em;
+    font-family: "Arial Black";
+    font-size: 2.4em;
+    color: #77ba9b;
+    cursor: pointer;
+}
+
+div#utilities {
+    display: none;
+    top: 0;
+    position: absolute;
+    padding: .5em;
+}
+
+div#content {
+    width: 69%;
+    position: absolute;
+}
+
+
 div.kb.form {
     margin-top: 7em;
 }
@@ -77,37 +139,35 @@ div.input label {
 }
 
 div.tag-cloud {
-    margin: 4em auto;
-    margin-bottom: 2em;
-    min-width: 40em;
-    max-width: 60em;
+    margin: 2em auto;
+    width: 90%;
     padding: 1.5em; 
     
     text-align: center;
     
-    background-color: rgba(255,255,255,.5); 
+    
 }
 
 div.tag-cloud a {
+    padding: .2em;
+    letter-spacing: -.1em;
+    color: #77ba9b;
     margin: 5px 0;
     font-weight: bold;
     text-decoration: none;
+    font-family: "Arial Black";
 }
 
 div.kb {
 
-    margin: 0 auto;
+    margin: 2.5em auto;
     min-width: 40em;
     max-width: 60em;
     
-    margin-bottom: 5em;
     
     padding: 1.5em;
     
-    background-color: #fff;
-    
-    border: 1px solid #999;
-    box-shadow: 0 0 10px #999;
+    background-color: #4c6aa9; 
     
     font-size: .8em;
 }
@@ -115,25 +175,27 @@ div.kb {
 div.kb div.type {
     float: left;
     font-weight: bold;
+    color: rgba(0,0,0,.3); 
 }
 
 div.kb div.tags {
     float: right;
+    color: rgba(0,0,0,.3); 
 }
 
 div.kb div.clear {
     clear: both;
     height: .3em;
-    border-bottom: 1px solid #bbb;
 }
 
 div.kb div.issue {
-    margin-top: 1.5em;
+    margin-bottom: .5em;
+    border-bottom: 1px solid rgba(255,255,255,.6); 
 }
 
 div.kb div.checklist {
     padding-bottom: 1em;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid rgba(255,255,255,.6); 
 }
 
 div.kb img {
@@ -152,11 +214,12 @@ div.kb div.solution {
 }   
 
 div.kb div.solution.even {
-    background-color: #ddd;
+    background-color: rgba(0,0,0,.2); 
+    background-color: #639bf1;
 }
 
 div.kb div.solution.odd {
-    background-color: #eee;
+    background-color: #77ba9b;
 }
 
 div.kb p {
@@ -166,10 +229,11 @@ div.kb p {
 /** Fonts and Texts **/
 h3 {
     clear: both;
-    text-decoration: underline;
+    text-decoration: none;
     margin-bottom: 1em;
     font-size: 1em;
     font-weight: bold;
+    
 }
 
 h2 {
@@ -178,13 +242,15 @@ h2 {
     margin-bottom: 1.2em;
     font-size: 1.2em;
     font-weight: bold;
+    color: #b6a754;
 }
 
 h1 {
     clear: both;
     font-size: 1.5em;
     font-weight: bold;    
-    text-decoration: underline;
+    text-decoration: none;
+    color: #b6a754;
 }
 
 li {

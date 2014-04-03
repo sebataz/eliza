@@ -1,5 +1,5 @@
 <?php
-include '../get.php';
+include 'lib/service.php';
 
 // form options
 $issue_type = array('FAQ', 'Issue', 'Warning', 'Error', 'Catastrophe');
@@ -8,7 +8,7 @@ $no_solution = 5;
 
 
 $issue_id = isset($_GET['id'])?$_GET['id']:null;
-$kb = get('kb', array($issue_id));
+$kb = Get::kb($issue_id);
 $kb_to_edit = $issue_id != null? $kb[0] : array('Type' => '',
                                                 'Tags' => '',
                                                 'Issue' => '',
@@ -54,12 +54,19 @@ $kb_to_edit = $issue_id != null? $kb[0] : array('Type' => '',
         </script>
     </head>
     <body>
-        <div id="opaque"></div>
+        <div id="background">
+        
+            <div id="background-top"></div>
+            <div id="background-bottom"><div class="title">trilead knowledge base</div></div>
+            
+        
+        </div>
         <div id="container">
             <div id="knowledge-base">
                 <div class="kb form">
                     <div id="edit" class="form">
-                    <form action="../post.php?save-kb" method="POST">
+                    <form action="service/proxy.php" method="POST">
+                    <input type="hidden" name="save-kb" value="1">
                     <div class="input">
                         <label for="name">type</label>
                         <select name="type">
@@ -107,7 +114,7 @@ $kb_to_edit = $issue_id != null? $kb[0] : array('Type' => '',
             <form action='editor.php' method="GET" style="display: inline;">
                 <select name="id">
                     <option></option>
-                <?php foreach (get('kb', array(null, 'Issue')) as $issue): ?>
+                <?php foreach (Get::kb(null, 'Issue') as $issue): ?>
                     <option value="<?php echo $issue['File']['Title']; ?>"><?php echo '#' . $issue['File']['Title'] . ': ' . $issue['Issue']; ?></option>
                 <?php endforeach; ?>
                 </select>

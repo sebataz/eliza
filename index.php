@@ -66,7 +66,17 @@ if (isset($_GET['q'])) {
         </script>
     </head>
     <body>
-        <div id="container">
+        <div id="background">
+        
+            <div id="background-top"></div>
+            <div id="background-bottom"><div class="title">trilead knowledge base</div></div>
+            
+        
+        </div>
+        <div id="search">
+            <form name"searchForm" id="searchForm" action='.' method="GET">
+                <input type="text" class="search" name="q" /><span class="search" onClick="searchForm.submit();">search</span>
+            </form>
             <div class="tag-cloud">
                 <?php foreach ($issue_type as $type): ?>
                     <a href="?ty=<?php echo $type; ?>" style="font-size: 2em;"><?php echo $type; ?></a>&nbsp;&nbsp;
@@ -77,12 +87,12 @@ if (isset($_GET['q'])) {
                         <a href="?t[]=<?php echo $tag['Tag'] . $tag_querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
                     <?php endforeach; ?>
             </div>
+        </div>
+        <div id="content">
             <div id="knowledge-base">
-                <div id="content">
-                    <?php foreach($kb as $Issue): ?>
-                        <?php include 'issue.php'; ?>
-                    <?php endforeach; ?>
-                </div>
+                <?php foreach($kb as $Issue): ?>
+                    <?php include 'issue.php'; ?>
+                <?php endforeach; ?>
             </div>
         </div>
         <div id="utilities">

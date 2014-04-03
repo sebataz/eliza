@@ -1,4 +1,5 @@
 <div class="kb">
+    <div class="issue"><h1><?php echo $Issue['Issue']; ?></h1></div>
     <div class="type"><?php echo $Issue['Type']; ?></div>
     <div class="tags">
     <?php foreach ($Issue['Tags'] as $tag): ?>
@@ -7,7 +8,6 @@
     [<a href="editor.php?id=<?php echo $Issue['File']['Title']; ?>">edit</a>]
     </div>
     <div class="clear"></div>
-    <div class="issue"><h1><?php echo $Issue['Issue']; ?></h1></div>
     
     <div class="description">
         <h2>Description</h2>

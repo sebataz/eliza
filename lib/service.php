@@ -25,7 +25,7 @@ abstract class Service {
     }
     
     public static function __callStatic($_method, $_args) {
-        return self::invoke($_method, $_args);
+        return self::invoke(str_replace('_', '-', $_method), $_args);
     }
     
     public static function remote($_url, $_request, $_method = 'GET') {
@@ -78,10 +78,8 @@ class Post extends Service {
         
         // output data
         if (($result = self::invoke($params[0], array_slice($_request, 1, count($_request)))) !== false) {
-            if (($post = post($service, $_POST)) !== false) {
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
-                exit();
-            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit();
         }
     }
 }
