@@ -90,7 +90,7 @@ if (isset($_GET['q'])) {
         </div>
         <div id="content">
             <div id="knowledge-base">
-                <a href="editor.php"><div class="kb"><span class="new">+ create kb</span></div></a>
+                <a href="editor.php"><div class="kb"><span class="new">+ create new</span></div></a>
                 <?php foreach($kb as $Issue): ?>
                     <?php include 'issue.php'; ?>
                 <?php endforeach; ?>
