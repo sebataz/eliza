@@ -29,7 +29,7 @@ function search($_callback_collection, $_search, $_case_sensitive = false) {
     // So for this I will, as you see in the arguments, put an array of fields to test against. but for now let's keep it simple stupid.
     
     foreach ($collection as $item) {
-        if (in_item($_search, $item)) {
+        if (in_item(str_replace(' ', '\w', $_search), $item)) {
             $exact_result[$result_i]['ItemID'] = $result_i;
             $exact_result[$result_i]['Result'] = $item;
             $exact_result[$result_i]['Relevance'] = 0;
