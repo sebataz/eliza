@@ -30,5 +30,8 @@ function tags($_callback_collection, $_suggest_for = null, $_create_tag_cloud = 
                         'Size' => ($n / count($tmp_tags)) *  10.4 + 0.7 > 3.3 ? 3.3 : ($n / count($tmp_tags)) * 10.4 + 0.7); // use em
     }
     
+    
+    $tags = array_slice($tags, 0, 137);
+    
     return $tags;
 }

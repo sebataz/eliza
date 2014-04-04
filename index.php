@@ -4,19 +4,18 @@ include 'lib/service.php';
 $issue_type = array('FAQ', 'Issue', 'Warning', 'Error', 'Catastrophe');
 
 $kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
-$tag_cloud = Get::tags($kb);
 
 
-$tag_querystring = isset($_GET['ty'])?'&ty=' . $_GET['ty']:'';
-if (isset($_GET['t'])) {
-    foreach ($_GET['t'] as $tag)
-        $tag_querystring .= '&t[]=' . $tag;
-}
+$querystring = array();
+$querystring = isset($_GET['ty']) ? array_merge($querystring, array('ty' => $_GET['ty'])) : $querystring;
+$querystring = '&' . urldecode(http_build_query($querystring));
+if (isset($_GET['t'])) foreach ($_GET['t'] as $tag) $querystring .= ($querystring == '' ? 't[]=' : '&t[]=') . $tag;
 
 if (isset($_GET['q'])) {
     $kb = array();
     foreach (Get::search('kb', $_GET['q']) as $issue)
         $kb[] = $issue['Result'];
+        
 }
 
  ?>
@@ -51,13 +50,18 @@ if (isset($_GET['q'])) {
         <div id="background">
         
             <div id="background-top"></div>
-            <div id="background-bottom"><div class="title">trilead knowledge base</div></div>
+            <div id="background-bottom">
+                <div class="title">trilead knowledge base</div>
+                <?php foreach (Get::tags($kb) as $tag): ?>
+                    <a href="?t[]=<?php echo $tag['Tag'] . $querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
+                <?php endforeach; ?>
+            </div>
             
         
         </div>
         <div id="search">
             <form name"searchForm" id="searchForm" action='.' method="GET">
-                <input type="text" class="search" name="q" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>"/><span class="search" onClick="searchForm.submit();">sebarch</span>
+                <input type="text" class="search" name="q" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>"/><span class="search" onClick="searchForm.submit();">search</span>
             </form>
             <div class="tag-cloud type">
                 <?php foreach ($issue_type as $type): ?>
@@ -66,24 +70,17 @@ if (isset($_GET['q'])) {
             </div>
             <div class="list">
                 <?php foreach($kb as $Issue): ?>
-                    <a href="?id=<?php echo $Issue['File']['Title'] . $tag_querystring; ?>"><div class="kb">#<?php echo $Issue['File']['Title']; ?>: <?php echo $Issue['Issue']; ?></div></a>
+                    <a href="?id=<?php echo $Issue['File']['Title'] . $querystring; ?>"><div class="kb">#<span class="id"><?php echo $Issue['File']['Title']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
                 <?php endforeach; ?>
             </div>
         </div>
         <div id="content">
+                <div class="kb" pa><a href="editor.php"><div><span class="new">+ create new</span></div></a></div>
             <div id="knowledge-base">
-                <a href="editor.php"><div class="kb"><span class="new">+ create new</span></div></a>
-                <?php if (isset($_GET['id'])): $Issue = reset(Get::kb($_GET['id'])); ?>
+                <?php if (!isset($_GET['id']) && !empty($kb)): $Issue = reset($kb); ?>
                     <?php include 'issue.php'; ?>
-                <?php elseif (count($kb)==1): $Issue = $kb[0]; ?>
+                <?php elseif (isset($_GET['id'])): $Issue = reset(Get::kb($_GET['id'])); ?>
                     <?php include 'issue.php'; ?>
-                <?php else: ?>
-                
-            <div class="tag-cloud">
-                <?php foreach (Get::tags($kb) as $tag): ?>
-                        <a href="?t[]=<?php echo $tag['Tag'] . $tag_querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
-                    <?php endforeach; ?>
-            </div>
                 <?php endif; ?>
             </div>
         </div>

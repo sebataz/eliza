@@ -15,7 +15,7 @@ function search($_callback_collection, $_search, $_case_sensitive = false) {
     $exact_result = array();
     $approx_result = array();
     $keywords = explode (' ', $_search);
-    $collection = Get::$_callback_collection();
+    $collection = is_array($_callback_collection) ? $_callback_collection : Get::$_callback_collection();
     
     // so the thing should go like that: you give me something to search, OK? then I will split it in single words and
     // give you back everything that checks with any of those words.
