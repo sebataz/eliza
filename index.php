@@ -39,20 +39,22 @@ if (isset($_GET['q'])) {
         <script type="text/javascript">        
             SyntaxHighlighter.defaults['toolbar'] = false;
             SyntaxHighlighter.all();
+                
+            var swim_log = 0;
+            console.log(swim_log);
             $(document).scroll(function(e){
- 
-                // grab the scroll amount and the window height
+                console.log(swim_log);
                 var scrollAmount = $(window).scrollTop();
                 var documentHeight = $(document).height();
-                
                 var swim = 60 - ( scrollAmount/documentHeight) * 150;
-                console.log(swim);
+                var reverse = swim > swim_log && swim_log != 0;
+                swim_log = swim;
+                $("#shark").css("visibility", "visible");
                 $("#shark").css("left", swim+"%");
                 $("#shark").css("bottom",  Math.floor(Math.random() * 6) + 6 +"%");
-                
-                
+                $("#shark").css("background", "url('public/img/shark" + (reverse ? '-reverse' : '') + ".png') no-repeat");
+                $("#shark").css("background-size", "contain");
             });
-            
             
             $(document).ready(function () {
             
