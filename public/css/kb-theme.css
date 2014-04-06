@@ -98,7 +98,7 @@ div#search {
     margin: 1.3em;
     position: relative;
     width: 31%;
-    height: 83%;
+    height: 81%;
     position: fixed;
     right: 0;
 }
@@ -129,12 +129,28 @@ div#search span.search {
     background-size: contain;
 }
 
-div#search div.kb {
+div#search table.type {
+    width: 100%;
     margin-bottom: 2px;
+}
+
+div#search table.type td {
     padding: .7em;
-    
-    background-color: #4c6aa9; 
-    font-size: .8em;
+    text-align: center;
+}
+
+div#search table.type td a {
+    padding: .2em;
+    letter-spacing: -.1em;
+    color: #293e64; 
+    margin: 5px 0;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: "Arial Black";
+}
+
+div#search table.type td a.active {
+    color: #b6a754; 
 }
 
 div#search div.list {
@@ -142,6 +158,14 @@ div#search div.list {
     max-height:85%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+div#search div.list div.kb {
+    margin-bottom: 2px;
+    padding: .7em;
+    
+    background-color: #4c6aa9; 
+    font-size: .8em;
 }
 
 div#search div.list div.kb span.id{

@@ -7,7 +7,7 @@ $kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['
 
 
 $querystring = array();
-$querystring = isset($_GET['ty']) ? array_merge($querystring, array('ty' => $_GET['ty'])) : $querystring;
+if (isset($_GET['ty'])) $querystring['ty'] = $_GET['ty'];
 $querystring = isset($_GET['q']) ? array_merge($querystring, array('q' => $_GET['q'])) : $querystring;
 $querystring = '&' . urldecode(http_build_query($querystring));
 if (isset($_GET['t'])) foreach ($_GET['t'] as $tag) $querystring .= ($querystring == '' ? 't[]=' : '&t[]=') . $tag;
@@ -43,7 +43,7 @@ if (isset($_GET['q'])) {
             var swim_log = 0;
             console.log(swim_log);
             $(document).scroll(function(e){
-                console.log(swim_log);
+                console.log(Math.floor(Math.random() * 6+5));
                 var scrollAmount = $(window).scrollTop();
                 var documentHeight = $(document).height();
                 var swim = 60 - ( scrollAmount/documentHeight) * 150;
@@ -51,7 +51,8 @@ if (isset($_GET['q'])) {
                 swim_log = swim;
                 $("#shark").css("visibility", "visible");
                 $("#shark").css("left", swim+"%");
-                $("#shark").css("bottom",  Math.floor(Math.random() * 6) + 6 +"%");
+                if (Math.floor(swim_log%5) == 0)
+                    $("#shark").css("bottom",  Math.floor((Math.random()*(5+1))+6) +"%");
                 $("#shark").css("background", "url('public/img/shark" + (reverse ? '-reverse' : '') + ".png') no-repeat");
                 $("#shark").css("background-size", "contain");
             });
@@ -68,6 +69,11 @@ if (isset($_GET['q'])) {
             <form name"searchForm" id="searchForm" action='.' method="GET">
                 <div><span><input type="text" class="search" name="q" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>"/></span><span class="search" onClick="searchForm.submit();"></span></div>
             </form>
+            <table class="type"><tr>
+                <?php foreach (array('FAQ', 'Issue', 'Warning', 'Error') as $type): ?>
+                <td><a class="<?php if(isset($_GET['ty'])) if ($_GET['ty'] == $type) echo 'active'; ?>"S  href="?ty=<?php echo $type, isset($_GET['q']) ? '&q=' . $_GET['q'] : ''; ?>"><?php echo $type; ?></a></td>
+                <?php endforeach; ?>
+            </tr></table>
             <div class="list">
                 <?php foreach($kb as $Issue): ?>
                     <a href="?id=<?php echo $Issue['File']['Title'] . $querystring; ?>"><div class="kb">#<span class="id"><?php echo $Issue['File']['Title']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
