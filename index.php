@@ -1,7 +1,7 @@
 <?php
 include 'lib/service.php';
 
-$issue_type = array('FAQ', 'Issue', 'Warning', 'Error', 'Catastrophe');
+$knowledge_type = array('FAQ', 'HowTo', 'Warning/Error', 'Troubleshooting');
 
 $kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
 
@@ -70,7 +70,7 @@ if (isset($_GET['q'])) {
                 <div><span><input type="text" class="search" name="q" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>"/></span><span class="search" onClick="searchForm.submit();"></span></div>
             </form>
             <table class="type"><tr>
-                <?php foreach (array('FAQ', 'Issue', 'Warning', 'Error') as $type): ?>
+                <?php foreach ($knowledge_type as $type): ?>
                 <td><a class="<?php if(isset($_GET['ty'])) if ($_GET['ty'] == $type) echo 'active'; ?>"S  href="?ty=<?php echo $type, isset($_GET['q']) ? '&q=' . $_GET['q'] : ''; ?>"><?php echo $type; ?></a></td>
                 <?php endforeach; ?>
             </tr></table>

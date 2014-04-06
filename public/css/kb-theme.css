@@ -176,11 +176,33 @@ div#search div.list div.kb span.title{
     font-weight: normal;
 }
 
+div#oops {
+    position: fixed;
+    margin-top: 10em;
+    width: 100%;
+    width: 67%;
+    font-size: .8em;
+}
+
+div#oops div {
+    padding: 1.5em;
+    margin: 0 auto;
+    width: 50em;
+    height: 20em;
+    background-color: rgba(0,0,0,.2); 
+}
+
+div#oops div h1 {
+
+    margin-bottom: .5em;
+    border-bottom: 1px solid rgba(255,255,255,.6); 
+}
+
 div#knowledge-base {
     padding-top: 3em;
     padding-bottom: 7.5em;
-    width: 67%;
     position: absolute;
+    width: 67%;
 }
 
 div#knowledge-base div.kb {
@@ -287,6 +309,23 @@ div.kb.edit div.input input, div.kb.edit div.input select, div.kb.edit div.input
     font-family: tahoma;
     font-size: 1.5em;
     font-size: 1em;
+}
+
+span.button  {
+    display: block;
+    padding: .2em;
+    letter-spacing: -.1em;
+    color: #3b5998; 
+    font-weight: bold;
+    text-decoration: none;
+    font-family: "Arial Black";
+    font-size: 2em;
+    unicode-bidi:bidi-override;
+    direction:rtl;
+}
+
+span.button:first-letter  {
+    color: #77ba9b;
 }
 
 div.kb.edit div.input span.i-button {

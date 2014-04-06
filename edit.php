@@ -64,8 +64,8 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
     <div class="input">
         <h3>Type</h3>
         <select name="type">
-        <?php foreach(array('FAQ', 'Issue', 'Warning', 'Error') as $type): ?>
-            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
+        <?php foreach($knowledge_type as $type): ?>
+            <option value="<?php echo $type; ?>" <?php echo $type == $Issue['Type'] ? 'selected="selected"' : ''; ?>><?php echo $type; ?></option>
         <?php endforeach; ?>
         </select>
     </div>
