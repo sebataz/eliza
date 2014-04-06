@@ -5,6 +5,18 @@ body {
     font-family: tahoma;
 }
 
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear {    
+    clear: both;
+}
+
 a {
     text-decoration: none;
     font-weight: bold;
@@ -17,17 +29,24 @@ a:hover {
     color: rgba(255,255,255,.6); 
 }
 
-.float-left {
-    float: left;
+span.button  {
+    display: block;
+    padding: .2em;
+    letter-spacing: -.1em;
+    color: #3b5998; 
+    font-weight: bold;
+    text-decoration: none;
+    font-family: "Arial Black";
+    font-size: 2em;
+    unicode-bidi:bidi-override;
+    direction:rtl;
+    cursor: pointer;
 }
 
-.float-right {
-    float: right;
+span.button:first-letter  {
+    color: #77ba9b;
 }
 
-.clear {    
-    clear: both;
-}
 
 /** kb layout **/
 div#background-top {
@@ -309,45 +328,6 @@ div.kb.edit div.input input, div.kb.edit div.input select, div.kb.edit div.input
     font-family: tahoma;
     font-size: 1.5em;
     font-size: 1em;
-}
-
-span.button  {
-    display: block;
-    padding: .2em;
-    letter-spacing: -.1em;
-    color: #3b5998; 
-    font-weight: bold;
-    text-decoration: none;
-    font-family: "Arial Black";
-    font-size: 2em;
-    unicode-bidi:bidi-override;
-    direction:rtl;
-}
-
-span.button:first-letter  {
-    color: #77ba9b;
-}
-
-div.kb.edit div.input span.i-button {
-    padding: .5%;
-    margin: 0;
-    display: block;
-    background: #445f97;
-    color: rgba(255,255,255,.4);
-    border-right: solid .3em #77ba9b;
-    font-family: "Arial Black";
-    font-size: 1.5em;
-    text-align: center;
-    cursor: pointer;
-}
-
-span.a-button {
-    padding: .5%;
-    margin: 0;
-    display: block;
-    background: #445f97;
-    color: rgba(255,255,255,.4);
-    border-right: solid .3em #77ba9b;
 }
 
 div.kb.edit div.input textarea, div.kb.edit div.input div.editor {

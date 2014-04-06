@@ -48,9 +48,10 @@
                 <ul>
                 <li>the page you are seeking was not found</li>
                 <li>either the server or the site is undergoing maintenance work</li>
-                <li>or maybe, it's just that the shark might be feeding</li>
+                <li>or maybe, it's just that the shark might be feeding (scroll to check)</li>
                 </ul></p><br /><br />
-                <a href="<?php echo 'http://', $_SERVER['HTTP_HOST'], '/?', $_SERVER['QUERY_STRING']; ?>"><span class="button" style="margin: 0 auto; width: 5em; text-align:center;">avorpir</span></a>
+                <a href="<?php echo 'http://', $_SERVER['HTTP_HOST'], '/?', $_SERVER['QUERY_STRING']; ?>">
+                <span class="button" style="margin: 0 auto; width: 5em; text-align:center;">yrter</span></a>
             </div>
         </div>
        

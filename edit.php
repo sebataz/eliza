@@ -95,10 +95,6 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
             <input type="text" name="checklist[]" value="<?php echo $Issue['Checklist'][$i]; ?>" />
         </div>
     <?php endfor; ?>
-    
-    <div class="input">
-        <a href="?edit=<?php echo $_GET['edit']; ?>"><div><span class="a-button">+ add</span></div></a>
-    </div>
 
     <div class="input array">
         <h3>Solution/s</h3>
@@ -112,11 +108,7 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
     <?php endfor; ?>
 
     <div class="input">
-        <a href="?edit=<?php echo $_GET['edit']; ?>"><div><span class="a-button">+ add</span></div></a>
-    </div>
-
-    <div class="input">
-        <span class="i-button" onClick="kbForm.submit();">save</span>
+        <span class="button" onClick="kbForm.submit();">evas</span>
     </div>
 </div>
 

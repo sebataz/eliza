@@ -59,5 +59,5 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
         array_multisort($temp_keys, SORT_ASC, $knowledge_base);
     }
     
-    return $knowledge_base;    
+    return $_issue ? array() : $knowledge_base;    
 }

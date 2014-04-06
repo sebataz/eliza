@@ -1,10 +1,13 @@
 <?php
 include 'lib/service.php';
 
+if (isset($_GET['id']))
+    if (empty(Get::kb($_GET['id'])))
+        header('Location: oops.php?' . $_SERVER['QUERY_STRING']);
+
 $knowledge_type = array('FAQ', 'HowTo', 'Warning/Error', 'Troubleshooting');
 
 $kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
-
 
 $querystring = array();
 if (isset($_GET['ty'])) $querystring['ty'] = $_GET['ty'];
@@ -93,7 +96,7 @@ if (isset($_GET['q'])) {
             <?php endif; ?>
             
             <?php if (!isset($_GET['edit'])): ?>
-                <div class="kb"><a href="?edit=<?php echo time(), substr(microtime(),2,3); ?>"><div><span class="a-button">+ create new</span></div></a></div>
+                <div class="kb"><a href="?edit=<?php echo time(), substr(microtime(),2,3); ?>"><div><span class="button">wen etaerc +</span></div></a></div>
             <?php endif; ?>
         </div>
         
