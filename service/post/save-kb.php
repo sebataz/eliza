@@ -21,5 +21,6 @@ function save_kb($_type, $_tags, $_issue, $_description, $_checklist, $_solution
             $issue_xml .= "\t<solution><![CDATA[" . utf8_encode($solution) . "]]></solution>\n";
     }
             
-    Post::save_file($issue_location . $issue_id . '.xml', $issue_xml . "</kb>");
+    if ((bool)Post::save_file($issue_location . $issue_id . '.xml', $issue_xml . "</kb>"))
+        header('Location: ../?id=' . $_id);
 }

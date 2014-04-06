@@ -16,6 +16,7 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
         $kb['Issue'] = (string) $issue['issue'];
         $kb['Description'] = (string) html_entity_decode($issue['description']);
         
+        $kb['Checklist'] = array();
         if (isset($issue['checklist'])) {
             if (is_array($issue['checklist']))
                 foreach ($issue['checklist'] as $checklist)
@@ -24,6 +25,7 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
                 $kb['Checklist'][] = $issue['checklist'];
         }
 
+        $kb['Solution'] = array();
         if (isset($issue['solution'])) {
             if (is_array($issue['solution']))
                 foreach ($issue['solution'] as $solution)

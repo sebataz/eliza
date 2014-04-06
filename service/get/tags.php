@@ -18,7 +18,7 @@ function tags($_callback_collection, $_suggest_for = null, $_create_tag_cloud = 
     if (!(bool)$_create_tag_cloud) {
         $tags = array_keys($tmp_tags);
         arsort($tags);
-        return $tags;
+        return array_values($tags);
     }
     
     

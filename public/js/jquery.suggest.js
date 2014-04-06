@@ -14,9 +14,10 @@
                 console.log("suggest for " + term);
                 
                 $.ajax({
-                    url: location.origin+"/get.php?kb-tags&t=" + term,
+                    url: location.origin+"/service/proxy.php?tags&c=kb&t=" + term + "&tc=0",
                     context: $( this ).parent()
                 }).done(function( suggestion ) {
+                console.log(suggestion);
                     if (suggestion.length > 0) {
                         var box = $("<div class=\"suggestion-box\" />");
                         $( this ).append(box);

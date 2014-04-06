@@ -3,6 +3,7 @@
 // main settings
 define ('DS', DIRECTORY_SEPARATOR); 
 define ('ROOT', dirname(__DIR__) . DS);
+define ('BASE_URI', 'http://' . $_SERVER['HTTP_HOST'] . '/');
 
 abstract class Service {
     public static function load($_service) {
@@ -78,8 +79,10 @@ class Post extends Service {
         
         // output data
         if (($result = self::invoke($params[0], array_slice($_request, 1, count($_request)))) !== false) {
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            //header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit();
+        } else {
+            die('error on post');
         }
     }
 }

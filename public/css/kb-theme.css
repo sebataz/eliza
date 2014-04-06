@@ -30,17 +30,16 @@ a:hover {
 }
 
 /** kb layout **/
-div#background { position: fixed; height: 100%; width: 100%;}
-div#background div#background-top {
-    position: absolute;
+div#background-top {
+    position: fixed;
     width: 100%;
     height: 100%;
     
     background-color: #3b5998;
 }
 
-div#background div#background-bottom {
-    position: absolute;
+div#background-bottom {
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 13%;
@@ -51,44 +50,82 @@ div#background div#background-bottom {
     background-color: #293e64;
 }
 
-div#background div#background-bottom div.title {
+div#background-top div#shark {
+    position: absolute;
+    
+    bottom: 11%;
+    left: 60%;    
+    
+    width: 125px;
+    height: 85px;
+    
+    background: url('../img/shark.png') no-repeat;
+    background-size: contain;
+    
+}
+
+div#background-bottom div.title {
     margin-top: -.8em;
-    margin-right: 1em;
+    margin-right: 1.5em;
     font-size: 3em;
     font-family: "Arial Black";
     color: #293e64;
     text-align: right;
 }
 
+div#background-bottom div.title  a {
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+    font-family: "Arial Black";
+    color: #293e64;
+    text-align: right;
+}
+
+
+div#background-bottom a {
+    padding: .2em;
+    letter-spacing: -.1em;
+    color: #3b5998; 
+    margin: 5px 0;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: "Arial Black";
+}
+
 div#search {
+    margin: 1.3em;
+    position: relative;
     width: 31%;
     height: 83%;
     position: fixed;
     right: 0;
-    padding: 1.3em;
 }
 
 div#search input.search {
-    float:left;
-    padding: .2em;
-    margin-bottom: 1.3em;
-    width: 70%;
+    margin: 0;
+    margin-bottom: 2px;
+    padding: 4px; 
+    padding-left: .3em;
+    width: 89%;
+    height: 45px;
     background-color: #4c6aa9; 
     color: rgba(255,255,255,.4);
     border: none;
     font-family: "Arial Black";
-    font-size: 1.5em;
-    border-right: solid .3em #77ba9b;
+    font-size: 32px;
 }
 
 div#search span.search {
-    letter-spacing: -.1em;
-    margin-left: -.3em;
-    padding: .2em;
-    font-family: "Arial Black";
-    font-size: 2.4em;
-    color: #77ba9b;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 39px;
+    height: 39px;
     cursor: pointer;
+    border: solid 7px #77ba9b;
+    background: url('../img/search.png') no-repeat;
+    background-size: contain;
 }
 
 div#search div.kb {
@@ -114,96 +151,17 @@ div#search div.list div.kb span.title{
     font-weight: normal;
 }
 
-div#utilities {
-    display: none;
-    top: 0;
-    position: absolute;
-    padding: .5em;
-}
-
-div#content {
+div#knowledge-base {
+    padding-top: 3em;
+    padding-bottom: 7.5em;
     width: 67%;
     position: absolute;
 }
 
+div#knowledge-base div.kb {
 
-div.kb.form {
-    margin-top: 7em;
-}
-
-div.input {
-    position:relative;
-}
-
-div.captcha {
-    padding-left: 100px;
-}
-
-div.input input, div.input textarea, div.input select, div.cke, div.suggestion-box {
-    width: 600px;
-    margin-left: 150px;
-}
-
-div.suggestion-box {
-    padding: 1em;
-}
-
-div.suggestion-box span {
-    line-height: 1.5em;
-    margin: .5em;
-    background-color: #eee;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-div.input textarea {
-    width: 40em;
-    height: 10em;
-}
-
-div.input label {
-    position:absolute;
-    display: inline-block;
-}
-
-div#background div#background-bottom a {
-    padding: .2em;
-    letter-spacing: -.1em;
-    color: #3b5998; 
-    margin: 5px 0;
-    font-weight: bold;
-    text-decoration: none;
-    font-family: "Arial Black";
-}
-
-div.tag-cloud {
-    margin: 2em auto;
-    width: 90%;
-    padding: 1.5em; 
-    
-    text-align: center;
-    
-    
-}
-
-div.tag-cloud.type {
-    display:block;
-    display:none;
-}
-
-div.tag-cloud a {
-    padding: .2em;
-    letter-spacing: -.1em;
-    color: #b6a754;
-    margin: 5px 0;
-    font-weight: bold;
-    text-decoration: none;
-    font-family: "Arial Black";
-}
-
-div#content div.kb {
-
-    margin: 2.5em auto;
+    margin: 0 auto;
+    margin-bottom: 2.5em;
     min-width: 40em;
     max-width: 60em;
     
@@ -211,6 +169,7 @@ div#content div.kb {
     padding: 1.5em;
     
     background-color: #4c6aa9; 
+    background-color: rgba(0,0,0,.2); 
     
     font-size: .8em;
 }
@@ -236,11 +195,6 @@ div.kb div.issue {
     border-bottom: 1px solid rgba(255,255,255,.6); 
 }
 
-div.kb div.checklist {
-    padding-bottom: 1em;
-    border-bottom: 1px solid rgba(255,255,255,.6); 
-}
-
 div.kb img {
     max-width: 100%;
     margin: .3em;
@@ -251,18 +205,22 @@ div.kb a img {
     border: 1px solid #999;
 }
 
+div.kb div.solution:nth-of-type(1) {
+    margin-top: 3em;
+}
+
 div.kb div.solution {
     padding: .3em;
     margin-top: 1em;
 }   
 
-div.kb div.solution.even {
+div.kb div.solution:nth-of-type(2n+1) {
     background-color: #639bf1;
     background-color: rgba(255,255,255,.2); 
-    background-color: rgba(0,0,0,.2); 
+    background-color: rgba(0,0,0,.3); 
 }
 
-div.kb div.solution.odd {
+div.kb div.solution:nth-of-type(2n+2) {
     background-color: #77ba9b;
     background-color: rgba(255,255,255,.4); 
     background-color: rgba(255,255,255,.2); 
@@ -271,6 +229,93 @@ div.kb div.solution.odd {
 
 div.kb p {
     margin-bottom: 1em;
+}
+
+
+/** Inline Editor **/
+div.kb.edit div.input {
+    position: relative;
+    background-color: rgba(0,0,0,.1); 
+    border: none;
+    margin-bottom: .7em;
+}
+
+div.kb.edit div.input h3 {
+    margin: 0;
+    padding: .3em;
+    background-color: rgba(0,0,0,.2); 
+    color: #b6a754;
+}
+
+div.kb.edit div.input input, div.kb.edit div.input select, div.kb.edit div.input textarea {
+    padding: .5%;
+    margin: 0;
+    width: 99%;
+    height: 99%;
+    background: #445f97;
+    background: #ffffff;
+    border: none;
+    border-right: solid .3em #77ba9b;
+    border-right: none;
+    color: #ffffff;
+    color: #000000;
+    font-family: tahoma;
+    font-size: 1.5em;
+    font-size: 1em;
+}
+
+div.kb.edit div.input span.i-button {
+    padding: .5%;
+    margin: 0;
+    display: block;
+    background: #445f97;
+    color: rgba(255,255,255,.4);
+    border-right: solid .3em #77ba9b;
+    font-family: "Arial Black";
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+}
+
+span.a-button {
+    padding: .5%;
+    margin: 0;
+    display: block;
+    background: #445f97;
+    color: rgba(255,255,255,.4);
+    border-right: solid .3em #77ba9b;
+}
+
+div.kb.edit div.input textarea, div.kb.edit div.input div.editor {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+div.kb.edit div.input select {
+    box-sizing:content-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+div.kb.edit div.suggestion-box {
+    margin: 0;
+    width: auto;
+    padding: 1em;
+}
+
+div.kb.edit div.suggestion-box span {
+    line-height: 1.5em;
+    margin: .5em;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.3em;
+    background: none;
+    color: #b6a754;
 }
 
 /** Fonts and Texts **/
@@ -321,7 +366,6 @@ kbd {
 strong {
     font-weight: bold;
 }
-
 /** SyntaxHighligther theme adaptation **/
 
 .syntaxhighlighter {
