@@ -1,7 +1,7 @@
 <?php
 $Id = $_GET['edit'] != '' ? $_GET['edit'] : (time() . substr(microtime(),2,3));
 
-$Issue = Get::kb($_GET['edit']);
+$Issue = Get::kb($Id);
 $Issue = count($Issue) == 1 ? $Issue[0] : array(
     'Type' => '',
     'Tags' => array(),
@@ -16,8 +16,6 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
 <script type="text/javascript" src="/public/js/jquery.suggest.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#<?php echo $_GET['edit']; ?>").remove();
-    
         $(".suggest").suggest();
         $(".array").keydown( function(e) {
             if (e.keyCode == 9 && !e.shiftKey) {
@@ -37,7 +35,6 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
             appendTo: 'body',
         });
         
-        $( ".dragged" ).draggable();
         
         $( ".drop" ).droppable({
             drop: function( event, ui ) {

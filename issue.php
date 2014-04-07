@@ -31,7 +31,7 @@
     <div>
     <?php foreach ($Issue['Related'] as $id): $Related = reset(Get::kb($id)); ?>
         <div class="solution">
-            <h3><?php echo $Related['Issue']; ?></h3>
+            <a class="title" href="?id=<?php echo $id, '&', $querystring; ?>">#<span class="id"><?php echo $id; ?></span>: <?php echo $Related['Issue']; ?></a>
             <?php echo $Related['Description']; ?>
         </div>
     <?php endforeach; ?>

@@ -50,7 +50,7 @@
                     <ul>
                         <li>the page you are seeking was not found</li>
                         <li>either the server or the site is undergoing maintenance work</li>
-                        <li>or maybe, it's just that the shark might be feeding (scroll to check)</li>
+                        <li>or maybe, it's just that the shark is feeding (scroll to check)</li>
                     </ul>
                 </p><br /><br />
                 <a href="<?php echo 'http://', $_SERVER['HTTP_HOST'], '/?', $_SERVER['QUERY_STRING']; ?>">
