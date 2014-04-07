@@ -6,11 +6,15 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
     
     $kb_file = Get::directory('issues');
     
+    
     foreach ($kb_file as $xml) {    
+        if ($_issue && $_issue != $xml['Title']) continue;
+        
         $kb = array();
         $kb['File'] = $xml;
         $issue = (array) simplexml_load_file($xml['Path']);
         
+        $kb['Id'] = $xml['Title'];
         $kb['Type'] = $issue['type'];
         $kb['Tags'] = explode(', ', $issue['tags']);
         $kb['Issue'] = (string) $issue['issue'];
@@ -25,13 +29,13 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
                 $kb['Checklist'][] = $issue['checklist'];
         }
 
-        $kb['Solution'] = array();
-        if (isset($issue['solution'])) {
-            if (is_array($issue['solution']))
-                foreach ($issue['solution'] as $solution)
-                    $kb['Solution'][] = (string) $solution;
+        $kb['Related'] = array();
+        if (isset($issue['related'])) {
+            if (is_array($issue['related']))
+                foreach ($issue['related'] as $related)
+                    $kb['Related'][] = $related;
             else
-                $kb['Solution'][] = (string) $issue['solution'];
+                $kb['Related'][] = $issue['related'];
         }
         
         // filter and return
@@ -45,10 +49,7 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
                 continue 2;
         }
         
-        if ($_issue == $xml['Title'])
-            return array($kb);
-        else
-            $knowledge_base[] = $kb;
+        $knowledge_base[] = $kb;
     }
     
     // order by
@@ -59,5 +60,5 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
         array_multisort($temp_keys, SORT_ASC, $knowledge_base);
     }
     
-    return $_issue ? array() : $knowledge_base;    
+    return $knowledge_base;    
 }

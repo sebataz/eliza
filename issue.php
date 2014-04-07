@@ -29,10 +29,10 @@
     <?php endif; ?>
     
     <div>
-    <?php $i = 1; foreach ($Issue['Solution'] as $solution): ?>
+    <?php foreach ($Issue['Related'] as $id): $Related = reset(Get::kb($id)); ?>
         <div class="solution">
-            <h3>Solution <?php echo $i++; ?></h3>
-            <?php echo $solution; ?>
+            <h3><?php echo $Related['Issue']; ?></h3>
+            <?php echo $Related['Description']; ?>
         </div>
     <?php endforeach; ?>
     </div>

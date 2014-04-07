@@ -179,19 +179,30 @@ div#search div.list {
     overflow-x: hidden;
 }
 
-div#search div.list div.kb {
+div#search div.list div.kb, div.kb.drag {
     margin-bottom: 2px;
     padding: .7em;
+    
+    width: 100%;
     
     background-color: #4c6aa9; 
     font-size: .8em;
 }
 
-div#search div.list div.kb span.id{
+body > div.kb.drag {
+    width: 30%;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Verdana;
+    color: rgba(255,255,255,.6); 
+}
+
+div#search div.list div.kb span.id, div.kb.drag span.id {
+    font-weight: bold;
     color: #b6a754;
 }
 
-div#search div.list div.kb span.title{
+div#search div.list div.kb span.title, div.kb.drag, span.title {
     font-weight: normal;
 }
 
@@ -298,12 +309,30 @@ div.kb p {
 }
 
 
-/** Inline Editor **/
+/** kb form **/
 div.kb.edit div.input {
     position: relative;
     background-color: rgba(0,0,0,.1); 
     border: none;
     margin-bottom: .7em;
+}
+
+div.kb.edit div.drop {
+    position: relative;
+    display: block;
+    padding: 1em;
+    font-size: 1em;
+    min-height: 2em;
+    height: auto;
+    width: 100%-1em;
+    color: #3b5998;
+    border: dashed 2px rgba(0,0,0,.2);
+}
+
+div.drop > span {
+    position: absolute;
+    margin-bottom: 1em;
+    bottom: 0;
 }
 
 div.kb.edit div.input h3 {

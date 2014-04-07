@@ -1,12 +1,14 @@
 <?php
+$Id = $_GET['edit'] != '' ? $_GET['edit'] : (time() . substr(microtime(),2,3));
+
 $Issue = Get::kb($_GET['edit']);
 $Issue = count($Issue) == 1 ? $Issue[0] : array(
     'Type' => '',
     'Tags' => array(),
     'Issue' => '',
     'Description' => '',
-    'Checklist' => array(null),
-    'Solution' => array(null)
+    'Checklist' => array(),
+    'Related' => array()
 );
 ?>
 <script type="text/javascript" src="/public/plugin/raptor/raptor.js"></script>
@@ -14,6 +16,8 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
 <script type="text/javascript" src="/public/js/jquery.suggest.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#<?php echo $_GET['edit']; ?>").remove();
+    
         $(".suggest").suggest();
         $(".array").keydown( function(e) {
             if (e.keyCode == 9 && !e.shiftKey) {
@@ -23,6 +27,31 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
                 push.find("textarea").val('');  
                 push.find(".editor").html('');  
                 push.find("h3").remove();
+            }
+        });
+        
+        $( ".drag" ).draggable({
+            helper: 'clone',
+            revert: 'invalid',
+            revertDuration: 0,
+            appendTo: 'body',
+        });
+        
+        $( ".dragged" ).draggable();
+        
+        $( ".drop" ).droppable({
+            drop: function( event, ui ) {
+                var dragged = $( "<div class=\"dragged\"></div>" );
+                dragged.append(ui.draggable[0]);
+                dragged.append("<input type=\"hidden\" name=\"related[]\" value=\"" + ui.draggable[0].id + "\" />");
+                $( this ).append(dragged);
+            }
+        });
+   
+        $(".drop").on("dropout", function(event, ui) {
+            if ($(ui.draggable).parent().hasClass('dragged')) {
+                $(ui.helper).remove();
+                $(ui.draggable).parent().remove();
             }
         });
         
@@ -59,8 +88,14 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
 </script>
 <form id="kbForm" action="service/proxy.php" method="POST">
 <input type="hidden" name="save-kb" value="1" />
+<input type="hidden" name="old-id" value="<?php echo $Id; ?>" />
 
 <div class="kb edit">
+    <div class="input">
+        <h3>Id</h3>
+        <input type="text" name="new-id" value="<?php echo $Id; ?>" />
+    </div>
+    
     <div class="input">
         <h3>Type</h3>
         <select name="type">
@@ -97,20 +132,23 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
     <?php endfor; ?>
 
     <div class="input array">
-        <h3>Solution/s</h3>
-        <textarea name="solution[]" class="editor"><?php echo !empty($Issue['Solution']) ? $Issue['Solution'][0] : ''; ?></textarea>
-    </div>
-    
-    <?php for ($i = 1; $i < count($Issue['Solution']); $i ++): ?>
-        <div class="input array">
-            <textarea name="solution[]" class="editor"><?php echo $Issue['Solution'][$i]; ?></textarea>
+        <h3>Related</h3>
+        <div class="drop">
+            <?php foreach ($Issue['Related'] as $id): $Related = reset(Get::kb($id)); ?>
+                <div class="dragged">
+                    <div id="<?php echo $Issue['Id']; ?>" class="kb drag">
+                        #<span class="id"><?php echo $Related['Id']; ?></span><span class="title">: <?php echo $Related['Issue']; ?></span>
+                    </div>
+                    <input type="hidden" name="related[]" value="<?php echo $Related['Id']; ?>" />
+                </div>
+            <?php endforeach; ?>
+            <span>drop an item to relate</span>
         </div>
-    <?php endfor; ?>
+    </div>
 
     <div class="input">
         <span class="button" onClick="kbForm.submit();">evas</span>
     </div>
 </div>
 
-<input type="hidden" name="id" value="<?php echo $_GET['edit']; ?>" />
 </form>

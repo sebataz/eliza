@@ -79,7 +79,7 @@ if (isset($_GET['q'])) {
             </tr></table>
             <div class="list">
                 <?php foreach($kb as $Issue): ?>
-                    <a href="?id=<?php echo $Issue['File']['Title'] . $querystring; ?>"><div class="kb">#<span class="id"><?php echo $Issue['File']['Title']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
+                    <a href="?id=<?php echo $Issue['File']['Title'] . $querystring; ?>"><div id="<?php echo $Issue['Id']; ?>" class="kb drag">#<span class="id"><?php echo $Issue['File']['Title']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -96,7 +96,7 @@ if (isset($_GET['q'])) {
             <?php endif; ?>
             
             <?php if (!isset($_GET['edit'])): ?>
-                <div class="kb"><a href="?edit=<?php echo time(), substr(microtime(),2,3); ?>"><div><span class="button">wen etaerc +</span></div></a></div>
+                <div class="kb"><a href="?edit"><div><span class="button">wen etaerc +</span></div></a></div>
             <?php endif; ?>
         </div>
         
