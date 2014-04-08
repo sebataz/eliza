@@ -32,7 +32,8 @@ if (isset($_GET['q'])) {
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
         <link rel="stylesheet" type="text/css" href="../public/css/kb-theme.css">
         
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>     
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         
         <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
         <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
@@ -88,6 +89,7 @@ if (isset($_GET['q'])) {
                             
                             data.forEach(function(i) {
                                 var kb = $( "<a href=\"?id=" + i.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + i.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + i.Result.Id + "</span><span class=\"title\">: " + i.Result.Issue + "</span></div></a>");
+                                kb.find(".drag").draggable(draggable_list);
                                 list.append(kb);
                             });
                         });
