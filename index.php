@@ -86,9 +86,8 @@ if (isset($_GET['q'])) {
                             var list = $( this );
                             list.empty();
                             
-                            data.forEach(function(kb) {
-                                var kb = $( "<a href=\"?id=" + kb.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + kb.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + kb.Result.Id + "</span><span class=\"title\">: " + kb.Result.Issue + "</span></div></a>");
-                                kb.draggable(draggable_list);
+                            data.forEach(function(i) {
+                                var kb = $( "<a href=\"?id=" + i.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + i.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + i.Result.Id + "</span><span class=\"title\">: " + i.Result.Issue + "</span></div></a>");
                                 list.append(kb);
                             });
                         });

@@ -33,17 +33,18 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
         
         $( ".drop" ).droppable({
             drop: function( event, ui ) {
-                var dragged = $( "<div class=\"dragged\"></div>" );
-                dragged.append($(ui.draggable));
-                dragged.append("<input type=\"hidden\" name=\"related[]\" value=\"" + $(ui.draggable).id + "\" />");
-                $( this ).append(dragged);
+                if (!$(ui.draggable).hasClass("dragged")) {
+                    $(ui.draggable).addClass("dragged");
+                    $(ui.draggable).append("<input type=\"hidden\" name=\"related[]\" value=\"" + ui.draggable[0].id + "\" />");
+                }
+                    $( this ).append($(ui.draggable));
             }
         });
    
         $(".drop").on("dropout", function(event, ui) {
-            if ($(ui.draggable).parent().hasClass('dragged')) {
+            if ($(ui.draggable).hasClass('dragged')) {
                 $(ui.helper).remove();
-                $(ui.draggable).parent().remove();
+                $(ui.draggable).remove();
             }
         });
         
@@ -127,12 +128,10 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
         <h3>Related</h3>
         <div class="drop">
             <?php foreach ($Issue['Related'] as $id): $Related = reset(Get::kb($id)); ?>
-                <div class="dragged">
-                    <div id="<?php echo $Issue['Id']; ?>" class="kb drag">
+                    <div id="<?php echo $Issue['Id']; ?>" class="kb drag dragged">
                         #<span class="id"><?php echo $Related['Id']; ?></span><span class="title">: <?php echo $Related['Issue']; ?></span>
-                    </div>
                     <input type="hidden" name="related[]" value="<?php echo $Related['Id']; ?>" />
-                </div>
+                    </div>
             <?php endforeach; ?>
             <span>drop an item to relate</span>
         </div>
