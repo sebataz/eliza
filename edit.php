@@ -28,19 +28,14 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
             }
         });
         
-        $( ".drag" ).draggable({
-            helper: 'clone',
-            revert: 'invalid',
-            revertDuration: 0,
-            appendTo: 'body',
-        });
+        $( ".drag" ).draggable(draggable_list);
         
         
         $( ".drop" ).droppable({
             drop: function( event, ui ) {
                 var dragged = $( "<div class=\"dragged\"></div>" );
-                dragged.append(ui.draggable[0]);
-                dragged.append("<input type=\"hidden\" name=\"related[]\" value=\"" + ui.draggable[0].id + "\" />");
+                dragged.append($(ui.draggable));
+                dragged.append("<input type=\"hidden\" name=\"related[]\" value=\"" + $(ui.draggable).id + "\" />");
                 $( this ).append(dragged);
             }
         });

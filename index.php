@@ -42,8 +42,18 @@ if (isset($_GET['q'])) {
         <script type="text/javascript">        
             SyntaxHighlighter.defaults['toolbar'] = false;
             SyntaxHighlighter.all();
-                
+               
+               
+            var draggable_list = {
+                                    helper: 'clone',
+                                    revert: 'invalid',
+                                    revertDuration: 0,
+                                    appendTo: 'body',
+                                };
+                                
             var swim_log = 0;
+            
+            
             console.log(swim_log);
             $(document).scroll(function(e){
                 console.log(Math.floor(Math.random() * 6+5));
@@ -78,6 +88,7 @@ if (isset($_GET['q'])) {
                             
                             data.forEach(function(kb) {
                                 var kb = $( "<a href=\"?id=" + kb.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + kb.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + kb.Result.Id + "</span><span class=\"title\">: " + kb.Result.Issue + "</span></div></a>");
+                                kb.draggable(draggable_list);
                                 list.append(kb);
                             });
                         });
