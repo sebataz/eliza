@@ -61,7 +61,28 @@ if (isset($_GET['q'])) {
             });
             
             $(document).ready(function () {
-            
+                $(".search").keypress(function(e) {
+                    if (e.keyCode == 32) {
+                        var search = $( this ).val();
+                        console.log("searching " + search);
+                        
+                        $.ajax({
+                            url: "service/proxy.php?search&c=kb&q=" + search,
+                            context: $(".list")
+                        }).done(function(data) {
+                            console.log("found:")
+                            console.log(data);
+                            
+                            var list = $( this );
+                            list.empty();
+                            
+                            data.forEach(function(kb) {
+                                var kb = $( "<a href=\"?id=" + kb.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + kb.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + kb.Result.Id + "</span><span class=\"title\">: " + kb.Result.Issue + "</span></div></a>");
+                                list.append(kb);
+                            });
+                        });
+                    }
+                });
             });
         </script>
     </head>
