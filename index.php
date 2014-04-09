@@ -12,7 +12,7 @@ $kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['
 $querystring = array();
 if (isset($_GET['ty'])) $querystring['ty'] = $_GET['ty'];
 $querystring = isset($_GET['q']) ? array_merge($querystring, array('q' => $_GET['q'])) : $querystring;
-$querystring = '&' . urldecode(http_build_query($querystring));
+$querystring = (empty($querystring)?'':'&') . urldecode(http_build_query($querystring));
 if (isset($_GET['t'])) foreach ($_GET['t'] as $tag) $querystring .= ($querystring == '' ? 't[]=' : '&t[]=') . $tag;
 
 if (isset($_GET['q'])) {
@@ -112,7 +112,7 @@ if (isset($_GET['q'])) {
             </tr></table>
             <div class="list">
                 <?php foreach($kb as $Issue): ?>
-                    <a href="?id=<?php echo $Issue['File']['Title'] . $querystring; ?>"><div id="<?php echo $Issue['Id']; ?>" class="kb drag">#<span class="id"><?php echo $Issue['File']['Title']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
+                    <a href="?id=<?php echo $Issue['Id'] . $querystring . '#' . $Issue['Id']; ?>"><div id="<?php echo $Issue['Id']; ?>" class="kb drag">#<span class="id"><?php echo $Issue['Id']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
                 <?php endforeach; ?>
             </div>
         </div>
