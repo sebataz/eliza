@@ -44,7 +44,7 @@ span.button  {
 }
 
 span.button:first-letter  {
-    color: #77ba9b;
+    color: #BAD07F;
 }
 
 
@@ -143,8 +143,8 @@ div#search span.search {
     width: 39px;
     height: 39px;
     cursor: pointer;
-    border: solid 7px #77ba9b;
-    background: url('../img/search.png') no-repeat;
+    border: solid 7px #BAD07F;
+    background: url('../img/search-nu.png') no-repeat;
     background-size: contain;
 }
 
@@ -282,13 +282,18 @@ div.kb a img {
     border: 1px solid #999;
 }
 
-div.kb div.solution:nth-of-type(1) {
-    margin-top: 3em;
+div.kb div.description {
+    text-align: justify;
 }
 
 div.kb div.solution {
-    padding: .3em;
+    text-align: justify;
+    padding: .3em .7em;
     margin-top: 1em;
+}
+
+div.kb div.solution:nth-of-type(1) {
+    margin-top: 3em;
 }
 
 div.kb div.solution a.title{
@@ -308,7 +313,7 @@ div.kb div.solution:nth-of-type(2n+1) {
 }
 
 div.kb div.solution:nth-of-type(2n+2) {
-    background-color: #77ba9b;
+    background-color: #BAD07F;
     background-color: rgba(255,255,255,.4); 
     background-color: rgba(255,255,255,.2); 
     background-color: rgba(0,0,0,.1); 
@@ -360,7 +365,7 @@ div.kb.edit div.input input, div.kb.edit div.input select, div.kb.edit div.input
     background: #445f97;
     background: #ffffff;
     border: none;
-    border-right: solid .3em #77ba9b;
+    border-right: solid .3em #BAD07F;
     border-right: none;
     color: #ffffff;
     color: #000000;

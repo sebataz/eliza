@@ -25,7 +25,7 @@
                 $("#shark").css("left", swim+"%");
                 if (Math.floor(swim_log%5) == 0)
                     $("#shark").css("bottom",  Math.floor((Math.random()*(5+1))+6) +"%");
-                $("#shark").css("background", "url('public/img/shark" + (reverse ? '-reverse' : '') + ".png') no-repeat");
+                $("#shark").css("background", "url('../public/img/shark" + (reverse ? '-reverse' : '') + ".png') no-repeat");
                 $("#shark").css("background-size", "contain");
             });
             
@@ -48,12 +48,16 @@
                 <p>
                     Chances are that...
                     <ul>
+                        <?php if (isset($_GET['e'])): ?>
+                        <li><?php echo $_GET['e']; ?></li>
+                        <?php else: ?>
                         <li>the page you are seeking was not found</li>
                         <li>either the server or the site is undergoing maintenance work</li>
+                        <?php endif; ?>
                         <li>or maybe, it's just that the shark is feeding (scroll to check)</li>
                     </ul>
                 </p><br /><br />
-                <a href="<?php echo 'http://', $_SERVER['HTTP_HOST'], '/?', $_SERVER['QUERY_STRING']; ?>">
+                <a href="<?php echo 'http://', $_SERVER['HTTP_HOST'], '/?', preg_replace('/e=.*$/', '', $_SERVER['QUERY_STRING']); ?>">
                 <span class="button" style="margin: 0 auto; width: 5em; text-align:center;">yrter</span></a>
             </div>
         </div>
@@ -61,7 +65,7 @@
         
         
         <div id="background-bottom">
-            <div class="title"><a href=".">trilead knowledge base</a></div>
+            <div class="title"><a href="..">trilead knowledge base</a></div>
            
         </div>
     </body>

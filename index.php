@@ -1,9 +1,9 @@
 <?php
-include 'lib/service.php';
+include 'eliza/beta.php';
 
 if (isset($_GET['id']))
     if (empty(Get::kb($_GET['id'])))
-        header('Location: oops.php?' . $_SERVER['QUERY_STRING']);
+        oops('knowledge could not be found');
 
 $knowledge_type = array('FAQ', 'HowTo', 'Warning/Error', 'Troubleshooting');
 
@@ -13,7 +13,7 @@ $querystring = array();
 if (isset($_GET['ty'])) $querystring['ty'] = $_GET['ty'];
 $querystring = isset($_GET['q']) ? array_merge($querystring, array('q' => $_GET['q'])) : $querystring;
 $querystring = (empty($querystring)?'':'&') . urldecode(http_build_query($querystring));
-if (isset($_GET['t'])) foreach ($_GET['t'] as $tag) $querystring .= ($querystring == '' ? 't[]=' : '&t[]=') . $tag;
+if (isset($_GET['t'])) foreach ($_GET['t'] as $tag) $querystring .= '&t[]=' . $tag;
 
 if (isset($_GET['q'])) {
     $tmp_kb = array();
@@ -78,7 +78,7 @@ if (isset($_GET['q'])) {
                         console.log("searching " + search);
                         
                         $.ajax({
-                            url: "service/proxy.php?search&c=kb&q=" + search,
+                            url: "eliza/?search&c=kb&q=" + search,
                             context: $(".list")
                         }).done(function(data) {
                             console.log("found:")
@@ -112,7 +112,7 @@ if (isset($_GET['q'])) {
             </tr></table>
             <div class="list">
                 <?php foreach($kb as $Issue): ?>
-                    <a href="?id=<?php echo $Issue['Id'] . $querystring . '#' . $Issue['Id']; ?>"><div id="<?php echo $Issue['Id']; ?>" class="kb drag">#<span class="id"><?php echo $Issue['Id']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
+                    <a href="?id=<?php echo $Issue['Id'], $querystring,'#' , $Issue['Id']; ?>"><div id="<?php echo $Issue['Id']; ?>" class="kb drag">#<span class="id"><?php echo $Issue['Id']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
                 <?php endforeach; ?>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php 
 
-include '../lib/service.php';
+include '../eliza/beta.php';
 
 // var_dump($_POST); die();
 

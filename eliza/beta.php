@@ -3,12 +3,15 @@
 // main settings
 define ('DS', DIRECTORY_SEPARATOR); 
 define ('ROOT', dirname(__DIR__) . DS);
+define ('ELIZA', basename(__DIR__) . DS);
 define ('BASE_URI', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+
+set_error_handler(function () { if (false) header('Location: eliza/oops.php?' . urldecode(http_build_query($_GET))); else var_dump(func_get_args()); die();}, E_ALL & ~E_STRICT);
+function oops($_excuse = null) {$_GET['e'] = $_excuse; trigger_error($_excuse);}
 
 abstract class Service {
     public static function load($_service) {
-        $path_to_service = ROOT 
-                        . 'service' . DS
+        $path_to_service = ROOT . ELIZA
                         . strtolower(get_called_class()) . DS
                         . $_service . '.php';
                         

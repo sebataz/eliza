@@ -79,7 +79,7 @@ $Issue = count($Issue) == 1 ? $Issue[0] : array(
         });
     });
 </script>
-<form id="kbForm" action="service/proxy.php" method="POST">
+<form id="kbForm" action="eliza/" method="POST">
 <input type="hidden" name="save-kb" value="1" />
 <input type="hidden" name="old-id" value="<?php echo $Id; ?>" />
 

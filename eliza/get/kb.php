@@ -45,7 +45,7 @@ function kb($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
                 continue;
          
         foreach ($_tag as $tag) {
-            if (!ereg($tag, implode(' ', $kb['Tags'])))
+            if (!preg_match('/' . $tag . '/', implode(' ', $kb['Tags'])))
                 continue 2;
         }
         
