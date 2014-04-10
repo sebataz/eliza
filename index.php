@@ -1,5 +1,6 @@
 <?php
-include 'eliza/beta.php';
+
+include 'eliza/service.php';
 
 if (isset($_GET['id']))
     if (empty(Get::kb($_GET['id'])))

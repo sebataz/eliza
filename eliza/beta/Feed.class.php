@@ -2,6 +2,4 @@
 
 namespace eliza\beta;
 
-abstract class Feed {
-
-}
+abstract class Feed {}

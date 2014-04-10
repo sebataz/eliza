@@ -3,12 +3,20 @@
 namespace eliza\beta;
 
 class Response {
-    public static __callStatic ($_method, $_args) {
-        require_once (ROOT . ELIZA . 'feed' . DS . $_method . '.php');
+    public static function __callStatic ($_method, $_args) {
+        return static::invoke($_method, $_args);
+    }
     
-        if ($feed = preg_replace('/JSON$/', '', $_method) !== null)
-            return call_user_func_array(array('eliza\\feed\\' . $feed, 'feedJSON'), $_args);
+    public static function invoke($_method, $_args) {
+        $feed = preg_replace("/(JSON)$/", '', $_method);
+        $path_to_feed = ROOT . ELIZA . 'feed' . DS . $feed . '.php';
+        
+        if (!file_exists($path_to_feed)) oops('there is nothing to see here' . $path_to_feed);
+        
+        require_once $path_to_feed;
+        if (preg_match("/(JSON)$/", $_method))
+            return call_user_func_array(array(ucfirst($feed), 'feedJSON'), $_args);
             
-        return call_user_func_array(array('eliza\\feed\\' . $_method, 'feed'), $_args);
+        return call_user_func_array(array(ucfirst($_method), 'feed'), $_args);
     }
 }

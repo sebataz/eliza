@@ -209,7 +209,6 @@ div#search div.list div.kb span.title, div.kb.drag, span.title {
 div#oops {
     position: fixed;
     margin-top: 10em;
-    width: 100%;
     width: 67%;
     font-size: .8em;
 }
@@ -218,7 +217,7 @@ div#oops div {
     padding: 1.5em;
     margin: 0 auto;
     width: 50em;
-    height: 20em;
+    min-height: 20em;
     background-color: rgba(0,0,0,.2); 
 }
 
