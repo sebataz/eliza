@@ -1,13 +1,12 @@
 <?php 
 
 class Ls extends eliza\beta\JSONFeed {
-    public static function feed($_directory, $_order_by = null, $_sorting = SORT_ASC) {  
+    public static function Feed($_directory, $_order_by = 'Title', $_sorting = SORT_ASC) {  
         if (!file_exists(ROOT . $_directory)) oops('the directory ' . $_directory . ' does not exist');
 
-        $ls = array();
+        $Ls = new eliza\beta\Collection();
+        
         $path = realpath(ROOT . $_directory) . DS;
-        
-        
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . preg_replace('#/+#', '/', str_replace('\\', '/', str_replace(ROOT, '', $path)));
         
         foreach (scandir($path) as $node) {
@@ -21,24 +20,17 @@ class Ls extends eliza\beta\JSONFeed {
             // strip extension
             $title = preg_replace('/(.*)(\.\b.*\b)/', '$1', $node);
             
-            // collecting files
-            $ls[] = array('Title' => $title,
-                          'Filename' => $node,
-                          'Extension' => '.' . pathinfo($node, PATHINFO_EXTENSION),
-                          'Timestamp' => filemtime($path . $node),
-                          'Path' => $path . $node,
-                          'Url' => $url . $node,
-                          'IsDir' => is_dir($path . $node));
+            $Node = new eliza\beta\Object();
+            $Node->Title = $title;
+            $Node->Filename = $node;
+            $Node->Extension = '.' . pathinfo($node, PATHINFO_EXTENSION);
+            $Node->Timestamp = filemtime($path . $node);
+            $Node->Path = $path . $node;
+            $Node->Url = $url . $node;
+            $Node->IsDir = is_dir($path . $node);
+            $Ls->append($Node);
         }
         
-        // order by
-        if ($_order_by && !empty($ls)) {
-            foreach ($ls as $node)
-                $temp_keys[] = $node[$_order_by];
-            
-            array_multisort($temp_keys, (int)$_sorting, $ls);
-        }
-        
-        return $ls;
+        return $Ls->sortBy($_order_by, $_sorting);
     }
 }

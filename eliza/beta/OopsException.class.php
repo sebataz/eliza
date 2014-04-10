@@ -9,7 +9,7 @@ class OopsException extends \Exception {
 
     public function printStackTrace() {
         $stack_trace = $this->getTrace();
-        $string_trace = "\n<br /><strong>" . get_class($this) . '</strong>: ' 
+        $string_trace = "\n<br /><strong>" . basename(get_class($this)) . '</strong>: ' 
                       . $this->getMessage() . "<br />"
                       . "\n#0 in " . self::path($this->getFile()) . ' on line ' . $this->getLine()
                       . ': ' . $this->getMessage() . '<br \>';

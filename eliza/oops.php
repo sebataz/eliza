@@ -63,7 +63,7 @@
                     </ul>
                 </p><br /><br />
                 <?php if ($e): ?>
-                    <h1 class="wtf">Wtf?</h1><span class="stacktrace"><?php $e->printStackTrace(); ?></span><br /><br />
+                    <h1 class="wtf" style="cursor: pointer;">Wtf?</h1><span class="stacktrace"><?php $e->printStackTrace(); ?></span><br /><br />
                 <?php endif; ?>
                 <a href="<?php echo 'http://', $_SERVER['HTTP_HOST'], '/?', preg_replace('/e=.*$/', '', $_SERVER['QUERY_STRING']); ?>">
                 <span class="button" style="margin: 0 auto; width: 5em; text-align:center;">yrter</span></a>
