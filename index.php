@@ -1,14 +1,12 @@
 <?php
 
-include 'eliza/service.php';
+include 'eliza/beta.php';
 
 if (isset($_GET['id']))
-    if (empty(Get::kb($_GET['id'])))
+    if (!eliza\beta\Response::Kb($_GET['id'])->count())
         oops('knowledge could not be found');
 
-$knowledge_type = array('FAQ', 'HowTo', 'Warning/Error', 'Troubleshooting');
-
-$kb = Get::kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
+$kb = eliza\beta\Response::Kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
 
 $querystring = array();
 if (isset($_GET['ty'])) $querystring['ty'] = $_GET['ty'];
@@ -29,7 +27,7 @@ if (isset($_GET['q'])) {
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Trilead - Knowledge Base</title>
+        <title><?php echo eliza\beta\Configuration::get()->Title; ?></title>
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
         <link rel="stylesheet" type="text/css" href="../public/css/kb-theme.css">
         
@@ -107,13 +105,13 @@ if (isset($_GET['q'])) {
                 <div><span><input type="text" class="search" name="q" value="<?php echo isset($_GET['q']) ? $_GET['q'] : ''; ?>"/></span><span class="search" onClick="searchForm.submit();"></span></div>
             </form>
             <table class="type"><tr>
-                <?php foreach ($knowledge_type as $type): ?>
+                <?php foreach (eliza\beta\Configuration::get()->Types as $type): ?>
                 <td><a class="<?php if(isset($_GET['ty'])) if ($_GET['ty'] == $type) echo 'active'; ?>"S  href="?ty=<?php echo $type, isset($_GET['q']) ? '&q=' . $_GET['q'] : ''; ?>"><?php echo $type; ?></a></td>
                 <?php endforeach; ?>
             </tr></table>
             <div class="list">
                 <?php foreach($kb as $Issue): ?>
-                    <a href="?id=<?php echo $Issue['Id'], $querystring,'#' , $Issue['Id']; ?>"><div id="<?php echo $Issue['Id']; ?>" class="kb drag">#<span class="id"><?php echo $Issue['Id']; ?></span><span class="title">: <?php echo $Issue['Issue']; ?></span></div></a>
+                    <a href="?id=<?php echo $Issue->Id, $querystring,'#' , $Issue->Id; ?>"><div id="<?php echo $Issue->Id; ?>" class="kb drag">#<span class="id"><?php echo $Issue->Id; ?></span><span class="title">: <?php echo $Issue->Issue; ?></span></div></a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -123,9 +121,9 @@ if (isset($_GET['q'])) {
         <div id="knowledge-base">
             <?php if (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
-            <?php elseif (!isset($_GET['id']) && !empty($kb)): $Issue = reset($kb); ?>
+            <?php elseif (!isset($_GET['id']) && !empty($kb)): $Issue = $kb[0]; ?>
                 <?php include 'issue.php'; ?>
-            <?php elseif (isset($_GET['id'])): $Issue = reset(Get::kb($_GET['id'])); ?>
+            <?php elseif (isset($_GET['id'])): $Issue = eliza\beta\Response::Kb($_GET['id'])->offsetGet(0); ?>
                 <?php include 'issue.php'; ?>
             <?php endif; ?>
             
@@ -136,8 +134,8 @@ if (isset($_GET['q'])) {
         
         
         <div id="background-bottom">
-            <div class="title"><a href=".">trilead knowledge base</a></div>
-            <?php foreach (Get::tags($kb) as $tag): ?>
+            <div class="title"><a href="."><?php echo eliza\beta\Configuration::get()->Title; ?></a></div>
+            <?php foreach (/*Get::tags($kb)*/array() as $tag): ?>
                 <a href="?t[]=<?php echo $tag['Tag'] . $querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
             <?php endforeach; ?>
         </div>

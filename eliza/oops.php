@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Trilead - Knowledge Base</title>
+        <title><?php echo eliza\beta\Configuration::get()->Title; ?></title>
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
         <link rel="stylesheet" type="text/css" href="../public/css/kb-theme.css">
         
@@ -73,7 +73,7 @@
         
         
         <div id="background-bottom">
-            <div class="title"><a href="..">trilead knowledge base</a></div>
+            <div class="title"><a href=".."><?php echo eliza\beta\Configuration::get()->Title; ?></a></div>
            
         </div>
     </body>

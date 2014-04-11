@@ -14,11 +14,11 @@ class Response {
             return self::Feed($_method, $_args);
             
         self::loadFeed($_args[0]);
-        return call_user_func_array(array(ucfirst($_args[0]), $_method), $_args[1]);
+        return call_user_func_array(array($_args[0], $_method), $_args[1]);
     }
     
     public static function Feed($_feed, $_args) {
         self::loadFeed($_feed);
-        return call_user_func_array(array(ucfirst($_feed), 'Feed'), $_args);
+        return call_user_func_array(array($_feed, 'Feed'), $_args);
     }
 }
