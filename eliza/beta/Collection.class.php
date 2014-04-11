@@ -17,4 +17,10 @@ class Collection extends \ArrayObject {
         
         return $this;
     }
+    
+    public function getBy($_key, $_value) {
+        foreach ($this as $Object)
+            if ($Object->$_key == $_value)
+                return $Object;
+    }
 }
