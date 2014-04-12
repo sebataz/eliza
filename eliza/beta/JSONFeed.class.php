@@ -1,9 +1,10 @@
 <?php
 
-namespace eliza\beta;
+namespace eliza\feed;
 
-class JSONFeed extends Feed {
-    public static function JSONFeed() {
-        return json_encode(array_values((array)call_user_func_array(array(get_called_class(), 'Feed'), func_get_args())));
+class JSONFeed extends QueryFeed {
+    public function JSONFeed() {
+        $array = (array)$this;
+        return json_encode($array);
     }
 }

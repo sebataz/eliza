@@ -11,7 +11,7 @@ class Cache extends Buffer {
     }
 
     public static function cached($_timeout = 3600) {
-        self::$_cache = '/tmp/cache/' . md5($_SERVER['REQUEST_URI']);
+        self::$_cache = '/temp/cache/' . md5($_SERVER['REQUEST_URI']);
         
         if ((file_exists(self::$_cache)) && (filemtime(self::$_cache) + $_timeout) > time()) {
             readfile(self::$_cache);

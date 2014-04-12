@@ -1,6 +1,6 @@
 <?php 
 
-class Kb extends eliza\beta\JSONFeed {
+class Kb extends eliza\feed\JSONFeed {
     public static function Feed($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
         $KnowledgeBase = new eliza\beta\Collection();
         $KbFile = eliza\beta\Response::Ls('issues');
