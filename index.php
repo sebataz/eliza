@@ -16,6 +16,10 @@ if (isset($_GET['kb']))
 if (isset($_GET['y']))
     $KnowledgeBase->filterBy('Type', $_GET['y']);
     
+if (isset($_GET['t']))
+    foreach ($_GET['t'] as $t)
+        $KnowledgeBase->filterBy('Tags', $t);
+    
 if (isset($_GET['q'])) {
     $tmp_kb = array();
     foreach ($KnowledgeBase->Q($_GET['q']) as $issue)
@@ -82,7 +86,7 @@ $Kb = !isset($_GET['kb']) && $KnowledgeBase->count()
                         console.log("searching " + search);
                         
                         $.ajax({
-                            url: "eliza/?search&c=kb&q=" + search,
+                            url: "eliza/?Kb&q=" + search,
                             context: $(".list")
                         }).done(function(data) {
                             console.log("found:")
@@ -90,7 +94,7 @@ $Kb = !isset($_GET['kb']) && $KnowledgeBase->count()
                             
                             var list = $( this );
                             list.empty();
-                            
+                                                        
                             data.forEach(function(i) {
                                 var kb = $( "<a href=\"?kb=" + i.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + i.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + i.Result.Id + "</span><span class=\"title\">: " + i.Result.Issue + "</span></div></a>");
                                 kb.find(".drag").draggable(draggable_list);
@@ -140,8 +144,8 @@ $Kb = !isset($_GET['kb']) && $KnowledgeBase->count()
         
         <div id="background-bottom">
             <div class="title"><a href="."><?php echo eliza\beta\Configuration::get()->Title; ?></a></div>
-            <?php foreach (array() as $tag): ?>
-                <a href="?t[]=<?php echo $tag['Tag'] . $querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
+            <?php foreach ($KnowledgeBase->TagCloud() as $Tag): ?>
+                <a href="?t[]=<?php echo $Tag->Tag, eliza\beta\Request::querystring(array('q', 'y', 't')); ?>" style="font-size: <?php echo $Tag->Size; ?>em;"><?php echo $Tag->Tag; ?></a>
             <?php endforeach; ?>
         </div>
     </body>

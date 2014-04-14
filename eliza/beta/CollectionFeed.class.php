@@ -27,4 +27,11 @@ abstract class CollectionFeed extends \eliza\beta\Collection {
             if ($Object->$_prop == $_value)
                 return $Object;
     }
+    
+    public function __call($_method, $_args) {
+        if (!$this->count()) return oops();
+        $feed = get_class($this->first());
+        
+        return call_user_func_array(array($feed, $_method), array_merge(array($this), $_args));
+    }
 }

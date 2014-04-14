@@ -31,10 +31,13 @@ class Request {
         if (!is_array($_include)) $_include = array($_include);
         $querystring = array();
         
-        foreach ($_GET as $key => $value)
+        foreach ($_GET as $key => $value) {
             if (in_array($key, $_include) || empty($_include))
                 $querystring[$key] = $value;
+        }
         
-        return empty($querystring) ? '' : ('&' . http_build_query($querystring));
+        // the preg_ will prevent the overwriting of array get variables
+        return empty($querystring) 
+             ? '' : ('&' . preg_replace('/%5B[0-9]*%5D/', '[]', http_build_query($querystring)));
     }
 }
