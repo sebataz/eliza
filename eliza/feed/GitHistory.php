@@ -1,9 +1,9 @@
 <?php
 
-class GitHistory extends eliza\beta\JSONFeed {
+class GitHistory extends eliza\beta\Feed {
     public static function Feed($_n) {
         /** GIT history **/
-        $GitHistory = new eliza\beta\Collection();
+        $GitHistory = new eliza\feed\JSONFeed();
         $Commit = null;
         
         // query git for history

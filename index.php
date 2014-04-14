@@ -2,25 +2,30 @@
 
 include 'eliza/beta.php';
 
-if (isset($_GET['id']))
-    if (!eliza\beta\Response::Kb($_GET['id'])->count())
+eliza\beta\Buffer::buffered();
+
+$KnowledgeBase = eliza\beta\Feed::Kb();
+$Kb = new Kb();
+
+$querystring = null;
+
+if (isset($_GET['kb']))
+    if (!($Kb = ($KnowledgeBase->getBy('Id', $_GET['kb']))))
         oops('knowledge could not be found');
-
-$kb = eliza\beta\Response::Kb(null, 'Issue', isset($_GET['t'])?$_GET['t']:array(), isset($_GET['ty'])?$_GET['ty']:null);
-
-$querystring = array();
-if (isset($_GET['ty'])) $querystring['ty'] = $_GET['ty'];
-$querystring = isset($_GET['q']) ? array_merge($querystring, array('q' => $_GET['q'])) : $querystring;
-$querystring = (empty($querystring)?'':'&') . urldecode(http_build_query($querystring));
-if (isset($_GET['t'])) foreach ($_GET['t'] as $tag) $querystring .= '&t[]=' . $tag;
-
+        
+if (isset($_GET['y']))
+    $KnowledgeBase->filterBy('Type', $_GET['y']);
+    
 if (isset($_GET['q'])) {
     $tmp_kb = array();
-    foreach (Get::search($kb, $_GET['q']) as $issue)
+    foreach ($KnowledgeBase->Q($_GET['q']) as $issue)
         $tmp_kb[] = $issue['Result'];
     
-    $kb = $tmp_kb;
+    $KnowledgeBase->exchangeArray($tmp_kb);
 }
+
+$Kb = !isset($_GET['kb']) && $KnowledgeBase->count() 
+    ? $KnowledgeBase->first() : $Kb;
 
  ?>
 <!DOCTYPE html>
@@ -87,7 +92,7 @@ if (isset($_GET['q'])) {
                             list.empty();
                             
                             data.forEach(function(i) {
-                                var kb = $( "<a href=\"?id=" + i.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + i.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + i.Result.Id + "</span><span class=\"title\">: " + i.Result.Issue + "</span></div></a>");
+                                var kb = $( "<a href=\"?kb=" + i.Result.Id + "<?php echo $querystring; ?>\"><div id=\"" + i.Result.Id + "\" class=\"kb drag\">#<span class=\"id\">" + i.Result.Id + "</span><span class=\"title\">: " + i.Result.Issue + "</span></div></a>");
                                 kb.find(".drag").draggable(draggable_list);
                                 list.append(kb);
                             });
@@ -106,12 +111,12 @@ if (isset($_GET['q'])) {
             </form>
             <table class="type"><tr>
                 <?php foreach (eliza\beta\Configuration::get()->Types as $type): ?>
-                <td><a class="<?php if(isset($_GET['ty'])) if ($_GET['ty'] == $type) echo 'active'; ?>"S  href="?ty=<?php echo $type, isset($_GET['q']) ? '&q=' . $_GET['q'] : ''; ?>"><?php echo $type; ?></a></td>
+                <td><a class="<?php if(isset($_GET['y'])) if ($_GET['y'] == $type) echo 'active'; ?>"  href="?y=<?php echo $type, eliza\beta\Request::querystring('q'); ?>"><?php echo $type; ?></a></td>
                 <?php endforeach; ?>
             </tr></table>
             <div class="list">
-                <?php foreach($kb as $Issue): ?>
-                    <a href="?id=<?php echo $Issue->Id, $querystring,'#' , $Issue->Id; ?>"><div id="<?php echo $Issue->Id; ?>" class="kb drag">#<span class="id"><?php echo $Issue->Id; ?></span><span class="title">: <?php echo $Issue->Issue; ?></span></div></a>
+                <?php foreach($KnowledgeBase as $KbLink): ?>
+                    <a href="?kb=<?php echo $KbLink->Id, eliza\beta\Request::querystring(array('q', 'y', 't')), '#', $KbLink->Id; ?>"><div id="<?php echo $KbLink->Id; ?>" class="kb drag">#<span class="id"><?php echo $KbLink->Id; ?></span><span class="title">: <?php echo $KbLink->Issue; ?></span></div></a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -121,10 +126,10 @@ if (isset($_GET['q'])) {
         <div id="knowledge-base">
             <?php if (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
-            <?php elseif (!isset($_GET['id']) && !empty($kb)): $Issue = $kb[0]; ?>
-                <?php include 'issue.php'; ?>
-            <?php elseif (isset($_GET['id'])): $Issue = eliza\beta\Response::Kb($_GET['id'])->offsetGet(0); ?>
-                <?php include 'issue.php'; ?>
+            <?php elseif (!isset($_GET['id'])): ?>
+                <?php include 'kb.php'; ?>
+            <?php elseif (isset($_GET['id'])): ?>
+                <?php include 'kb.php'; ?>
             <?php endif; ?>
             
             <?php if (!isset($_GET['edit'])): ?>
@@ -135,7 +140,7 @@ if (isset($_GET['q'])) {
         
         <div id="background-bottom">
             <div class="title"><a href="."><?php echo eliza\beta\Configuration::get()->Title; ?></a></div>
-            <?php foreach (/*Get::tags($kb)*/array() as $tag): ?>
+            <?php foreach (array() as $tag): ?>
                 <a href="?t[]=<?php echo $tag['Tag'] . $querystring; ?>" style="font-size: <?php echo $tag['Size']; ?>em;"><?php echo $tag['Tag']; ?></a>
             <?php endforeach; ?>
         </div>

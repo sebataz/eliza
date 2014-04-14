@@ -1,19 +1,28 @@
 <?php 
 
-class Kb extends eliza\feed\JSONFeed {
-    public static function Feed($_issue = null, $_order_by = null, $_tag = array(), $_type = null) {
-        $KnowledgeBase = new eliza\beta\Collection();
-        $KbFile = eliza\beta\Response::Ls('issues');
+class Kb extends eliza\beta\Feed {
+    public $Id = null;
+    public $Type = '';
+    public $Issue = '';
+    public $Description = '';
+
+    public $File;
+    
+    public $Checklist = array();
+    public $Related = array();
+    public $Tags = array();
+    
+    public static function Feed() {
+        $KnowledgeBase = new eliza\feed\JSONFeed();
         
-        foreach ($KbFile as $Xml) { 
-            if ($_issue && $_issue != $Xml->Title) continue;
+        foreach (eliza\beta\Feed::Node('issues') as $Xml) { 
+            // if ($_issue && $_issue != $Xml->Title) continue;
             
-            $KbXml = new eliza\beta\Object();
-            $Kb = new eliza\beta\Object();
             
+            $KbXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));
+            
+            $Kb = new self();
             $Kb->File = $Xml;
-            $KbXml = simplexml_load_file($Xml->Path);
-            
             $Kb->Id = $Xml->Title;
             $Kb->Type = $KbXml->type;
             $Kb->Tags = explode(', ', $KbXml->tags);
@@ -21,33 +30,33 @@ class Kb extends eliza\feed\JSONFeed {
             $Kb->Description = (string) html_entity_decode($KbXml->description);
             
             $Kb->Checklist = array();
-            if (isset($KbXml->checklist)) {
-                if (is_array($KbXml->checklist))
-                    foreach ($KbXml->checklist as $checklist)
-                        $Kb->Checklist[] = $checklist;
-                else
+            if ($KbXml->offsetExists('checklist')) {
+                if (is_string($KbXml->checklist))
                     $Kb->Checklist[] = $KbXml->checklist;
+                else
+                    foreach (((array)$KbXml->checklist) as $checklist)
+                        $Kb->Checklist[] = $checklist;
             }
 
             $Kb->Related = array();
-            if (isset($KbXml->related)) {
-                if (is_array($KbXml->related))
-                    foreach ($KbXml->related as $related)
-                        $Kb->Related[] = $related;
-                else
+            if ($KbXml->offsetExists('related')) {
+                if (is_string($KbXml->related))
                     $Kb->Related[] = $KbXml->related;
+                else
+                    foreach (((array)$KbXml->related) as $related)
+                        $Kb->Related[] = $related;
             }
             
             // filter and return
             
-            if ($_type)
-                if ($_type != $Kb->Type)
-                    continue;
+            // if ($_type)
+                // if ($_type != $Kb->Type)
+                    // continue;
              
-            foreach ($_tag as $tag) {
-                if (!preg_match('/' . $tag . '/', implode(' ', $Kb->Tags)))
-                    continue 2;
-            }
+            // foreach ($_tag as $tag) {
+                // if (!preg_match('/' . $tag . '/', implode(' ', $Kb->Tags)))
+                    // continue 2;
+            // }
             
             $KnowledgeBase->append($Kb);
         }

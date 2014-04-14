@@ -26,4 +26,15 @@ class Request {
     private function _context() {
         return stream_context_create($this->_option);
     }
+    
+    public static function querystring($_include = array()) {
+        if (!is_array($_include)) $_include = array($_include);
+        $querystring = array();
+        
+        foreach ($_GET as $key => $value)
+            if (in_array($key, $_include) || empty($_include))
+                $querystring[$key] = $value;
+        
+        return empty($querystring) ? '' : ('&' . http_build_query($querystring));
+    }
 }

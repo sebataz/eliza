@@ -2,7 +2,7 @@
 
 namespace eliza\feed;
 
-class QueryFeed extends \eliza\beta\Collection {
+abstract class CollectionFeed extends \eliza\beta\Collection {
     public function sortBy($_prop, $_order = SORT_ASC)  {
         $array = (array) $this;
         if ($this->count()) {
@@ -20,5 +20,11 @@ class QueryFeed extends \eliza\beta\Collection {
         $array = (array) $this;
         $this->exchangeArray(array_slice($array, $_offset, $_limit));
         return $this;
+    }
+    
+    public function getBy($_prop, $_value) {
+        foreach ($this as $Object)
+            if ($Object->$_prop == $_value)
+                return $Object;
     }
 }

@@ -5,12 +5,15 @@ namespace eliza\beta;
 class Collection extends \ArrayObject {
     public function __construct(array $_array = array()) {    
         foreach($_array as $key => $value) {
-            if(is_array($value)){
+            if(is_array($value))
                 $value = new self($value);
-            }
             
             $this->offsetSet($key, $value);
         }
+    }
+    
+    public function first() {
+        return $this->get(0);
     }
     
     public function get($_key) { return $this->offsetGet($_key); }

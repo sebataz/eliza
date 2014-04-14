@@ -36,7 +36,7 @@
         include 'oops.php'; die();
     });
     
-    function oops($_excuse = 'you are in deep blue, nothing to see here') { 
+    function oops($_excuse = null) { 
         if (is_array($_excuse)) oops(); 
         throw new eliza\beta\OopsException($_excuse);
     }
