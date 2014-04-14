@@ -21,6 +21,9 @@ class SaveKb extends eliza\beta\Feed {
                 $issue_xml .= "\t<related>" . utf8_encode($related) . "</related>\n";
         }
                 
+        if ($issue_id != $_old_id)        
+            if (file_exists(ROOT . $issue_location . $_old_id . '.xml'))
+                return unlink($handle, $_content);
         
         if (null !== ($handle = fopen(ROOT . $issue_location . $issue_id . '.xml', 'w')))
             if ((bool)fwrite($handle, $issue_xml . "</kb>"))

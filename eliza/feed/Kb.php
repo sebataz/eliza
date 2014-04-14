@@ -20,7 +20,7 @@ class Kb extends eliza\beta\Feed {
             
             $Kb = new self();
             $Kb->File = $Xml;
-            $Kb->Id = $Xml->Title;
+            $Kb->Id = $Xml->Name;
             $Kb->Type = $KbXml->type;
             $Kb->Tags = explode(', ', $KbXml->tags);
             $Kb->Issue = (string) $KbXml->issue;
@@ -55,7 +55,7 @@ class Kb extends eliza\beta\Feed {
         $Tags = new eliza\feed\JSONFeed();
         
         foreach ($_FeedCollection->TagList() as $tag => $n) {
-            $Tag = new stdClass();
+            $Tag = new eliza\beta\Object();
             $Tag->Tag = $tag;
             $Tag->Count = $n;
             $Tag->Weight = $n / $_FeedCollection->TagList()->count();

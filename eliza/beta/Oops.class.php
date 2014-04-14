@@ -2,7 +2,7 @@
 
 namespace eliza\beta;
 
-class OopsException extends \Exception {    
+class Oops extends \Exception {    
     private static function path($_real_path) {
         return preg_replace('/' . str_replace('\\', '\\\\', substr(ROOT, 0, -1)) . '/', '', $_real_path);
     }

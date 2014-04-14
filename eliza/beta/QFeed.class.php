@@ -19,6 +19,7 @@ class QFeed extends CollectionFeed {
 
     public function QFeed() { return $this; }
     public function Q($_search, $_case_sensitive = false) {
+        if ($_search === false) return $this;
     
         $result_i = 0;
         $exact_result = array();

@@ -1,4 +1,4 @@
 <?php
 
-$config['Title'] = 'trilead knowledge base';
+$config['Title'] = 'eliza knowledge base';
 $config['Types'] = array('FAQ', 'HowTo', 'Warning/Error', 'Troubleshooting');

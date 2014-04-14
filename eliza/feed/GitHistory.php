@@ -1,13 +1,13 @@
 <?php
 
 class GitHistory extends eliza\beta\Feed {
-    public static function Feed($_n) {
+    public static function Feed() {
         /** GIT history **/
         $GitHistory = new eliza\feed\JSONFeed();
         $Commit = null;
         
         // query git for history
-        exec('git log -n ' . $_n, $output);
+        exec('git log', $output);
 
         // parse command output
         foreach($output as $line){

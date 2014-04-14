@@ -38,7 +38,7 @@
     
     function oops($_excuse = null) { 
         if (is_array($_excuse)) oops(); 
-        throw new eliza\beta\OopsException($_excuse);
+        throw new eliza\beta\Oops($_excuse);
     }
     
     set_error_handler(function () { 
