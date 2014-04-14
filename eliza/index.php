@@ -2,7 +2,6 @@
 include '../eliza/beta.php';
 if (!count($_GET)) oops();
 
-header('Content-type: application/json');
 $feed = key($_GET);
 $args = count($_POST) ? $_POST : array_slice($_GET, 1);
 

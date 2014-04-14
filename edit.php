@@ -73,8 +73,7 @@ if (!($KbEdit = eliza\beta\Feed::Kb()->getBy('Id', $_GET['edit'])))
         });
     });
 </script>
-<form id="kbForm" action="eliza/" method="POST">
-<input type="hidden" name="save-kb" value="1" />
+<form id="kbForm" action="eliza/?SaveKb" method="POST">
 <input type="hidden" name="old-id" value="<?php echo $Id; ?>" />
 
 <div class="kb edit">
