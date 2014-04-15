@@ -4,12 +4,13 @@ namespace eliza\beta;
 
 class Oops extends \Exception {    
     private static function path($_real_path) {
-        return preg_replace('/' . str_replace('\\', '\\\\', substr(ROOT, 0, -1)) . '/', '', $_real_path);
+        return preg_replace('/' . preg_quote(substr(ROOT, 0, -1), '/') . '/', '', $_real_path);
     }
 
     public function printStackTrace() {
         $stack_trace = array_reverse($this->getTrace());
-        $string_trace = "\n<br /><strong>" . basename(get_class($this)) . '</strong>: ' 
+        $class = explode('\\', get_class($this));
+        $string_trace = "\n<br /><strong>" . end($class) . '</strong>: ' 
                       . $this->getMessage() . '<br \><br \>';
         
         for ($i = 0; $i < count($stack_trace); $i++) {
