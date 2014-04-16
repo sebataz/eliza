@@ -36,11 +36,11 @@ class Node extends eliza\beta\Feed {
         return $Directory;
     }
     
-    private static function __path($_directory) {
-        return realpath(ROOT . $_directory) . DS;
+    private static function __url($_directory) {
+        return BASE_URI . preg_replace('#/+#', '/', str_replace('\\', '/', str_replace(ROOT, '', self::__path($_directory))));
     }
     
-    private static function __url($_directory) {
-        return 'http://' . $_SERVER['HTTP_HOST'] . '/' . preg_replace('#/+#', '/', str_replace('\\', '/', str_replace(ROOT, '', self::__path($_directory))));
+    private static function __path($_directory) {
+        return realpath(ROOT . $_directory) . DS;
     }
 }
