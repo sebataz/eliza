@@ -373,6 +373,11 @@ div.kb.edit div.input input, div.kb.edit div.input select, div.kb.edit div.input
     font-size: 1em;
 }
 
+div.kb.edit div.input select {
+    background: #fff url('../img/dropdown.png') no-repeat right;
+    background-size: contain;
+}
+
 div.kb.edit div.input textarea, div.kb.edit div.input div.editor {
     width: 100%;
     height: 100%;

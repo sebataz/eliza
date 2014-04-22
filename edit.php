@@ -5,8 +5,7 @@ if (!($KbEdit = eliza\beta\Feed::Kb()->getBy('Id', $_GET['edit'])))
     $KbEdit = new Kb();
 
 ?>
-<script type="text/javascript" src="/public/plugin/raptor/raptor.js"></script>
-<link href="/public/plugin/raptor/raptor-front-end.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/plugin/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/public/js/jquery.suggest.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -41,36 +40,6 @@ if (!($KbEdit = eliza\beta\Feed::Kb()->getBy('Id', $_GET['edit'])))
                 $(ui.draggable).remove();
             }
         });
-        
-        $(".editor").raptor({
-            name: 'inline',
-            classes: 'raptor-editing-inline',
-            autoEnable: true,
-            draggable: false,
-            unify: false,
-            unloadWarning: false,
-            reloadOnDisable: true,
-            plugins: {
-                unsavedEditWarning: false,
-                dock: {
-                    dockToElement: true,
-                    docked: true,
-                    persist: false
-                }
-            },
-            layouts: {
-                toolbar: {
-                    uiOrder: [
-                        ['viewSource'],
-                        ['textBold', 'textItalic', 'textUnderline', 'textStrike'],
-                        ['textBlockQuote'],
-                        ['listOrdered', 'listUnordered'],
-                        ['textSizeDecrease', 'textSizeIncrease'],
-                        ['linkCreate', 'linkRemove']
-                    ]
-                }
-            }
-        });
     });
 </script>
 <form id="kbForm" action="eliza/?SaveKb" method="POST">
@@ -103,7 +72,14 @@ if (!($KbEdit = eliza\beta\Feed::Kb()->getBy('Id', $_GET['edit'])))
 
     <div class="input">
         <h3>Description</h3>
-        <textarea name="description" class="editor"><?php echo $KbEdit->Description; ?></textarea>
+        <textarea name="description" id="editor" name="editor"><?php echo $KbEdit->Description; ?></textarea>
+        <script>
+			CKEDITOR.replace( 'editor', {
+				uiColor: '#ffffff'
+			});
+
+		</script>
+
     </div>
 
     <div class="input array">
