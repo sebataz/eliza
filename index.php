@@ -22,8 +22,8 @@ if (isset($_GET['t']))
     
 if (isset($_GET['q'])) {
     $tmp_kb = array();
-    foreach ($KnowledgeBase->Q($_GET['q']) as $issue)
-        $tmp_kb[] = $issue['Result'];
+    foreach ($KnowledgeBase->Q($_GET['q']) as $Found)
+        $tmp_kb[] = $Found->Result;
     
     $KnowledgeBase->exchangeArray($tmp_kb);
 }
