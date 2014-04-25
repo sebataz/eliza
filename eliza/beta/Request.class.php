@@ -36,7 +36,7 @@ class Request {
                 $querystring[$key] = $value;
         }
         
-        // the preg_ will prevent the overwriting of array get variables
+        // the preg_ will prevent the overwriting of array get variables, by removing the explicit index
         return empty($querystring) 
              ? '' : ('&' . preg_replace('/%5B[0-9]*%5D/', '[]', http_build_query($querystring)));
     }
