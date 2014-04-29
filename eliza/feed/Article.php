@@ -9,7 +9,7 @@ class Article extends eliza\beta\Feed {
     public $File;
     
     public static function Feed() {
-        $Blog = new eliza\feed\JSONFeed();
+        $Blog = new eliza\feed\HTMLFeed();
         
         foreach (eliza\beta\Feed::Node('articles') as $Xml) { 
             $ArticleXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));

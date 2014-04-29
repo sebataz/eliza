@@ -31,12 +31,7 @@ $Article = $Blog->first();
         </script>
     </head>
     <body>
-        <div id="blog">
-            <?php if (!isset($_GET['id'])): ?>
-                <?php include 'article.php'; ?>
-            <?php elseif (isset($_GET['id'])): ?>
-                <?php include 'article.php'; ?>
-            <?php endif; ?>
-        </div>
+        <?php $Blog->HTMLFeed(); ?>
+        <?php eliza\beta\Feed::Image('public/img')->HTMLFeed(); ?>
     </body>
 </html>

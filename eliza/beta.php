@@ -19,6 +19,7 @@
     spl_autoload_extensions('.class.php');
     spl_autoload_register(function ($_class) {
         $class = explode('\\', $_class);
+        preg_replace('/(I)$/', '', $class);
         $path_to_class = ROOT . ELIZA . 'beta' . DS 
                        . end($class) . '.class.php';
                        
