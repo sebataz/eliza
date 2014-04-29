@@ -1,0 +1,143 @@
+/** Base theme definition **/
+
+body {
+    color: #000000;
+    font-family: tahoma;
+    font-size: .7em;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear {    
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Verdana;
+    color: rgba(0,0,0,.6); 
+}
+
+a:hover {
+    color: rgba(0,0,0,.4); 
+}
+
+/** Fonts and Texts **/
+h3 {
+    clear: both;
+    text-decoration: none;
+    margin-bottom: .2em;
+    font-size: 2em;
+    font-weight: bold;
+    border-bottom: 1px solid #cccccc;
+}
+
+h2 {
+    clear: both;
+    padding-top: 2em;
+    margin-bottom: 1.2em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+h1 {
+    clear: both;
+    font-size: 1.5em;
+    font-weight: bold;    
+    text-decoration: none;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+li {
+    margin: .5em;
+    margin-left: 2em;
+}
+
+ul {
+    list-style: square;
+}
+
+ol {
+    list-style: lower-alpha;
+}
+
+kbd {
+    background-color: #ddd;
+    font-family: "courier";
+}
+
+strong {
+    font-weight: bold;
+}
+
+/** Layout **/
+div#blog {
+    margin: 10em auto;
+    min-width: 40em;
+    max-width: 60em;
+}
+
+div#navigate {
+    position: fixed;
+    top: 10em;
+    right: 5em;
+    
+    width: 23em;
+    padding: 3em;
+}
+
+div#navigate img#sebataz {
+    width: 23em;
+}
+
+div.article {
+    padding-bottom: 1.3em;
+    border-bottom: 1px solid #cccccc;
+}
+
+div.article div.title {
+    margin-bottom: 3em;
+}
+
+div.article div.title span.author {
+    margin-left: 1em;
+}
+
+div.article div.title span.tags {
+    float: right;
+    margin-right: 1em;
+}
+
+div.article div.text {
+    padding: 0 1em;
+}
+
+/** SyntaxHighligther theme adaptation **/
+
+.syntaxhighlighter {
+    max-width: 60em;
+    margin: .7em auto;
+    padding: .2em;
+    border: 1px solid #ddd;
+    font-size: 1em;
+}
+
+.syntaxhighlighter  .gutter .line{
+    padding-right: .2em;
+    text-align: right;
+}
+
+.syntaxhighlighter  .code .container {
+    font-family: courier;
+    padding-left: 1em;
+}
