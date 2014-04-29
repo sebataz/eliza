@@ -2,7 +2,7 @@
 
 include 'eliza/beta.php';
 
-eliza\beta\Buffer::buffered();
+eliza\beta\Presentation::buffered();
 
 $Blog = eliza\beta\Feed::Article();
 $Article = $Blog->first();
@@ -31,7 +31,6 @@ $Article = $Blog->first();
         </script>
     </head>
     <body>
-        <?php $Blog->HTMLFeed(); ?>
-        <?php eliza\beta\Feed::Image('public/img')->HTMLFeed(); ?>
+        [Image public/img /]
     </body>
 </html>

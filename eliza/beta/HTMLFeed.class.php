@@ -8,16 +8,21 @@ interface HTMLFeedI {
 
 class HTMLFeed extends JSONFeed {
     public function HTMLFeed() {
+        $html = '';
+        
         foreach ($this as $Object) {
-            echo "\n", '<div class="', strtolower(get_class($Object)), '">', "\n";
+            $html .= "\n" . '<div class="' . strtolower(get_class($Object)) . '">' . "\n";
             
-            if ($Object instanceof HTMLFeedI) echo $Object->toHTML();
+            if ($Object instanceof HTMLFeedI) $html .= $Object->toHTML();
             else
                 foreach ($Object as $key => $prop)
                     if (!is_array($prop) && !is_object($prop))
-                        echo "\t", '<span class="', strtolower($key), '">', $prop, '</span>', "\n";
+                        $html .= "\t" . '<span class="' . strtolower($key) . '">'
+                              . $prop . '</span>' . "\n";
                 
-            echo '</div>', "\n";
+            $html .= '</div>' . "\n";
         }
+        
+        return $html;
     }
 }
