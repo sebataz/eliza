@@ -31,6 +31,8 @@ $Article = $Blog->first();
         </script>
     </head>
     <body>
-        [Image public/img /]
+        <div id="blog">
+            [Article /]
+        </div>
     </body>
 </html>

@@ -3,15 +3,33 @@
 namespace eliza\beta;
 
 class Presentation {
+    private static $_cache = null;
+
     public static function buffered() {
         ob_start();
-        register_shutdown_function(array(get_called_class(), 'show')); 
+        register_shutdown_function(array(get_called_class(), 'show'));
+    }
+
+    public static function cached($_timeout = 3600) {
+        self::$_cache = '/temp/cache/' . md5($_SERVER['REQUEST_URI']);
+        
+        if ((file_exists(self::$_cache)) && (filemtime(self::$_cache) + $_timeout) > time()) {
+            readfile(self::$_cache);
+            exit();
+        } else {
+            self::buffered();
+        }
     }
     
     public static function show() {
-        $buffer = self::flush();
-        $buffer = self::replaceHTMLFeedReference($buffer);
-        echo $buffer; die();
+        try {
+            $buffer = self::flush();
+            $buffer = self::replaceHTMLFeedReference($buffer);
+            if (self::$_cache) file_put_contents(self::$_cache, $buffer);
+            echo $buffer; die();
+        } catch (\Exception $e) {
+            include ROOT . ELIZA . 'oops.php'; die();
+        }
     }
     
     public static function flush() {
@@ -25,7 +43,7 @@ class Presentation {
     public static function replaceHTMLFeedReference($_content) {
         $replacedContent = '';
         $replacedContent = preg_replace_callback('/\[(.*)\s\/\](\{(.*)\})?/', function($matches) {
-
+        
             $callback = explode(' ', $matches[1]);
             $Feed = Response::Feed($callback[0], array_slice($callback, 1));
             
@@ -38,6 +56,9 @@ class Presentation {
                 
             if ($Feed instanceof \eliza\feed\HTMLFeed)
                 return $Feed->HTMLFeed();
+            // else oops(OOPS);
+                
+            return $matches[0];
         
         }, $_content);
     

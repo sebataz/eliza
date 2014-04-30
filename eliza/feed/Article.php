@@ -1,6 +1,6 @@
 <?php
 
-class Article extends eliza\beta\Feed {
+class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Title = '';
     public $Author = '';
@@ -12,6 +12,8 @@ class Article extends eliza\beta\Feed {
         $Blog = new eliza\feed\HTMLFeed();
         
         foreach (eliza\beta\Feed::Node('articles') as $Xml) { 
+            if ($Xml->IsDir) continue;
+        
             $ArticleXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));
             
             $Article = new self();
@@ -30,5 +32,15 @@ class Article extends eliza\beta\Feed {
     
     }
 
+    public function toHTML() {
+        return '<div class="article">'
+            . '<span class="title">'
+            . $this->Title
+            . '</span><span class="author">'
+            . $this->Author
+            . '</span><span class="text">'
+            . eliza\beta\Presentation::replaceHTMLFeedReference($this->Text)
+            . '</span></div>';
+    }
 
 }

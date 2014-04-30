@@ -1,4 +1,4 @@
-<?php eliza\beta\Buffer::clean(); ?>
+<?php eliza\beta\Presentation::flush(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

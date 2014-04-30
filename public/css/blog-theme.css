@@ -122,6 +122,14 @@ div.article div.text {
     padding: 0 1em;
 }
 
+div.article div.gallery {
+    text-align: center;
+}
+
+div.article  div.gallery div.image {
+    display: inline-block;
+}
+
 /** SyntaxHighligther theme adaptation **/
 
 .syntaxhighlighter {
