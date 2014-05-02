@@ -4,6 +4,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Title = '';
     public $Author = '';
+    public $Headline = '';
     public $Text = '';
     public $Tags = array();
     public $File;
@@ -20,6 +21,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Article->Id = $Xml->Name;
             $Article->Title = (string) $ArticleXml->title;
             $Article->Author = (string) $ArticleXml->author;
+            $Article->Headline = (string) html_entity_decode($ArticleXml->headline);
             $Article->Text = (string) html_entity_decode($ArticleXml->text);
             $Article->Tags = explode(', ', $ArticleXml->tags);
             $Article->File = $Xml;
@@ -33,14 +35,18 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     }
 
     public function toHTML() {
-        return '<div class="article">'
-            . '<span class="title">'
+        return '<div class="title">'
+            . '<img class="avatar" src="public/img/sebataz-avatar.jpg" /><h3>'
             . $this->Title
-            . '</span><span class="author">'
+            . '</h3><div class="date">'
+            . date('d M', $this->File->Datetime)
+            . '</div></div><div class="author">by '
             . $this->Author
-            . '</span><span class="text">'
+            . '</div><div class="headline">'
+            . $this->Headline
+            . '</div><div class="text">'
             . eliza\beta\Presentation::replaceHTMLFeedReference($this->Text)
-            . '</span></div>';
+            . '</div>';
     }
 
 }

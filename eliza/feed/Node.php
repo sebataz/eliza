@@ -4,7 +4,7 @@ class Node extends eliza\beta\Feed {
     public $Name = '';
     public $Filename = '';
     public $Extension = '';
-    public $Timestamp = 0;
+    public $Datetime = 0;
     public $Path = '';
     public $Url = '';
     public $IsDir = false;
@@ -26,7 +26,7 @@ class Node extends eliza\beta\Feed {
             $Node->Name = preg_replace('/(.*)(\.\b.*\b)/', '$1', $node);
             $Node->Filename = $node;
             $Node->Extension = '.' . pathinfo($node, PATHINFO_EXTENSION);
-            $Node->Timestamp = filemtime(self::__path($_directory) . $node);
+            $Node->Datetime = filemtime(self::__path($_directory) . $node);
             $Node->Path = self::__path($_directory) . $node;
             $Node->Url = self::__url($_directory) . $node;
             $Node->IsDir = is_dir(self::__path($_directory) . $node);

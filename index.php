@@ -34,5 +34,11 @@ $Article = $Blog->first();
         <div id="blog">
             [Article /]
         </div>
+        <div id="top-bar">
+            <div>
+                <span class="at">@</span>
+                sebataz.ch
+            </div>
+        </div>
     </body>
 </html>

@@ -6,7 +6,7 @@ interface HTMLFeedI {
     public function toHTML();
 }
 
-class HTMLFeed extends JSONFeed {
+class HTMLFeed extends XMLFeed {
     public function HTMLFeed() {
         $html = '';
         
@@ -20,7 +20,7 @@ class HTMLFeed extends JSONFeed {
                         $html .= "\t" . '<span class="' . strtolower($key) . '">'
                               . $prop . '</span>' . "\n";
                 
-            $html .= '</div>' . "\n";
+            $html .= "\n" . '</div>' . "\n";
         }
         
         return $html;
