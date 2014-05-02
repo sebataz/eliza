@@ -32,12 +32,40 @@ $Article = $Blog->first();
     </head>
     <body>
         <div id="blog">
+            <?php if (isset($_GET['m'])): ?>
+            [Article /]{byMonth:<?php echo $_GET['m']; ?>}
+            <?php else: ?>
             [Article /]
+            <?php endif; ?>
+            <div id="archive">
+                <ul>
+                <?php foreach (eliza\beta\Feed::Article()->Archive() as $ref => $month): ?>
+                    <li><a href="?m=<?php echo $ref; ?>"><?php echo $month; ?></a></li>
+                <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
         <div id="top-bar">
             <div>
                 <span class="at">@</span>
-                sebataz.ch
+                <span>sebataz.ch</span>
+                <span>
+                    <select name="links" id="links">
+                        <option value=".">/</option>
+                        <option value="https://github.com/sebataz">projects</option>
+                        <option value="https://sourceforge.net/users/sebataz">downloads</option>
+                        <option value="http://sebataz.ch/rigoni">about me</option>
+                    </select>
+                </span>
+                <script type="text/javascript">
+                    var urlmenu = document.getElementById( 'links' );
+                    urlmenu.onchange = function() {
+                        window.open(  this.options[ this.selectedIndex ].value , '_self' );
+                    };
+                </script>
+                <form action="." method="GET">
+                    <input name="search" id="search" type="text" placeholder="search..." />
+                </form>
             </div>
         </div>
     </body>

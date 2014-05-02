@@ -33,6 +33,24 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         return $Blog;    
     
     }
+    
+    public static function Archive($_FeedCollection) {
+        $temp_archive = array();
+        foreach ($_FeedCollection as $Article)
+            $temp_archive[date('FY', $Article->File->Datetime)] = date('F Y', $Article->File->Datetime);
+            
+        return new eliza\beta\Collection(array_unique($temp_archive));
+    }
+    
+    public static function byMonth($_FeedCollection, $_month) {
+        $ByMonth = new eliza\feed\HTMLFeed();
+        
+        foreach ($_FeedCollection as $Article)
+            if (date('FY', $Article->File->Datetime) == $_month)
+                $ByMonth->append($Article);
+        
+        return $ByMonth;
+    }
 
     public function toHTML() {
         return '<div class="title">'
