@@ -7,7 +7,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Headline = '';
     public $Text = '';
     public $Tags = array();
-    public $File;
+    public $File = array();
     
     public static function Feed() {
         $Blog = new eliza\feed\HTMLFeed();
@@ -54,9 +54,10 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
 
     public function toHTML() {
         return '<div class="title">'
-            . '<img class="avatar" src="public/img/sebataz-avatar.jpg" /><h3>'
+            . '<img class="avatar" src="public/img/' . $this->Author . '-avatar.jpg" />'
+            . '<a href="?id=' . $this->Id . '"><h3>'
             . $this->Title
-            . '</h3><div class="date">'
+            . '</a></h3><div class="date">'
             . date('d M', $this->File->Datetime)
             . '</div></div><div class="author">by '
             . $this->Author

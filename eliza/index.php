@@ -1,10 +1,18 @@
 <?php
 include '../eliza/beta.php';
+    
+if (count($_POST)) {
+    $SaveArticle = new eliza\feed\XMLFeed(array(new Article($_POST)));
+    
+    if (null !== ($handle = fopen(ROOT . 'articles' . DS . $SaveArticle->first()->Id . '.xml', 'w')))
+            if ((bool)fwrite($handle, $SaveArticle->XMLFeed()))
+                header('Location: ../?id=' . $SaveArticle->first()->Id);
+}
+
 if (!count($_GET)) oops();
 
 $feed = key($_GET);
-$args = count($_POST) 
-      ? $_POST : array_slice($_GET, 1);
+$args = array_slice($_GET, 1);
 
 echo eliza\beta\Response::Feed($feed, $args)
     ->Q(isset($_GET['q']) ? $_GET['q'] : false)

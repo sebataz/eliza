@@ -2,7 +2,7 @@
 
 namespace eliza\beta;
 
-abstract class Feed {
+abstract class Feed extends Object {
     public function __get($_prop){ oops(OOPS); }
     public function __set($_prop, $_val) { oops(OOPS); }
     

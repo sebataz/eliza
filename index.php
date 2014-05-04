@@ -4,8 +4,10 @@ include 'eliza/beta.php';
 
 eliza\beta\Presentation::buffered();
 
-$Blog = eliza\beta\Feed::Article();
-$Article = $Blog->first();
+$Blog = new eliza\feed\HTMLFeed();
+if (isset($_GET['search']))
+    foreach (eliza\beta\Feed::Article()->Q($_GET['search']) as $Found)
+        $Blog->append($Found->Result);
 
  ?>
 <!DOCTYPE html>
@@ -31,13 +33,22 @@ $Article = $Blog->first();
         </script>
     </head>
     <body>
+    
+    <div id="container">
         <div id="blog">
-            <?php if (isset($_GET['m'])): ?>
+            <?php if (isset($_GET['id'])): ?>
+            [Article /]{filterBy:Id,<?php echo $_GET['id']; ?>}
+            <?php elseif (isset($_GET['search'])): ?>
+                <?php echo $Blog->HTMLFeed(); ?>
+            <?php elseif (isset($_GET['m'])): ?>
             [Article /]{byMonth:<?php echo $_GET['m']; ?>}
+            <?php elseif (isset($_GET['edit'])): ?>
+                <?php include 'edit.php'; ?>
             <?php else: ?>
             [Article /]
             <?php endif; ?>
             <div id="archive">
+                <p><a href=".">Home</a></p>
                 <ul>
                 <?php foreach (eliza\beta\Feed::Article()->Archive() as $ref => $month): ?>
                     <li><a href="?m=<?php echo $ref; ?>"><?php echo $month; ?></a></li>
@@ -45,16 +56,17 @@ $Article = $Blog->first();
                 </ul>
             </div>
         </div>
+    </div>
+        
         <div id="top-bar">
             <div>
+                <span>sebataz</span>
                 <span class="at">@</span>
-                <span>sebataz.ch</span>
                 <span>
                     <select name="links" id="links">
                         <option value=".">/</option>
-                        <option value="https://github.com/sebataz">projects</option>
-                        <option value="https://sourceforge.net/users/sebataz">downloads</option>
-                        <option value="http://sebataz.ch/rigoni">about me</option>
+                        <option value="https://github.com/sebataz">github.com</option>
+                        <option value="https://sourceforge.net/users/sebataz">sourceforge.net</option>
                     </select>
                 </span>
                 <script type="text/javascript">
@@ -64,9 +76,16 @@ $Article = $Blog->first();
                     };
                 </script>
                 <form action="." method="GET">
-                    <input name="search" id="search" type="text" placeholder="search..." />
+                    <input name="search" id="search" type="text" placeholder="search..." value="<?php echo isset($_GET['search'])?$_GET['search']:''; ?>" />
                 </form>
             </div>
         </div>
+        
+        <div id="bottom-bar">
+            <div>
+                <a href="http://sebataz.ch/rigoni">about me</a>
+            </div>
+        </div>
+        
     </body>
 </html>

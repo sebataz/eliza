@@ -24,8 +24,13 @@
         $path_to_class = ROOT . ELIZA . 'beta' . DS 
                        . end($class) . '.class.php';
                        
+        $path_to_feed = ROOT . ELIZA . 'feed' . DS
+                      . end($class) . '.php';
+                       
         if (file_exists($path_to_class))
             require_once $path_to_class;
+        elseif (file_exists($path_to_feed))
+            require_once $path_to_feed;
     }, false);
 
 

@@ -4,6 +4,7 @@ body {
     color: #000000;
     font-family: tahoma;
     font-size: .7em;
+    background-color: #555;
 }
 
 .float-left {
@@ -81,6 +82,7 @@ strong {
 }
 
 /** Layout **/
+div#container { background-color: #fff; min-height: 50em; padding-top: 13em; }
 div#top-bar {
     position: fixed;
     top: 0;
@@ -91,6 +93,7 @@ div#top-bar {
     font-size: 2em;
     
     background-color: #333333;
+    color: #fba827;
     color: #bcb747;
 }
 
@@ -106,7 +109,7 @@ div#top-bar div span {
 
 div#top-bar div span.at {
     font-family: Arial Black;
-    color: rgba(255,255,255,.13); 
+    color: #555; 
 }
 
 div#top-bar select {
@@ -121,10 +124,30 @@ div#top-bar input#search {
     width: 21em;
 }
 
+div#bottom-bar {
+    min-height: 13em;
+    border-top: 13px solid #fba827;
+    border-top: 13px solid #bcb747;
+    background-color: #555;
+    
+    padding-top: 3em;
+    padding-bottom: 1em;
+}
+
+div#bottom-bar div {
+    margin: 0 auto;
+    width: 80em;
+}
+
+div#bottom-bar a {
+    color: #999;
+}
+
 div#blog {
     position: relative;
     margin: 0 auto;
     width: 80em;
+    height: 100%;
 }
 
 div#blog div#archive {
@@ -136,13 +159,17 @@ div#blog div#archive {
 }
 
 div.article {
-    margin-top: 13em;
     margin-right: 23em;
+    margin-bottom: 13em;
     padding-bottom: 1.3em;
 }
 
 div.article div.title {
     position: relative;
+}
+
+div.article div.title a {
+    color: #000;
 }
 
 div.article div.title h3 {
@@ -180,6 +207,20 @@ div.article div.gallery {
 
 div.article  div.gallery div.image {
     display: inline-block;
+}
+
+div.article.edit input, div.article.edit textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px #ddd;
+    padding: .3em;
+    margin-top: .3em;
+    margin-bottom: .7em;
+    background-color: #fff;
+}
+
+div.article.edit textarea {
+    height: 10em;
 }
 
 /** SyntaxHighligther theme adaptation **/
