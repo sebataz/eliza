@@ -32,7 +32,6 @@ a:hover {
 
 /** Fonts and Texts **/
 h3 {
-    clear: both;
     text-decoration: none;
     margin-bottom: .2em;
     font-size: 2em;
@@ -41,7 +40,6 @@ h3 {
 }
 
 h2 {
-    clear: both;
     padding-top: 2em;
     margin-bottom: 1.2em;
     font-size: 1.2em;
@@ -49,14 +47,15 @@ h2 {
 }
 
 h1 {
-    clear: both;
-    font-size: 1.5em;
+    margin-top: 1.3em;
+    margin-bottom: .7em;
+    font-size: 1.3em;
     font-weight: bold;    
     text-decoration: none;
 }
 
 p {
-    margin-bottom: 1em;
+    margin-bottom: .7em;
 }
 
 li {
@@ -207,6 +206,16 @@ div.article div.gallery {
 
 div.article  div.gallery div.image {
     display: inline-block;
+}
+
+div.article div.text img, div.article div.headline img {
+    max-width: 100%;
+    margin: .3em;
+}
+
+div.article span.info-source {
+    font-size: .7em;
+    vertical-align: super;
 }
 
 div.article.edit input, div.article.edit textarea {

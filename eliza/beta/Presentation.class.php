@@ -56,8 +56,7 @@ class Presentation {
             
             if ($Feed instanceof \eliza\feed\HTMLFeed)
                 return $Feed->HTMLFeed();
-            // else oops(OOPS);
-                
+            
             return $matches[0];
         }, $_content);
     

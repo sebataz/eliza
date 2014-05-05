@@ -25,7 +25,10 @@ if (isset($_GET['search']))
         <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
         <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
         <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushPlain.js" type="text/javascript"></script>
+        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushPhp.js" type="text/javascript"></script>
         <script src="public/plugin/shBrush/shBrushNginx.js" type="text/javascript"></script>
+                
+        <script src="public/js/jquery.preview.js" type="text/javascript"></script>
         
         <script type="text/javascript">        
             SyntaxHighlighter.defaults['toolbar'] = false;
@@ -45,7 +48,7 @@ if (isset($_GET['search']))
             <?php elseif (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
             <?php else: ?>
-            [Article /]
+            [Article /]{sortBy:Id,3}
             <?php endif; ?>
             <div id="archive">
                 <p><a href=".">Home</a></p>
@@ -64,9 +67,9 @@ if (isset($_GET['search']))
                 <span class="at">@</span>
                 <span>
                     <select name="links" id="links">
-                        <option value=".">/</option>
-                        <option value="https://github.com/sebataz">github.com</option>
-                        <option value="https://sourceforge.net/users/sebataz">sourceforge.net</option>
+                        <?php foreach (eliza\beta\Configuration::get()->Social as $name => $url): ?>
+                            <option value="<?php echo $url; ?>"><?php echo $name; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </span>
                 <script type="text/javascript">
