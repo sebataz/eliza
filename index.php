@@ -8,6 +8,12 @@ $Blog = new eliza\feed\HTMLFeed();
 if (isset($_GET['search']))
     foreach (eliza\beta\Feed::Article()->Q($_GET['search']) as $Found)
         $Blog->append($Found->Result);
+        
+if (isset($_GET['t'])) {
+    $Blog = eliza\beta\Feed::Article();
+    foreach ($_GET['t'] as $t)
+        $Blog->filterBy('Tags', $t);
+}        
 
  ?>
 <!DOCTYPE html>
@@ -45,6 +51,8 @@ if (isset($_GET['search']))
                 <?php echo $Blog->HTMLFeed(); ?>
             <?php elseif (isset($_GET['m'])): ?>
             [Article /]{byMonth:<?php echo $_GET['m']; ?>}
+            <?php elseif (isset($_GET['t'])): ?>
+                <?php echo $Blog->HTMLFeed(); ?>
             <?php elseif (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
             <?php else: ?>
@@ -57,6 +65,11 @@ if (isset($_GET['search']))
                     <li><a href="?m=<?php echo $ref; ?>"><?php echo $month; ?></a></li>
                 <?php endforeach; ?>
                 </ul>
+                <div id="tag-cloud">
+                    <?php foreach (eliza\beta\Feed::Article()->TagCloud() as $tag => $count): ?>
+                        <span class="tag"><a href="?t[]=<?php echo $tag; ?>"><?php echo $tag; ?></a>(<?php echo $count; ?>)</span>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </div>

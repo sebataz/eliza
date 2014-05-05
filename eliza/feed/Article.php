@@ -42,6 +42,17 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         return new eliza\beta\Collection(array_unique($temp_archive));
     }
     
+    public static function TagCloud($_FeedCollection) {
+        $Tags = new eliza\feed\JSONFeed();
+        
+        foreach ($_FeedCollection as $Object) {
+            foreach ($Object->Tags as $tag)                
+                $Tags->set($tag, $Tags->offsetExists($tag) ? $Tags->get($tag) + 1 : 1);
+        }
+        
+        return $Tags;
+    }
+    
     public static function byMonth($_FeedCollection, $_month) {
         $ByMonth = new eliza\feed\HTMLFeed();
         
