@@ -13,4 +13,12 @@ class Response {
             
         return self::Feed($_args[0], $_args[1])->{$_method}();
     }
+    
+    public static function privileged() {
+        if (GlobalContext::Session()->unlock)
+            foreach (GlobalContext::Configuration()->Lock as $user => $lock)
+                if (GlobalContext::Session()->unlock == $lock) return;
+        
+        oops('this page is locked');
+    }
 }
