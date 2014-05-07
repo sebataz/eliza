@@ -50,6 +50,10 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
                 $Tags->set($tag, $Tags->offsetExists($tag) ? $Tags->get($tag) + 1 : 1);
         }
         
+        $temp_tags = $Tags->getArrayCopy();
+        arsort($temp_tags);
+        
+        $Tags->exchangeArray($temp_tags);        
         return $Tags;
     }
     

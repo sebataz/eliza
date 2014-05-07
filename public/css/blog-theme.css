@@ -1,34 +1,7 @@
 /** Base theme definition **/
-
-body {
-    color: #000000;
-    font-family: tahoma;
-    font-size: .7em;
-    background-color: #555;
-}
-
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
-}
-
-.clear {    
-    clear: both;
-}
-
-a {
-    text-decoration: none;
-    font-weight: bold;
-    font-family: Verdana;
-    color: rgba(0,0,0,.6); 
-}
-
-a:hover {
-    color: rgba(0,0,0,.4); 
-}
+body { color: #000000; font-family: tahoma; font-size: .7em; background-color: #555; }
+a { text-decoration: none; font-weight: bold; font-family: Verdana; color: rgba(0,0,0,.6); }
+a:hover { color: rgba(0,0,0,.4); }
 
 /** Fonts and Texts **/
 h3 {
@@ -93,6 +66,7 @@ div#top-bar {
     
     background-color: #333333;
     color: #fba827;
+    color: #97282c;
     color: #bcb747;
 }
 
@@ -126,6 +100,7 @@ div#top-bar input#search {
 div#bottom-bar {
     min-height: 13em;
     border-top: 13px solid #fba827;
+    border-top: 13px solid #97282c;
     border-top: 13px solid #bcb747;
     background-color: #555;
     
@@ -133,13 +108,39 @@ div#bottom-bar {
     padding-bottom: 1em;
 }
 
-div#bottom-bar div {
+div#bottom-bar div#columns {
+    position: relative;
+
     margin: 0 auto;
     width: 80em;
 }
 
+div#bottom-bar div#columns div {
+    width: 13em;
+    float: left;
+}
+
+div#bottom-bar div#columns h4 {
+    margin: 0;
+    margin-bottom: 1em;
+    
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #bbb;
+}
+
+div#bottom-bar div#columns div#unlock {
+    position: absolute;
+    right: 0;
+}
+
 div#bottom-bar a {
     color: #999;
+}
+
+div#bottom-bar li {
+    list-style: none;
+    margin-left: .7em;
 }
 
 div#blog {
@@ -159,7 +160,12 @@ div#blog div#archive {
 
 div#blog div#archive div#tag-cloud {
     margin-top: 2.3em;
-    text-align: justify;
+    text-align: left;
+}
+
+div#blog div#archive div#tag-cloud span.tag {
+    margin: .3em;
+    line-height: 1.3em;
 }
 
 div.article {

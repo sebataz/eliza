@@ -3,7 +3,7 @@ $.fn.preview = function() {
         $(this).click(function (e) {
             e.preventDefault();
             var loaded = false;
-            var foreground = $('<div id="foreground"/>');
+            var foreground = $('<div id="foreground" />');
             var preview = $('<div id="preview"/>');
             var spinner = $('<div class="spinner fixed"/>');
             var image = $('<img>');
@@ -49,6 +49,11 @@ $.fn.preview = function() {
             preview.click(function (e) { foreground.remove(); });
             
             foreground.append(preview);
+            foreground.css("position", "fixed");
+            foreground.css("width", "100%");
+            foreground.css("height", "100%");
+            foreground.css("top", "0");
+            foreground.css("background-color", "rgba(0,0,0,.7)");
             foreground.click(function (e) { foreground.remove(); });
             
             $(document.body).append(foreground);

@@ -1,7 +1,17 @@
 <?php
 include '../eliza/beta.php';
     
-if (count($_POST)) {
+if (isset($_POST['lock'])) {
+    eliza\beta\Session::unlock($_POST['lock']);
+    header('Location: ../?' . eliza\beta\Request::querystring());
+}
+    
+if (isset($_POST['Id'])
+    && isset($_POST['Tags'])
+    && isset($_POST['Title'])
+    && isset($_POST['Author'])
+    && isset($_POST['Headline'])
+    && isset($_POST['Text'])) {
     $SaveArticle = new eliza\feed\XMLFeed(array(new Article($_POST)));
     
     if (null !== ($handle = fopen(ROOT . 'articles' . DS . $SaveArticle->first()->Id . '.xml', 'w')))

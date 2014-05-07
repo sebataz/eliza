@@ -1,9 +1,12 @@
 <?php
+
+eliza\beta\Session::locked();
+eliza\beta\Presentation::show(); 
+
 $Id = $_GET['edit'] != '' ? $_GET['edit'] : (time() . substr(microtime(),2,3));
 
 if (!($Edit = eliza\beta\Feed::Article()->getBy('Id', $_GET['edit'])))
-    $Edit = new Article();
-eliza\beta\Presentation::show();  
+    $Edit = new Article(); 
 ?>
 
 <form id="articleForm" action="eliza/" method="POST">

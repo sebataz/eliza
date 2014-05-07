@@ -39,6 +39,10 @@ if (isset($_GET['t'])) {
         <script type="text/javascript">        
             SyntaxHighlighter.defaults['toolbar'] = false;
             SyntaxHighlighter.all();
+            
+            $(document).ready(function () {
+                $(".preview").preview()
+            });
         </script>
     </head>
     <body>
@@ -98,8 +102,21 @@ if (isset($_GET['t'])) {
         </div>
         
         <div id="bottom-bar">
-            <div>
-                <a href="http://sebataz.ch/rigoni">about me</a>
+            <div id="columns">
+                <div class="sebataz">
+                    <h4>sebataz</h4>
+                    <ul>
+                        <li><a href=".">home</a></li>
+                        <li><a href="http://sebataz.ch/eliza">about me</a></li>
+                        <li><a href="https://careers.stackoverflow.com/rigoni">curriculum</a></li>
+                    </ul>
+                </div>
+                
+                <div id="unlock">
+                    <form action="eliza/?<?php echo eliza\beta\Request::querystring(); ?>" method="POST" />
+                        <input type="password" name="lock" placeholder="unlock..." />
+                    </form>
+                </div>
             </div>
         </div>
         
