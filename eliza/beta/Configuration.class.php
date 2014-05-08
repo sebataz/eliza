@@ -13,7 +13,7 @@ class Configuration {
                 
         // create configuration
         include $_config_file;
-        self::$_Config = new Collection($config);
+        self::$_Config = new Collection($cfg);
     }
     
     public static function get() {

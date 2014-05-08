@@ -29,24 +29,6 @@ class GlobalContext extends Collection {
         return $Session;
     }
     
-    public static function Get() {
-        static $Get;
-        
-        if (!$Get)
-            $Get = new self($_GET);
-            
-        return $Get;
-    }
-    
-    public static function Post() {
-        static $Post;
-        
-        if (!$Post)
-            $Post = new self($_POST);
-            
-        return $Post;
-    }
-    
     public static function Querystring($_include = array()) {
         if (!is_array($_include)) $_include = array($_include);
         $querystring = array();
@@ -58,5 +40,6 @@ class GlobalContext extends Collection {
         
         // the preg_ will prevent the overwriting of array get variables, by removing the explicit index
         return empty($querystring) 
-             ? '' : ('&' . preg_replace('/%5B[0-9]*%5D/', '[]', http_build_query($querystring)));}
+             ? '' : ('&' . preg_replace('/%5B[0-9]*%5D/', '[]', http_build_query($querystring)));
+    }
 }
