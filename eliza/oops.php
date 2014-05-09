@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><?php echo eliza\beta\Configuration::get()->Title; ?></title>
+        <title><?php echo eliza\beta\GlobalContext::Configuration()->Title; ?></title>
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
         <link rel="stylesheet" type="text/css" href="../public/css/kb-theme.css">
         

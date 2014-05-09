@@ -2,8 +2,8 @@
 include '../eliza/beta.php';
     
 if (isset($_POST['lock'])) {
-    eliza\beta\Session::unlock($_POST['lock']);
-    header('Location: ../?' . eliza\beta\Request::querystring());
+    eliza\beta\GlobalContext::Session(array('unlock' => $_POST['lock']));
+    header('Location: ../?' . eliza\beta\GlobalContext::Querystring());
 }
     
 if (isset($_POST['Id'])

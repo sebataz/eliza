@@ -3,12 +3,14 @@
 namespace eliza\beta;
 
 class GlobalContext extends Collection {
-    public static function Configuration($_load_file = '../config.php') {
+    public static function Configuration() {
         static $Configuration;
         
         if (!$Configuration) {  
-            if (file_exists($_load_file) include ($_load_file);
-            $Configuration = new self($cfg)
+            if (file_exists(ROOT . ELIZA . 'config.php')) {
+                include (ROOT . ELIZA . 'config.php');
+                $Configuration = new self($cfg);
+            }
         }
         
         return $Configuration;
@@ -33,13 +35,13 @@ class GlobalContext extends Collection {
         if (!is_array($_include)) $_include = array($_include);
         $querystring = array();
         
-        foreach (self::Get() as $key => $value) {
+        foreach ($_GET as $key => $value) {
             if (in_array($key, $_include) || empty($_include))
                 $querystring[$key] = $value;
         }
         
         // the preg_ will prevent the overwriting of array get variables, by removing the explicit index
-        return empty($querystring) 
+        return empty($querystring)
              ? '' : ('&' . preg_replace('/%5B[0-9]*%5D/', '[]', http_build_query($querystring)));
     }
 }

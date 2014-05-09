@@ -20,7 +20,7 @@ if (isset($_GET['t'])) {
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><?php echo eliza\beta\Configuration::get()->Title; ?></title>
+        <title><?php echo eliza\beta\GlobalContext::Configuration()->Title; ?></title>
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
         <link rel="stylesheet" type="text/css" href="../public/css/blog-theme.css">
         
@@ -50,13 +50,13 @@ if (isset($_GET['t'])) {
     <div id="container">
         <div id="blog">
             <?php if (isset($_GET['id'])): ?>
-            [Article /]{filterBy:Id,<?php echo $_GET['id']; ?>}
+            [Article /]{sortBy:Id,3 filterBy:Id,<?php echo $_GET['id']; ?>}
             <?php elseif (isset($_GET['search'])): ?>
-                <?php echo $Blog->HTMLFeed(); ?>
+                <?php echo $Blog->sortBy('Id', 3)->HTMLFeed(); ?>
             <?php elseif (isset($_GET['m'])): ?>
-            [Article /]{byMonth:<?php echo $_GET['m']; ?>}
+            [Article /]{sortBy:Id,3 byMonth:<?php echo $_GET['m']; ?>}
             <?php elseif (isset($_GET['t'])): ?>
-                <?php echo $Blog->HTMLFeed(); ?>
+                <?php echo $Blog->sortBy('Id', 3)->HTMLFeed(); ?>
             <?php elseif (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
             <?php else: ?>
@@ -84,7 +84,7 @@ if (isset($_GET['t'])) {
                 <span class="at">@</span>
                 <span>
                     <select name="links" id="links">
-                        <?php foreach (eliza\beta\Configuration::get()->Social as $name => $url): ?>
+                        <?php foreach (eliza\beta\GlobalContext::Configuration()->Social as $name => $url): ?>
                             <option value="<?php echo $url; ?>"><?php echo $name; ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -113,7 +113,7 @@ if (isset($_GET['t'])) {
                 </div>
                 
                 <div id="unlock">
-                    <form action="eliza/?<?php echo eliza\beta\Request::querystring(); ?>" method="POST" />
+                    <form action="eliza/?<?php echo eliza\beta\GlobalContext::Querystring(); ?>" method="POST" />
                         <input type="password" name="lock" placeholder="unlock..." />
                     </form>
                 </div>

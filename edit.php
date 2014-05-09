@@ -1,6 +1,6 @@
 <?php
 
-eliza\beta\Session::locked();
+eliza\beta\Response::privileged();
 eliza\beta\Presentation::show(); 
 
 $Id = $_GET['edit'] != '' ? $_GET['edit'] : (time() . substr(microtime(),2,3));
