@@ -26,13 +26,9 @@ class Response {
         return file_get_contents($this->url, false, stream_context_create($_option));
     }
     
-    /* I don't like that much this solution, since it becomes a bit too tight
-    I'd like it more loose. but for that i must use another strategy and right miao this works!!!
-    well i haven't tested it yet, but i am quite confident */
     public static function privileged() {
-        if (GlobalContext::Session()->offsetExists('unlock'))
-            foreach (GlobalContext::Configuration()->Lock as $user => $lock)
-                if (GlobalContext::Session()->unlock == $lock) return;
+        foreach (GlobalContext::Configuration()->Lock as $user => $lock)
+            if (GlobalContext::Session()->defaultValue('unlock') == $lock) return;
         
         oops('you are not that privilieged');
     }

@@ -16,6 +16,10 @@ class Collection extends \ArrayObject {
         return $this->get(0);
     }
     
+    public function defaultValue($_key, $_default_value = null) {
+        return $this->offsetExists($_key) ? $this->get($_key) : $_default_value;
+    }
+    
     public function get($_key) { return $this->offsetGet($_key); }
     public function set($_key, $_value) { $this->offsetSet($_key, $_value); }
     public function __get($_key) { return $this->get($_key); }
