@@ -4,6 +4,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Title = '';
     public $Author = '';
+    public $Date = 0;
     public $Headline = '';
     public $Text = '';
     public $Tags = array();
@@ -21,6 +22,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Article->Id = $Xml->Name;
             $Article->Title = (string) $ArticleXml->title;
             $Article->Author = (string) $ArticleXml->author;
+            $Article->Date = (int) $ArticleXml->date;
             $Article->Headline = (string) html_entity_decode($ArticleXml->headline);
             $Article->Text = (string) html_entity_decode($ArticleXml->text);
             $Article->Tags = explode(', ', $ArticleXml->tags);
@@ -36,8 +38,8 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     
     public static function Archive($_FeedCollection) {
         $temp_archive = array();
-        foreach ($_FeedCollection as $Article)
-            $temp_archive[date('FY', $Article->File->Datetime)] = date('F Y', $Article->File->Datetime);
+        foreach ($_FeedCollection->sortBy('Date', SORT_DESC) as $Article)
+            $temp_archive[date('FY', $Article->Date)] = date('F Y', $Article->Date);
             
         return new eliza\beta\Collection(array_unique($temp_archive));
     }
@@ -61,7 +63,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         $ByMonth = new eliza\feed\HTMLFeed();
         
         foreach ($_FeedCollection as $Article)
-            if (date('FY', $Article->File->Datetime) == $_month)
+            if (date('FY', $Article->Date) == $_month)
                 $ByMonth->append($Article);
         
         return $ByMonth;
@@ -73,7 +75,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             . '<a href="?id=' . $this->Id . '"><h3>'
             . $this->Title
             . '</a></h3><div class="date">'
-            . date('d M', $this->File->Datetime)
+            . date('d M', $this->Date)
             . '</div></div><div class="author">by '
             . $this->Author
             . '</div><div class="headline">'

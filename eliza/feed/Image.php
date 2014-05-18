@@ -15,7 +15,7 @@ class Image extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Image->File = $Img;
             $Image->ThumbSize = $thumb_size;
             $Image->Thumb = ($thumb_size > 0) 
-                          ? eliza\beta\Thumbnail::create($Img->Url, $thumb_size) : $Img->Url;
+                          ? eliza\beta\Utils::createImageThumbnail($Img->Url, $thumb_size) : $Img->Url;
                           
             $Gallery->append($Image);
         }

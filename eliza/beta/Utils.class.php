@@ -2,8 +2,8 @@
 
 namespace eliza\beta;
 
-class Thumbnail {
-    public static function create($_url_to_image, $_thumb_size) {
+class Utils {
+    public static function createImageThumbnail($_url_to_image, $_thumb_size) {
         $thumb_name =  md5($_url_to_image) . '_' . $_thumb_size . '.jpg';
         $thumb_url = 'http://' . $_SERVER['HTTP_HOST'] . '/temp/thumb/' . $thumb_name;
         $path_to_thumb = ROOT . DS . 'temp' . DS . 'thumb' . DS . $thumb_name;
@@ -48,5 +48,16 @@ class Thumbnail {
         imagedestroy($thumb);
         
         return $thumb_url;
+    }
+    
+    public static function writeFile($_path_to_file, $_file_content) {
+        if (!file_exists(dirname($_path_to_file)))
+            mkdir(dirname($_path_to_file));
+            
+        if (null !== ($handle = fopen($_path_to_file, 'w')))
+            if ((bool)fwrite($handle, $_file_content))
+                return true;
+                
+        return false;
     }
 }

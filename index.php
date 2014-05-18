@@ -50,17 +50,17 @@ if (isset($_GET['t'])) {
     <div id="container">
         <div id="blog">
             <?php if (isset($_GET['id'])): ?>
-            [Article /]{sortBy:Id,3 filterBy:Id,<?php echo $_GET['id']; ?>}
+            [Article /]{filterBy:Id,<?php echo $_GET['id']; ?>}
             <?php elseif (isset($_GET['search'])): ?>
                 <?php echo $Blog->sortBy('Id', 3)->HTMLFeed(); ?>
             <?php elseif (isset($_GET['m'])): ?>
-            [Article /]{sortBy:Id,3 byMonth:<?php echo $_GET['m']; ?>}
+            [Article /]{sortBy:Date,4 byMonth:<?php echo $_GET['m']; ?>}
             <?php elseif (isset($_GET['t'])): ?>
                 <?php echo $Blog->sortBy('Id', 3)->HTMLFeed(); ?>
             <?php elseif (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
             <?php else: ?>
-            [Article /]{sortBy:Id,3}
+            [Article /]{sortBy:Date,3}
             <?php endif; ?>
             <div id="archive">
                 <p><a href=".">Home</a></p>

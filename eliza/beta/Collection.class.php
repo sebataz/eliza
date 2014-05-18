@@ -8,7 +8,7 @@ class Collection extends \ArrayObject {
             if(is_array($value))
                 $value = new self($value);
             
-            $this->offsetSet($key, $value);
+            parent::offsetSet($key, $value);
         }
     }
     

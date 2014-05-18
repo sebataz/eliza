@@ -3,6 +3,21 @@
 namespace eliza\beta;
 
 class GlobalContext extends Collection {
+    public function set($_key, $_value) { }
+    public function __set($_key, $_value) { }
+    public static function Globals(){
+        static $Globals;
+        
+        if (!$Globals) 
+            $Globals = new self(array(
+                'Server' => $_SERVER,
+                'Get' => $_GET,
+                'Post' => $_POST
+            ));
+            
+        return $Globals;
+    }
+
     public static function Configuration() {
         static $Configuration;
         
@@ -24,9 +39,12 @@ class GlobalContext extends Collection {
             $Session = new self($_SESSION);
         }
             
-        if (!empty($_array))
+        if (!empty($_array)) {
             foreach ($_array as $key => $value)
-                $Session->$key = $_SESSION[$key] = $value;
+                $_SESSION[$key] = $value;
+                
+            $Session = new self($_SESSION);
+        }
             
         return $Session;
     }

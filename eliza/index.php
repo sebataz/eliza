@@ -12,11 +12,12 @@ if (isset($_POST['Id'])
     && isset($_POST['Author'])
     && isset($_POST['Headline'])
     && isset($_POST['Text'])) {
-    $SaveArticle = new eliza\feed\XMLFeed(array(new Article($_POST)));
     
-    if (null !== ($handle = fopen(ROOT . 'articles' . DS . $SaveArticle->first()->Id . '.xml', 'w')))
-            if ((bool)fwrite($handle, $SaveArticle->XMLFeed()))
-                header('Location: ../?id=' . $SaveArticle->first()->Id);
+    $_POST['Date'] = time();
+    $SaveArticle = new eliza\feed\XMLFeed(array(new Article($_POST)));
+                
+    if (eliza\beta\Utils::writeFile(ROOT . 'articles' . DS . $SaveArticle->first()->Id . '.xml', $SaveArticle->XMLFeed()))
+        header('Location: ../?id=' . $SaveArticle->first()->Id);
 }
 
 if (!count($_GET)) oops();
