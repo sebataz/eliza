@@ -5,6 +5,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Title = '';
     public $Author = '';
     public $Date = 0;
+    public $Draft = true;
     public $Headline = '';
     public $Text = '';
     public $Tags = array();
@@ -13,7 +14,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public static function Feed() {
         $Blog = new eliza\feed\HTMLFeed();
         
-        foreach (eliza\beta\Feed::Node('articles') as $Xml) { 
+        foreach (eliza\beta\Feed::Node('articles') as $Xml) {
             if ($Xml->IsDir) continue;
         
             $ArticleXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));
@@ -27,6 +28,10 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Article->Text = (string) html_entity_decode($ArticleXml->text);
             $Article->Tags = explode(', ', $ArticleXml->tags);
             $Article->File = $Xml;
+            
+            $Article->Draft = $ArticleXml->draft == 0 ? false : true;
+            
+            if ($Article->Draft && !eliza\beta\Response::hasPrivilege()) continue;
             
             $Blog->append($Article);
         }
@@ -79,7 +84,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             . '</div></div><div class="author">by '
             . $this->Author
             . '</div><div class="headline">'
-            . $this->Headline
+            . eliza\beta\Presentation::replaceHTMLFeedReference($this->Headline)
             . '</div><div class="text">'
             . eliza\beta\Presentation::replaceHTMLFeedReference($this->Text)
             . '</div>';

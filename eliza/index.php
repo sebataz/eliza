@@ -13,7 +13,10 @@ if (isset($_POST['Id'])
     && isset($_POST['Headline'])
     && isset($_POST['Text'])) {
     
+    eliza\beta\Response::privileged();
+    
     $_POST['Date'] = time();
+    $_POST['Draft'] = (bool) $_POST['Draft'];
     $SaveArticle = new eliza\feed\XMLFeed(array(new Article($_POST)));
                 
     if (eliza\beta\Utils::writeFile(ROOT . 'articles' . DS . $SaveArticle->first()->Id . '.xml', $SaveArticle->XMLFeed()))

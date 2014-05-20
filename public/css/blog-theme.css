@@ -243,6 +243,11 @@ div.article.edit textarea {
     height: 10em;
 }
 
+div.article.edit label {
+    font-size: 1.1em;
+    color: #aaa;
+}
+
 /** SyntaxHighligther theme adaptation **/
 
 .syntaxhighlighter {

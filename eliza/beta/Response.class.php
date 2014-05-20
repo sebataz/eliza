@@ -26,10 +26,15 @@ class Response {
         return file_get_contents($this->url, false, stream_context_create($_option));
     }
     
-    public static function privileged() {
+    public static function hasPrivilege() {
         foreach (GlobalContext::Configuration()->Lock as $user => $lock)
-            if (GlobalContext::Session()->defaultValue('unlock') == $lock) return;
-        
-        oops('you are not that privilieged');
+            if (GlobalContext::Session()->defaultValue('unlock') == $lock) return true;
+            
+        return false;
+    }
+    
+    public static function privileged() {
+        if (!self::hasPrivilege())
+            oops('you are not that privilieged');
     }
 }

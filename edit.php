@@ -11,10 +11,15 @@ if (!($Edit = eliza\beta\Feed::Article()->getBy('Id', $_GET['edit'])))
 
 <form id="articleForm" action="eliza/" method="POST">
 <input type="hidden" name="Id" value="<?php echo $Id; ?>" />
+<input type="hidden" name="Draft" value="0" />
 
 <div class="article edit">
 
         <h2>Head</h2>
+    <div class="input">
+        <label><input style="width: auto;" type="checkbox" name="Draft" value="1" <?php var_dump($Edit->Draft); echo $Edit->Draft ? 'checked' : ''; ?> />draft...</label>
+    </div>
+        
     <div class="input">
         <input type="text" name="Tags" placeholder="tags..." value="<?php echo implode(', ', $Edit->Tags); ?>" autocomplete="off"/>
     </div>
