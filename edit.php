@@ -12,6 +12,7 @@ if (!($Edit = eliza\beta\Feed::Article()->getBy('Id', $_GET['edit'])))
 <form id="articleForm" action="eliza/" method="POST">
 <input type="hidden" name="Id" value="<?php echo $Id; ?>" />
 <input type="hidden" name="Draft" value="0" />
+<input type="hidden" name="Date" value="<?php echo $Edit->Date == 0 ? time() : $Edit->Date; ?>" />
 
 <div class="article edit">
 

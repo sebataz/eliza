@@ -15,7 +15,6 @@ if (isset($_POST['Id'])
     
     eliza\beta\Response::privileged();
     
-    $_POST['Date'] = time();
     $_POST['Draft'] = (bool) $_POST['Draft'];
     $SaveArticle = new eliza\feed\XMLFeed(array(new Article($_POST)));
                 
