@@ -248,6 +248,18 @@ div.article.edit label {
     color: #aaa;
 }
 
+/** jQuery Plugins **/
+div.spinner {
+    width: 100%;
+    height: 15px;
+    background: url('../img/spinner.gif') no-repeat center center; 
+}
+
+div.spinner.fixed {
+    position: fixed;
+    height: 100%;
+}
+
 /** SyntaxHighligther theme adaptation **/
 
 .syntaxhighlighter {

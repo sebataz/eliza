@@ -1,6 +1,7 @@
 <?php
 
 class Image extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
+    public $Name = '';
     public $Thumb = '';
     public $ThumbSize = 0; 
     public $File;
@@ -12,6 +13,7 @@ class Image extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         
         foreach ($GalleryFolder as $Img) {
             $Image = new self();
+            $Image->Name = $Img->Name;
             $Image->File = $Img;
             $Image->ThumbSize = $thumb_size;
             $Image->Thumb = ($thumb_size > 0) 
