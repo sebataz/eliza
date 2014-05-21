@@ -27,6 +27,9 @@ class Response {
     }
     
     public static function hasPrivilege() {
+        if (GlobalContext::Globals()->Post->offsetExists('lock'))
+            GlobalContext::Session(array('unlock' => GlobalContext::Globals()->Post->lock));
+    
         foreach (GlobalContext::Configuration()->Lock as $user => $lock)
             if (GlobalContext::Session()->defaultValue('unlock') == $lock) return true;
             
