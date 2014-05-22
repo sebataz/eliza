@@ -1,32 +1,52 @@
 <?php
+//----------------------------------------------------------------------------//
+//                                 eliza\beta                                 //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                                  response                                  //
+//----------------------------------------------------------------------------//
 include '../eliza/beta.php';
-if (!count($_REQUEST)) oops();
 try {
-
-// METHOD: GET
-    $feed = key($_GET);
-    $args = array_slice($_GET, 1);
+    $feed = class_exists(key($_GET)) ? key($_GET) : null;
+    $args = $feed ? array_slice($_GET, 1) : array();
     
-    echo eliza\beta\Response::Feed($feed, $args)
-        ->Q(isset($_GET['q']) ? $_GET['q'] : false)
-        ->sortBy(isset($_GET['sort']) ? $_GET['sort'] : null)
-        ->limit(isset($_GET['limit']) ? $_GET['limit'] : null)
-        ->JSONFeed();
+    
 
-        
-// METHOD: POST
+//----------------------------------------------------------------------------//
+//                                method: post                                //
+//----------------------------------------------------------------------------//
     if (eliza\beta\Response::hasPrivilege() && count($_POST)) {
-        if (class_exists($feed)) {
-            $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
-            if (
-                eliza\beta\Utils::writeFile(ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
-                $Feed->XMLFeed())
-            )
-                header('Location: ../?id=' . $SaveArticle->first()->Id);
-        }
+        if ($feed) $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
+        if ($feed && eliza\beta\Utils::writeFile(
+            ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
+            $Feed->XMLFeed())
+        ) {
+            header('Location: ../?id=' . $Feed->first()->Id);
+            exit();
+        }            
     }
     
+    // if post is not feed go back to same querystring
+    if (count($_POST))
+        header('Location: ../?' . eliza\beta\GlobalContext::Querystring());
+        
+        
     
+//----------------------------------------------------------------------------//
+//                                method: get                                 //
+//----------------------------------------------------------------------------//
+    echo !$feed ? '':
+        eliza\beta\Response::Feed($feed, $args)
+            ->Q(isset($_GET['q']) ? $_GET['q'] : false)
+            ->sortBy(isset($_GET['sort']) ? $_GET['sort'] : null)
+            ->limit(isset($_GET['limit']) ? $_GET['limit'] : null)
+            ->JSONFeed();
+            
+            
+            
+//----------------------------------------------------------------------------//
+//                                  fallback                                  //
+//----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
     header('Location: ../?' . eliza\beta\GlobalContext::Querystring() . '&Oops');
 }
