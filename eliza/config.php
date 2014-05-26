@@ -1,5 +1,4 @@
 <?php
-
 $cfg['Title'] = 'sebataz.ch';
 
 $cfg['Social']['/'] = '.';

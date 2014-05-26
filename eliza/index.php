@@ -36,7 +36,7 @@ try {
 //----------------------------------------------------------------------------//
 //                                method: get                                 //
 //----------------------------------------------------------------------------//
-    echo !$feed ? '':
+    echo !$feed ? 'undefined':
         eliza\beta\Response::Feed($feed, $args)
             ->Q(isset($_GET['q']) ? $_GET['q'] : false)
             ->sortBy(isset($_GET['sort']) ? $_GET['sort'] : null)
