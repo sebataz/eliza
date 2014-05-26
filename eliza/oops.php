@@ -71,7 +71,7 @@
         
         
         <div id="background-bottom">
-            <div class="title"><a href=".."><?php echo eliza\beta\Configuration::get()->Title; ?></a></div>
+            <div class="title"><a href=".."><?php echo eliza\beta\GlobalContext::Configuration()->Title; ?></a></div>
            
         </div>
     </body>

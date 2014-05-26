@@ -60,4 +60,8 @@ class Utils {
                 
         return false;
     }
+    
+    public static function uniqueId() {
+        return time() . substr(microtime(),2,3);
+    }
 }

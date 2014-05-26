@@ -35,9 +35,4 @@ class Response {
             
         return false;
     }
-    
-    public static function privileged() {
-        if (!self::hasPrivilege())
-            oops('you are not that privilieged');
-    }
 }

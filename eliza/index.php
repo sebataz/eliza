@@ -6,6 +6,7 @@
 //                                  response                                  //
 //----------------------------------------------------------------------------//
 include '../eliza/beta.php';
+if (empty($_REQUEST)) oops();
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = $feed ? array_slice($_GET, 1) : array();
@@ -48,5 +49,5 @@ try {
 //                                  fallback                                  //
 //----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
-    header('Location: ../?' . eliza\beta\GlobalContext::Querystring() . '&Oops');
+    header('Location: ../?Oops');
 }

@@ -1,6 +1,8 @@
 <?php
 
-eliza\beta\Response::privileged();
+if (!eliza\beta\Response::hasPrivilege())
+    oops('are not allowed to edit');
+
 eliza\beta\Presentation::show(); 
 
 $Id = $_GET['edit'] != '' ? $_GET['edit'] : (time() . substr(microtime(),2,3));
@@ -18,7 +20,7 @@ if (!($Edit = eliza\beta\Feed::Article()->getBy('Id', $_GET['edit'])))
 
         <h2>Head</h2>
     <div class="input">
-        <label><input style="width: auto;" type="checkbox" name="Draft" value="1" <?php var_dump($Edit->Draft); echo $Edit->Draft ? 'checked' : ''; ?> />draft...</label>
+        <label><input style="width: auto;" type="checkbox" name="Draft" value="1" <?php echo $Edit->Draft ? 'checked' : ''; ?> />draft...</label>
     </div>
         
     <div class="input">
@@ -34,12 +36,12 @@ if (!($Edit = eliza\beta\Feed::Article()->getBy('Id', $_GET['edit'])))
     </div>
 
     <div class="input">
-        <textarea name="Headline" id="editor-h" name="editor-h"><?php echo $Edit->Headline; ?></textarea>
+        <textarea name="Headline"><?php echo $Edit->Headline; ?></textarea>
     </div>
 
         <h2>Body</h2>
     <div class="input">
-        <textarea name="Text" id="editor-t" name="editor-t"><?php echo $Edit->Text; ?></textarea>
+        <textarea name="Text"><?php echo $Edit->Text; ?></textarea>
     </div>
 
     <div class="input">
