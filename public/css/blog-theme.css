@@ -80,7 +80,7 @@ div#top-bar div span {
     display: inline-block;
 }
 
-div#top-bar div span.at {
+div#top-bar div span:nth-of-type(2) {
     font-family: Arial Black;
     color: #555; 
 }

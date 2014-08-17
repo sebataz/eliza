@@ -80,21 +80,7 @@ if (isset($_GET['t'])) {
         
         <div id="top-bar">
             <div>
-                <span>sebataz</span>
-                <span class="at">@</span>
-                <span>
-                    <select name="links" id="links">
-                        <?php foreach (eliza\beta\GlobalContext::Configuration()->Social as $name => $url): ?>
-                            <option value="<?php echo $url; ?>"><?php echo $name; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </span>
-                <script type="text/javascript">
-                    var urlmenu = document.getElementById( 'links' );
-                    urlmenu.onchange = function() {
-                        window.open(  this.options[ this.selectedIndex ].value , '_self' );
-                    };
-                </script>
+                <span>sebataz</span><span>.ch</span>
                 <form action="." method="GET">
                     <input name="search" id="search" type="text" placeholder="search..." value="<?php echo isset($_GET['search'])?$_GET['search']:''; ?>" />
                 </form>
@@ -106,9 +92,18 @@ if (isset($_GET['t'])) {
                 <div class="sebataz">
                     <h4>sebataz</h4>
                     <ul>
-                        <li><a href=".">home</a></li>
-                        <li><a href="http://sebataz.ch/eliza">about me</a></li>
-                        <li><a href="https://careers.stackoverflow.com/rigoni">curriculum</a></li>
+                        <?php foreach (eliza\beta\GlobalContext::Configuration()->Me as $name => $url): ?>
+                            <li><a href="<?php echo $url; ?>"><?php echo $name; ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                
+                <div class="sebataz">
+                    <h4>comunities</h4>
+                    <ul>
+                        <?php foreach (eliza\beta\GlobalContext::Configuration()->Comunities as $name => $url): ?>
+                            <li><a href="<?php echo $url; ?>"><?php echo $name; ?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
                 

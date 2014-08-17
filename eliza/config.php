@@ -1,8 +1,11 @@
 <?php
 $cfg['Title'] = 'sebataz.ch';
 
-$cfg['Social']['/'] = '.';
-$cfg['Social']['github.com'] = 'https://github.com/sebataz';
-$cfg['Social']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
+$cfg['Me']['home'] = '.';
+$cfg['Me']['about me'] = "http://sebataz.ch/eliza";
+$cfg['Me']['curriculum'] = "https://careers.stackoverflow.com/rigoni";
+
+$cfg['Comunities']['github.com'] = 'https://github.com/sebataz';
+$cfg['Comunities']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
 
 $cfg['Lock']['sebataz'] = 'test1234';
