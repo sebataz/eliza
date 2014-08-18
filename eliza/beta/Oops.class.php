@@ -10,7 +10,7 @@ class Oops extends \Exception {
     public function printStackTrace() {
         $stack_trace = array_reverse($this->getTrace());
         $class = explode('\\', get_class($this));
-        $string_trace = "\n<br /><strong>" . end($class) . '</strong>: ' 
+        $string_trace = "\n<strong>" . end($class) . '</strong>: ' 
                       . $this->getMessage() . '<br \><br \>';
         
         for ($i = 0; $i < count($stack_trace); $i++) {
