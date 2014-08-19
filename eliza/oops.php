@@ -13,16 +13,6 @@
             h2 {font-size: 1.2em; margin-bottom: 1em;}
             li {list-style-type: square; margin-left: 2em;}
         </style>
-        
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>    
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#stacktrace").hide();
-                $("h1.wtf").click(function () {
-                    $("#stacktrace").toggle();
-                });
-            });
-        </script>
     </head>
     <body>
         <div id="oops">
