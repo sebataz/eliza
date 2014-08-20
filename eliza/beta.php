@@ -9,6 +9,8 @@
     define ('ROOT', dirname(__DIR__) . DS);
     define ('ELIZA', basename(__DIR__) . DS);
     define ('BASE_URI', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+    
+    define ('DEBUG', 1);
 
 
 
@@ -44,7 +46,7 @@
     });
     
     function oops($_excuse = null) { 
-        if (is_array($_excuse)) oops(); 
+        if (is_array($_excuse)) oops();
         throw new eliza\beta\Oops($_excuse);
     }
     

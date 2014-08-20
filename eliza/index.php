@@ -49,5 +49,6 @@ try {
 //                                  fallback                                  //
 //----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
-    header('Location: ../?Oops');
+    if (DEBUG) throw $O;
+    else header('Location: ../?Oops');
 }

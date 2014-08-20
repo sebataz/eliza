@@ -143,6 +143,8 @@ div#bottom-bar li {
     margin-left: .7em;
 }
 
+/** BLOG **/
+
 div#blog {
     position: relative;
     margin: 0 auto;
@@ -246,6 +248,24 @@ div.article.edit textarea {
 div.article.edit label {
     font-size: 1.1em;
     color: #aaa;
+}
+
+/** PAGE **/
+div#page{
+    position: relative;
+    margin: 0 auto;
+    width: 80em;
+    height: 100%;
+}
+
+div#page .title {
+    width: 100%;
+    background-color: red;
+}
+
+div#page .content {
+    width: 100%;
+    background-color: blue;
 }
 
 /** jQuery Plugins **/
