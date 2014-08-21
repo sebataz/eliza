@@ -22,14 +22,14 @@ try {
             ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
             $Feed->XMLFeed())
         ) {
-            //header('Location: ../?id=' . $Feed->first()->Id);
+            header('Location: ../?id=' . $Feed->first()->Id);
             exit();
         }            
     }
     
     // if post is not feed go back to same querystring
     if (count($_POST))
-        //header('Location: ../?' . eliza\beta\GlobalContext::Querystring());
+        header('Location: '. $_SERVER['HTTP_REFERER']);
         
         
     

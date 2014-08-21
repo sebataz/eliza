@@ -26,14 +26,16 @@ $.fn.postable = function(feed, properties) {
                 post[properties[i]] = postable.find("." + properties[i].toLowerCase()).html();
             
             console.log(post);
-            $.post(
-                proxy,
-                post,
-                function() {
+            $.ajax({
+                type: "POST",
+                url: proxy,
+                data: post,
+                success: function(outcome) {
                     save.find('a').text('save');
                     console.log("saved content");
+                    console.log(outcome);
                 }
-            );
+            });
         });
     
     });
