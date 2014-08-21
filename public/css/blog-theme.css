@@ -260,12 +260,13 @@ div#page{
 
 div#page .title {
     width: 100%;
-    background-color: red;
+    min-height: 2em;
+    border: 1px solid black;
 }
 
 div#page .content {
     width: 100%;
-    background-color: blue;
+    border: 1px solid black;
 }
 
 /** jQuery Plugins **/

@@ -3,7 +3,6 @@
 class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Title = '';
-    public $Author = '';
     public $Draft = true;
     public $Content = '';
     public $File = array();
@@ -19,7 +18,6 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Page = new self();
             $Page->Id = $Xml->Name;
             $Page->Title = (string) $PageXml->title;
-            $Page->Author = (string) $PageXml->author;
             $Page->Content = (string) html_entity_decode($PageXml->content);
             $Page->File = $Xml;
             

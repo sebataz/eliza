@@ -18,13 +18,12 @@ eliza\beta\Presentation::buffered();
                 
         <script src="public/js/jquery.preview.js" type="text/javascript"></script>
         
-        <script src="public/js/eliza.get.js" type="text/javascript"></script>
-        <script src="public/js/eliza.post.js" type="text/javascript"></script>
+        <script src="public/js/eliza.getable.js" type="text/javascript"></script>
+        <script src="public/js/eliza.postable.js" type="text/javascript"></script>
         
         <script type="text/javascript">                    
             $(document).ready(function () {
-                $(".title").post('Page');
-                $(".content").post('Page');
+                $("#page").postable('Page', ['Title', 'Content']);
                 $(".preview").preview()
             });
         </script>
@@ -33,7 +32,7 @@ eliza\beta\Presentation::buffered();
     
     <div id="container">
         <div id="page">
-            [Page getBy:id,<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p'); ?> /]
+            [Page getBy:id,1 /]
         </div>
     </div>
         
