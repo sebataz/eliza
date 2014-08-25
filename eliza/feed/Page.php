@@ -3,7 +3,6 @@
 class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Title = '';
-    public $Draft = true;
     public $Content = '';
     public $File = array();
     
@@ -20,10 +19,6 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Page->Title = (string) $PageXml->title;
             $Page->Content = (string) html_entity_decode($PageXml->content);
             $Page->File = $Xml;
-            
-            $Page->Draft = $PageXml->draft == 0 ? false : true;
-            
-            if ($Page->Draft && !eliza\beta\Response::hasPrivilege()) continue;
             
             $Site->append($Page);
         }

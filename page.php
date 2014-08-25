@@ -23,7 +23,11 @@ eliza\beta\Presentation::buffered();
         
         <script type="text/javascript">                    
             $(document).ready(function () {
+            
+                <?php if (eliza\beta\Response::hasPrivilege()): ?>
                 $("#page").postable('Page', ['Title', 'Content']);
+                <?php endif; ?>
+                
                 $(".preview").preview()
             });
         </script>
