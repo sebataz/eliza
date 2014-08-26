@@ -60,7 +60,7 @@ if (isset($_GET['t'])) {
             <?php elseif (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
             <?php else: ?>
-            [Article /]{sortBy:Date,3 limit:5}
+            [Article /]{sortBy:Date,3 limit:5,<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0); ?>}
             <?php endif; ?>
             <div id="archive">
                 <p><a href=".">Home</a></p>
@@ -75,6 +75,14 @@ if (isset($_GET['t'])) {
                     <?php endforeach; ?>
                 </div>
             </div>
+        <div id="pager">
+            <?php if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0) > 0): ?>
+            <a href="?p=<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0)-5; ?>">previous</a>
+            <?php endif; ?>
+            <?php if (eliza\beta\Feed::Article()->count() > eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0) + 5): ?>
+            <a href="?p=<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0)+5; ?>">next</a>
+            <?php endif; ?>
+        </div>
         </div>
     </div>
         

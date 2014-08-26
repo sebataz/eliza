@@ -158,6 +158,12 @@ div#blog div#archive {
     padding-left: 3em;
 }
 
+div#blog div#pager {
+    margin-bottom: 7em;
+    width: 100%;
+    text-align: center;
+}
+
 div#blog div#archive div#tag-cloud {
     margin-top: 2.3em;
     text-align: left;
