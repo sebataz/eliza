@@ -60,7 +60,7 @@ if (isset($_GET['t'])) {
             <?php elseif (isset($_GET['edit'])): ?>
                 <?php include 'edit.php'; ?>
             <?php else: ?>
-            [Article /]{sortBy:Date,3}
+            [Article /]{sortBy:Date,3 limit:5}
             <?php endif; ?>
             <div id="archive">
                 <p><a href=".">Home</a></p>
