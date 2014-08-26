@@ -76,11 +76,15 @@ if (isset($_GET['t'])) {
                 </div>
             </div>
         <div id="pager">
+            <?php if (!eliza\beta\GlobalContext::Globals()->Get->offsetExists('id')
+                  &&  !eliza\beta\GlobalContext::Globals()->Get->offsetExists('m')
+                  &&  !eliza\beta\GlobalContext::Globals()->Get->offsetExists('edit')): ?>
             <?php if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0) > 0): ?>
-            <a href="?p=<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0)-5; ?>">previous</a>
-            <?php endif; ?>
-            <?php if (eliza\beta\Feed::Article()->count() > eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0) + 5): ?>
-            <a href="?p=<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0)+5; ?>">next</a>
+                <a href="?p=<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0)-5; ?>">previous</a>
+                <?php endif; ?>
+                <?php if (eliza\beta\Feed::Article()->count() > eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0) + 5): ?>
+                <a href="?p=<?php echo eliza\beta\GlobalContext::Globals()->Get->defaultValue('p', 0)+5; ?>">next</a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         </div>
