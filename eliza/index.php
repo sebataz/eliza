@@ -22,13 +22,17 @@ try {
             ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
             $Feed->XMLFeed())
         ) {
-            header('Location: ../?id=' . $Feed->first()->Id);
+            if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
+                header('Location: ../?id=' . $Feed->first()->Id);
+            else
+                echo json_encode(array('outcome'=>'good'));
             exit();
         }            
     }
     
     // if post is not feed go back to same querystring
-    if (count($_POST))
+    if (count($_POST) 
+    && !eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
         header('Location: '. $_SERVER['HTTP_REFERER']);
         
         

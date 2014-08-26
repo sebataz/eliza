@@ -19,7 +19,7 @@ $.fn.postable = function(feed, properties) {
             console.log('saving content for ' + feed);
             
             // post
-            var proxy = location.origin + "/eliza/index.php?" + feed;
+            var proxy = location.origin + "/eliza/index.php?" + feed + "&verbose=1";
             var post = {"Id":1};
             
             for (var i = 0; i < properties.length; i++)
@@ -30,11 +30,11 @@ $.fn.postable = function(feed, properties) {
                 type: "POST",
                 url: proxy,
                 data: post,
+                }
                 success: function(outcome) {
                     save.find('a').text('save');
                     console.log("saved content");
                     console.log(outcome);
-                }
             });
         });
     
