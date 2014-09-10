@@ -1,7 +1,3 @@
-
-var proxy_url = location.origin + '/eliza/index.php';
-
-
 var getParams = function(data, url) {
     var arr = [], str;
     for(var name in data) {
@@ -15,11 +11,12 @@ var getParams = function(data, url) {
 }
 
 var Eliza = {
+    var url = location.origin + '/eliza/index.php';
     query: function (ops) {
         if(typeof ops == 'string') ops = { query: ops };
         ops.method = ops.method || 'get';
         ops.data = ops.data || {};
-        ops.source =  proxy_url + ops.query
+        ops.source =  url + ops.query
         
         var api = {
             host: {},

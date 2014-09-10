@@ -26,9 +26,9 @@ $.fn.postable = function(feed, properties) {
                 post[properties[i]] = postable.find("." + properties[i].toLowerCase()).html();
             
             console.log(post);
-            $.ajax({
-                type: "POST",
-                url: proxy,
+            Eliza.query({
+                method: "POST",
+                feed: feed,
                 data: post,
                 }
                 success: function(outcome) {
