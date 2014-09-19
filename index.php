@@ -14,6 +14,7 @@ else
         <meta charset="utf-8">
         <title><?php echo eliza\beta\GlobalContext::Configuration()->Title; ?></title>
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../public/css/theme.css">
         
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
