@@ -17,7 +17,7 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             
             $Page = new self();
             $Page->Id = $Xml->Name;
-            $Page->Parent = (string) $PageXml->parent;
+            $Page->Parent = (int) $PageXml->parent;
             $Page->Title = (string) $PageXml->title;
             $Page->Content = (string) html_entity_decode($PageXml->content);
             $Page->File = $Xml;
@@ -32,15 +32,15 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     
     public static function buildIndexHTML($_FeedCollection, $_parent = 0) {
         $index = '<ul class="index">';
-         
+        
         foreach ($_FeedCollection as $Page) {
-            if ($Page->Parent = $_parent) {
+            if ($Page->Parent == $_parent) {
                 $index .= '<li>' . $Page->Title . '</li>';
                 $index .= self::buildIndexHTML($_FeedCollection, $Page->Id);
             }
         }
             
-        $index .= '</ul>'
+        $index .= '</ul>'; 
         return $index;
     }
 
