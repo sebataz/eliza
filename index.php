@@ -9,7 +9,7 @@ else
     
     
 $Page = eliza\beta\Feed::Page()->getBy('Id', eliza\beta\GlobalContext::Globals()->Get->defaultValue('id'));
-$Page = $Page ? $Page : new Page(array('Id' => (time() . substr(microtime(),2,3))));
+$Page = $Page ? $Page : new Page(array('Id' => time()));
 
  ?>
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ $Page = $Page ? $Page : new Page(array('Id' => (time() . substr(microtime(),2,3)
             <div id="index">
                 <a href="."><img src="public/img/seba.jpg" /></a>
                 <?php 
-                    echo eliza\beta\Feed::Page()->sortBy('Title', SORT_ASC)->buildIndexHTML();
+                  try {  echo eliza\beta\Feed::Page()->sortBy('Title', SORT_ASC)->buildIndexHTML(); } catch (eliza\beta\Oops $O) {}
                 ?>
             </div>
         </div>

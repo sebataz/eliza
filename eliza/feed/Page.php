@@ -43,7 +43,7 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         }
             
         
-        $index .= '</ul>'; 
+        $index .= '</ul>';
         return $index;
     }
 
