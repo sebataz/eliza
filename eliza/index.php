@@ -22,7 +22,7 @@ try {
             ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
             $Feed->XMLFeed())
         ) {
-            if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
+            if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
                 header('Location: ../?id=' . $Feed->first()->Id);
             else
                 echo json_encode(array('outcome'=>'good'));

@@ -35,11 +35,14 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         
         foreach ($_FeedCollection as $Page) {
             if ($Page->Parent == $_parent) {
-                $index .= '<li>' . $Page->Title . '</li>';
-                $index .= self::buildIndexHTML($_FeedCollection, $Page->Id);
+                $index .= '<li><a href="?';
+                $index .= (eliza\beta\Response::hasPrivilege()?'id':'id');
+                $index .= '=' . $Page->Id . '">' . $Page->Title . '</a>';
+                $index .= self::buildIndexHTML($_FeedCollection, $Page->Id) . '</li>';
             }
         }
             
+        
         $index .= '</ul>'; 
         return $index;
     }
