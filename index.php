@@ -42,7 +42,7 @@ $Page = $Page ? $Page : new Page(array('Id' => time()));
                 <?php endif; ?>
             </div>
             <div id="index">
-                <a href="."><img src="public/img/seba.jpg" /></a>
+                <a href="."><img src="public/img/seba2.jpg" /></a>
                 <?php 
                   try {  echo eliza\beta\Feed::Page()->sortBy('Title', SORT_ASC)->buildIndexHTML(); } catch (eliza\beta\Oops $O) {}
                 ?>
