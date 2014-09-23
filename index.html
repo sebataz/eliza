@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>eliza | a kiss javascript/php set of APIs</title>
+        <link rel="stylesheet" type="text/css" href="public/css/reset.css">
+        <link rel="stylesheet" type="text/css" href="public/css/theme.css">
+        
+        
+        <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
+        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushPhp.js" type="text/javascript"></script>
+        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushHtml.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">        
+            SyntaxHighlighter.defaults['toolbar'] = false;
+            SyntaxHighlighter.all();
+        </script>
+    </head>
+    <body>
+        <form action="./eliza/?Page" method="POST" >
+        <div id="container">
+            <div id="page">
+                <div class="title">eliza</div>
+                <div class="content">
+                    <h3>a kiss javascript/php set of APIs</h3>
+                    <p>eliza is a set of <strong>API</strong> meant to simplify the creation of <strong>web applications</strong>.</p>
+                    <p>The concept is <strong>kiss</strong> (Keep It Simple Stupid), a feed class generates a <strong>collection of items</strong> that are then exposed to the interface.</p>
+                    
+                    <h3>How she works</h3>                    
+                    <p>The project includes a <strong>PHP library</strong> and several <strong>jQuery plugins</strong>, the communication between the PHP and JavaScript layers uses <strong>JSON</strong>.</p>
+                    <p>eliza responds to a request using a feed source which can be formatted in <strong>PHP, JSON, XML, HTML</strong>.</p>
+                    <p>eliza already includes some basic feeds that you can use: GitHistory, Node (files), Image, Page.</p>
+                    <p>Moreover, eliza has a simple <strong>buffering and caching</strong> system for your pages.</p>
+                    
+                    <h3>How to use her</h3>
+                    <p>Basically two files would be enough to build any application, a <strong>source class (feed)</strong> and a <strong>html template or page</strong>.</p>
+                    <p>An example of feed:</p>
+                    <pre class="brush: php">
+class Item extends eliza\beta\Feed {
+    public $Value = '';
+    
+    public static function Feed {
+
+        $Collection = new eliza\feed\JSONFeed();
+        $Collection->add(new self(array('Hello World!');
+        
+        return $Collection
+        
+    }
+}
+                    </pre>
+                    <p>An example of page:</p>
+                    <pre class="brush: php">eliza\beta\Feed::Item()</pre>
+                    <h3>Where to get her</h3>
+                    <p>Feel free to clone the <strong>git repository</strong> from <strong>GitHub</strong>:<br /><code>git clone https://github.com/sebataz/eliza</code></p>
+                </div>
+            </div>
+            <div id="index">
+                <img src="public/img/eliza.jpg" />
+            </div>
+        </div>
+    </body>
+</html>
