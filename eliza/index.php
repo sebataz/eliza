@@ -6,7 +6,7 @@
 //                                  response                                  //
 //----------------------------------------------------------------------------//
 include '../eliza/beta.php';
-if (empty($_REQUEST)) oops();
+if (empty($_REQUEST)) oops('you did not request anything');
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = $feed ? array_slice($_GET, 1) : array();
@@ -22,19 +22,19 @@ try {
             ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
             $Feed->XMLFeed())
         ) {
-            if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
-                header('Location: ../?id=' . $Feed->first()->Id);
-            else
-                echo json_encode(array('outcome'=>'good'));
-            exit();
+            $outcome = 'good';
         }            
     }
     
-    // if post is not feed go back to same querystring
-    if (count($_POST) 
-    && !eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
-        header('Location: '. $_SERVER['HTTP_REFERER']);
+    if (count($_POST)) { 
+        if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
+            header('Location: '. $_SERVER['HTTP_REFERER']);
+            
+        header('Content-Type: application/json');
+        echo json_encode(array('outcome'=>$outcome, 'request'=>$_REQUEST));
         
+        die();
+    }
         
     
 //----------------------------------------------------------------------------//
