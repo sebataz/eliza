@@ -10,8 +10,11 @@ class Response {
     
     public static function __callStatic($_method, $_args) {
         if (!class_exists('eliza\\feed\\' . $_method, true)) oops(OOPS);
-            
-        return self::Feed($_args[0], $_args[1])->{$_method}();
+        
+        return self::Feed(
+            $_args[0],
+            count($_args) > 1 ? $_args[1] : array()
+        )->{$_method}();
     }
     
     public static function remote($_url, $_request, $_method) {

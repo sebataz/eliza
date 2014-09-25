@@ -53,12 +53,11 @@
 class Item extends eliza\beta\Feed {
     public $Value = '';
     
-    public static function Feed {
-
-        $Collection = new eliza\feed\JSONFeed();
-        $Collection->add(new self(array('Hello World!');
+    public static function Feed() {
+        $Collection = new eliza\feed\HTMLFeed();
+        $Collection->append(new self(array('Value'=>'Hello World!')));
         
-        return $Collection
+        return $Collection;
         
     }
 }

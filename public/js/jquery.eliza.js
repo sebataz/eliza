@@ -13,7 +13,7 @@ function Eliza (url) {
         return this;
     };
     
-    this.ask = function (callback) {
+    this.call = function (callback) {
         $.ajax({
             url : this.source,
             type: this.method,
