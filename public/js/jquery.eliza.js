@@ -17,7 +17,22 @@ function Eliza (url) {
         $.ajax({
             url : this.source,
             type: this.method,
-            success : callback
+            success : function (data) {
+                var html = $('<div />');
+                data.forEach(function(item, index, collection) {
+                    //console.log('');
+                    //console.log('item-'+index||item.Id);
+                    var div = $('<div />');
+                    div.attr('id', index);
+                    for (var prop in item) {
+                        //console.log(prop+":"+item[prop]);
+                        div.append($('<div class="' + prop + '">' + item[prop] + '</div>'));
+                    }
+                    html.append(div);
+                });
+                console.log(data);
+                callback(data, html);
+            }
         });
     };
 }
