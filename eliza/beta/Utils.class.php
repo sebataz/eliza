@@ -6,10 +6,10 @@ class Utils {
     public static function createImageThumbnail($_url_to_image, $_thumb_size) {
         $thumb_name =  md5($_url_to_image) . '_' . $_thumb_size . '.jpg';
         $thumb_url = 'http://' . $_SERVER['HTTP_HOST'] . '/temp/thumb/' . $thumb_name;
-        $path_to_thumb = ROOT . DS . 'temp' . DS . 'thumb' . DS . $thumb_name;
+        $path_to_thumb = ROOT . 'temp' . DS . 'thumb' . DS . $thumb_name;
         
-        if (!file_exists(ROOT . DS . 'temp' . DS . 'thumb')) 
-            mkdir(ROOT . DS . 'temp' . DS . 'thumb', 0777, true);
+        if (!file_exists(ROOT . 'temp' . DS . 'thumb')) 
+            mkdir(ROOT . 'temp' . DS . 'thumb', 0777, true);
 
         
         if (file_exists($path_to_thumb))

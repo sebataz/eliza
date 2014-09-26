@@ -28,7 +28,7 @@ class Presentation {
             if (self::$_cache) file_put_contents(self::$_cache, $buffer);
             echo $buffer; //might be bug: die();
         } catch (\Exception $e) {
-            include ROOT . ELIZA . 'oops.php'; die();
+            include ELIZA . 'oops.php'; die();
         }
     }
     

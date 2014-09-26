@@ -19,7 +19,8 @@ try {
     if (eliza\beta\Response::hasPrivilege() && count($_POST)) {
         if ($feed) $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
         if ($feed && eliza\beta\Utils::writeFile(
-            ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
+            eliza\beta\GlobalContext::Configuration()->Feed->Location
+            . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
             $Feed->XMLFeed())
         ) {
             $outcome = 'good';
