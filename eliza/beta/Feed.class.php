@@ -24,6 +24,7 @@ abstract class Feed extends Object {
         $feed = ELIZA . 'feed' . DS 
               . $_feed . '.php';
               
+        if (class_exists($_feed)) return;
         if (!file_exists($feed)) oops();
         require_once $feed;
     }
