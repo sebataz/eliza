@@ -5,19 +5,23 @@ function Eliza (url) {
     this.method = 'GET';
     this.data = null;
     
-    this.query = function (query, data, verbose) {
+    this.query = function (query, data) {
         this.data = data;
         this.method = data ? 'POST' : 'GET';
-        this.source = this.url + '?' + query + (verbose ? 'verbose=1' : '');
+        this.source = this.url + '?' + query;
         console.log(this.source);
+        console.log(this.method);
+        console.log(this.data);
         return this;
     };
     
-    this.call = function (callback) {
+    this.call = function (callback, verbose) {
         $.ajax({
-            url : this.source,
+            url : this.source + (verbose ? '&verbose=1' : ''),
             type: this.method,
+            data : this.data,
             success : function (data) {
+            console.log(data);
                 var html = $('<div />');
                 data.forEach(function(item, index, collection) {
                     //console.log('');
@@ -30,7 +34,7 @@ function Eliza (url) {
                     }
                     html.append(div);
                 });
-                console.log(data);
+                
                 callback(data, html);
             }
         });
