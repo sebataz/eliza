@@ -28,8 +28,8 @@ try {
                 $outcome = 'bad';
         } else
             $outcome = 'locked';
-        
-        
+            
+            
         if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
             header('Location: '. $_SERVER['HTTP_REFERER']);
             
