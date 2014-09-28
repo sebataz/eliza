@@ -1,7 +1,9 @@
 <?php
 
+//include eliza
 include '../eliza/beta.php';
 
+//define an item class
 class Item extends eliza\beta\Feed {
     public $Value = '';
     
@@ -13,6 +15,8 @@ class Item extends eliza\beta\Feed {
         
     }
 }
-                    
 
+//echo formatted html output
 echo eliza\beta\Response::HTMLFeed('Item');
+echo '<br />';
+echo eliza\beta\Feed::Item()->HTMLFeed();
