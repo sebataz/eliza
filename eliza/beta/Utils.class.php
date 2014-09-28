@@ -52,7 +52,7 @@ class Utils {
     
     public static function writeFile($_path_to_file, $_file_content) {
         if (!file_exists(dirname($_path_to_file)))
-            mkdir(dirname($_path_to_file));
+            mkdir(dirname($_path_to_file), 0777, true);
             
         if (null !== ($handle = fopen($_path_to_file, 'w')))
             if ((bool)fwrite($handle, $_file_content))

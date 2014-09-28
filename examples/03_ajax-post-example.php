@@ -22,9 +22,7 @@
     <body>
         <div id="response"></div>
         <form action="../eliza/index.php" method="POST" />
-        <input type="hidden" name="lock" value="root1234" />
-        <input type="submit" />
-        
+            <input type="password" name="lock" placeholder="unlock..." />
         </form>
     </body>
 </html>
