@@ -21,7 +21,7 @@
     </head>
     <body>
         <div id="response"></div>
-        <form action="../eliza/index.php?Page&verbose=1" method="POST" />
+        <form action="../eliza/index.php" method="POST" />
         <input type="hidden" name="lock" value="root1234" />
         <input type="submit" />
         
