@@ -10,7 +10,6 @@ if (empty($_REQUEST)) oops('you did not request anything');
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = $feed ? array_slice($_GET, 1) : array();
-    $outcome = 'undefined';
     
 
 //----------------------------------------------------------------------------//
@@ -18,23 +17,22 @@ try {
 //----------------------------------------------------------------------------//
     if (count ($_POST)) {
         if (eliza\beta\Response::hasPrivilege()) {
-            if ($feed) $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
-            if ($feed && eliza\beta\Utils::writeFile(
-                ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
-                $Feed->XMLFeed())
-            ) {
-                $outcome = 'good';
-            } else
-                $outcome = 'bad';
-        } else
-            $outcome = 'locked';
-            
+            if ($feed) {
+                $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
+                eliza\beta\Utils::writeFile(
+                    eliza\beta\GlobalContext::Configuration()->Feed->Location
+                    . strtolower($feed) . DS 
+                    . $Feed->first()->Id . '.xml',     
+                    $Feed->XMLFeed()
+                );
+            }
+        }
             
         if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
             header('Location: '. $_SERVER['HTTP_REFERER']);
             
         header('Content-Type: application/json');
-        echo json_encode(array('outcome'=>$outcome, 'request'=>$_REQUEST));
+        echo json_encode(array(array('collected'=>$Feed->JSONFeed())));
         
         die();
     }

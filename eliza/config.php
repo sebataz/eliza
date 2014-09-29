@@ -2,12 +2,12 @@
 
 // Main settings
 $cfg['Title'] = 'sebataz.ch';
-$cfg['Lock']['root'] = 'seba1234';
+$cfg['Lock']['test'] = 'test1234';
 
 // Feeds settings
 $cfg['Feed']['Location'] = 'feeds' . DS;
-$cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article';
-$cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page';
+$cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article' . DS;
+$cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page' . DS;
 
 // Custom settings
 $cfg['Me']['home'] = '.';

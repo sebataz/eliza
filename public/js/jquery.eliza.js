@@ -9,9 +9,9 @@ function Eliza (url) {
         this.data = data;
         this.method = data ? 'POST' : 'GET';
         this.source = this.url + '?' + query;
-        console.log(this.source);
-        console.log(this.method);
-        console.log(this.data);
+        //console.log(this.source);
+        //console.log(this.method);
+        //console.log(this.data);
         return this;
     };
     
@@ -21,7 +21,7 @@ function Eliza (url) {
             type: this.method,
             data : this.data,
             success : function (data) {
-            console.log(data);
+            //console.log(data);
                 var html = $('<div />');
                 data.forEach(function(item, index, collection) {
                     //console.log('');

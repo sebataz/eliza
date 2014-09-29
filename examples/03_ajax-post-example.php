@@ -15,7 +15,7 @@
                     Title: 'ajax post',
                     Content: 'first post with eliza'
                 }).call(function(response, html){
-                    $('#response').append(html);
+                    console.log(response);
                 }, 1);
         </script>
     </head>
