@@ -21,9 +21,10 @@ abstract class Feed extends Object {
     }
     
     public static function load($_feed) {
-        $feed = ROOT . ELIZA . 'feed' . DS 
+        $feed = ELIZA . 'feed' . DS 
               . $_feed . '.php';
               
+        if (class_exists($_feed)) return;
         if (!file_exists($feed)) oops();
         require_once $feed;
     }

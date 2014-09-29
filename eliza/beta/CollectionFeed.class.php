@@ -10,12 +10,6 @@ abstract class CollectionFeed extends \eliza\beta\Collection {
         return parent::append($_Feed);
     }
     
-    public function getBy($_prop, $_value) {
-        foreach ($this as $Object)
-            if ($Object->$_prop == $_value)
-                return $Object;
-    }
-    
     public function sortBy($_prop, $_order = SORT_ASC)  {
         if (!$_prop) return $this;
         $array = (array) $this;

@@ -6,10 +6,10 @@ class Utils {
     public static function createImageThumbnail($_url_to_image, $_thumb_size) {
         $thumb_name =  md5($_url_to_image) . '_' . $_thumb_size . '.jpg';
         $thumb_url = 'http://' . $_SERVER['HTTP_HOST'] . '/temp/thumb/' . $thumb_name;
-        $path_to_thumb = ROOT . DS . 'temp' . DS . 'thumb' . DS . $thumb_name;
+        $path_to_thumb = ROOT . 'temp' . DS . 'thumb' . DS . $thumb_name;
         
-        if (!file_exists(ROOT . DS . 'temp' . DS . 'thumb')) 
-            mkdir(ROOT . DS . 'temp' . DS . 'thumb', 0777, true);
+        if (!file_exists(ROOT . 'temp' . DS . 'thumb')) 
+            mkdir(ROOT . 'temp' . DS . 'thumb', 0777, true);
 
         
         if (file_exists($path_to_thumb))
@@ -51,10 +51,11 @@ class Utils {
     }
     
     public static function writeFile($_path_to_file, $_file_content) {
-        if (!file_exists(dirname($_path_to_file)))
-            mkdir(dirname($_path_to_file));
+        $path_to_file = ROOT . $_path_to_file;
+        if (!file_exists(dirname($path_to_file)))
+            mkdir(dirname($path_to_file), 0777, true);
             
-        if (null !== ($handle = fopen($_path_to_file, 'w')))
+        if (null !== ($handle = fopen($path_to_file, 'w')))
             if ((bool)fwrite($handle, $_file_content))
                 return true;
                 

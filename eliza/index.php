@@ -11,30 +11,32 @@ try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = $feed ? array_slice($_GET, 1) : array();
     
-    
 
 //----------------------------------------------------------------------------//
 //                                method: post                                //
 //----------------------------------------------------------------------------//
-    if (eliza\beta\Response::hasPrivilege() && count($_POST)) {
-        if ($feed) $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
-        if ($feed && eliza\beta\Utils::writeFile(
-            ROOT . strtolower($feed) . DS . $Feed->first()->Id . '.xml',
-            $Feed->XMLFeed())
-        ) {
-            $outcome = 'good';
-        }            
-    }
-    
-    if (count($_POST)) { 
+    if (count ($_POST)) {
+        if (eliza\beta\Response::hasPrivilege()) {
+            if ($feed) {
+                $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
+                eliza\beta\Utils::writeFile(
+                    eliza\beta\GlobalContext::Configuration()->Feed->Location
+                    . strtolower($feed) . DS 
+                    . $Feed->first()->Id . '.xml',     
+                    $Feed->XMLFeed()
+                );
+            }
+        }
+            
         if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
             header('Location: '. $_SERVER['HTTP_REFERER']);
             
         header('Content-Type: application/json');
-        echo json_encode(array('outcome'=>$outcome, 'request'=>$_REQUEST));
+        echo json_encode(array(array('collected'=>$Feed->JSONFeed())));
         
         die();
     }
+    
         
     
 //----------------------------------------------------------------------------//
@@ -53,6 +55,13 @@ try {
 //                                  fallback                                  //
 //----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
-    if (DEBUG) throw $O;
-    else header('Location: ../?Oops');
+    if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose')) 
+        throw $O;
+    
+    header('Content-Type: application/json');
+    echo json_encode(array(
+        'oops'=>$O->getMessage(),
+        'wtf'=>$O->getTrace(), 
+        'request'=>$_REQUEST
+    ));
 }

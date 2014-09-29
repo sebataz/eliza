@@ -14,7 +14,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public static function Feed() {
         $Blog = new eliza\feed\HTMLFeed();
         
-        foreach (eliza\beta\Feed::Node('article') as $Xml) {
+        foreach (eliza\beta\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationArticle) as $Xml) {
             if ($Xml->IsDir) continue;
         
             $ArticleXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));

@@ -5,14 +5,12 @@
 //----------------------------------------------------------------------------//
 //                                   global                                   //
 //----------------------------------------------------------------------------//
-    define ('DS', DIRECTORY_SEPARATOR); 
-    define ('ROOT', dirname(__DIR__) . DS);
-    define ('ELIZA', basename(__DIR__) . DS);
+    define ('DS', DIRECTORY_SEPARATOR);
+    define ('ROOT', preg_replace('/\/|\\\/', DS, $_SERVER['DOCUMENT_ROOT'] . DS));
+    define ('ELIZA', __DIR__ . DS); 
     define ('BASE_URI', 'http://' . $_SERVER['HTTP_HOST'] . '/');
     
     define ('DEBUG', 1);
-
-
 
 //----------------------------------------------------------------------------//
 //                                  autoload                                  //
@@ -23,10 +21,10 @@
         $class = explode('\\', $_class);
         $class = preg_replace('/(I)$/', '', $class);
         
-        $path_to_class = ROOT . ELIZA . 'beta' . DS 
+        $path_to_class = ELIZA . 'beta' . DS 
                        . end($class) . '.class.php';
                        
-        $path_to_feed = ROOT . ELIZA . 'feed' . DS
+        $path_to_feed = ELIZA . 'feed' . DS
                       . end($class) . '.php';
                        
         if (file_exists($path_to_class))
