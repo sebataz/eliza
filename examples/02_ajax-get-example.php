@@ -9,7 +9,7 @@
         <script src="../public/js/jquery.eliza.js" type="text/javascript"></script>
         
         <script type="text/javascript">  
-                new Eliza('../eliza/index.php').query('Node&dir=eliza').call(function(response, html){
+                new Eliza('../eliza/index.php').query('Node').call(function(response, html){
                     $('#response').append(html);
                 });
         </script>

@@ -10,12 +10,3 @@ $cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article' . DS;
 $cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page' . DS;
 
 // Custom settings
-$cfg['Me']['home'] = '.';
-$cfg['Me']['about me'] = "./seba/";
-$cfg['Me']['curriculum'] = "https://careers.stackoverflow.com/rigoni";
-
-$cfg['Projects']['eliza'] = "http://eliza.sebataz.ch/";
-
-$cfg['Comunities']['github.com'] = 'https://github.com/sebataz';
-$cfg['Comunities']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
-$cfg['Comunities']['stackoverflow.com'] = 'http://stackoverflow.com/users/935075/sebataz';
