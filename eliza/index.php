@@ -32,7 +32,7 @@ try {
             header('Location: '. $_SERVER['HTTP_REFERER']);
             
         header('Content-Type: application/json');
-        echo json_encode(array(array('collected'=>$Feed->JSONFeed())));
+        echo json_encode(array(array('collected'=>(array)$Feed)));
         
         die();
     }
@@ -41,15 +41,26 @@ try {
     
 //----------------------------------------------------------------------------//
 //                                method: get                                 //
-//----------------------------------------------------------------------------//
-    echo !$feed ? 'undefined':
-        eliza\beta\Response::Feed($feed, $args)
-            ->Q(isset($_GET['q']) ? $_GET['q'] : false)
-            ->sortBy(isset($_GET['sort']) ? $_GET['sort'] : null)
-            ->limit(isset($_GET['limit']) ? $_GET['limit'] : null)
-            ->JSONFeed();
-            
-            
+//----------------------------------------------------------------------------//       
+    if (!$feed) die('none');
+    
+    $Feed = eliza\beta\Response::Feed($feed, $args)
+        ->Q(isset($_GET['q']) ? $_GET['q'] : false)
+        ->filterBy(
+            isset($_GET['by']) ? $_GET['by'] : false,
+            isset($_GET['val']) ? $_GET['val'] : null
+        )
+        ->sortBy(
+            isset($_GET['srt']) ? $_GET['srt'] : null,
+            isset($_GET['ord']) ? $_GET['ord'] : null
+        )
+        ->limit(
+            isset($_GET['lmt']) ? $_GET['lmt'] : null,
+            isset($_GET['off']) ? $_GET['off'] : null
+        );
+        
+    echo '{"feed":' . $Feed->JSONFeed() . ',';
+    echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
             
 //----------------------------------------------------------------------------//
 //                                  fallback                                  //

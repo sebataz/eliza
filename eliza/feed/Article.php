@@ -76,12 +76,12 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
 
     public function toHTML() {
         return '<div class="title">'
-            . '<img class="avatar" src="public/img/' . $this->Author . '-avatar.jpg" />'
-            . '<a href="?'
+            . '<img class="avatar" src="eliza/public/img/' . $this->Author . '-avatar.jpg" />'
+            . '<h1><a href="?'
             . (eliza\beta\GlobalContext::Globals()->Get->defaultValue('id')&&eliza\beta\Response::hasPrivilege()?'edit':'id')
-            . '=' . $this->Id . '"><h3>'
+            . '=' . $this->Id . '">'
             . $this->Title
-            . '</a></h3><div class="date">'
+            . '</a></h1><div class="date">'
             . date('d M', $this->Date)
             . '</div></div><div class="author">by '
             . $this->Author

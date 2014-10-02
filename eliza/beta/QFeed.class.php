@@ -30,7 +30,9 @@ class QFeed extends CollectionFeed {
         return $Search;
     }
     
-    public function filterBy($_prop, $_value) {
+    public function filterBy($_prop = false, $_value = false) {
+        if ($_prop === false) return $this;
+        
         $array = array();
         foreach ((array)$this as $key => $Object)
             if (self::__filter($_value, $Object->$_prop))

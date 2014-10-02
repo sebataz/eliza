@@ -21,21 +21,7 @@ function Eliza (url) {
             type: this.method,
             data : this.data,
             success : function (data) {
-            //console.log(data);
-                var html = $('<div />');
-                data.forEach(function(item, index, collection) {
-                    //console.log('');
-                    //console.log('item-'+index||item.Id);
-                    var div = $('<div />');
-                    div.attr('id', index);
-                    for (var prop in item) {
-                        //console.log(prop+":"+item[prop]);
-                        div.append($('<div class="' + prop + '">' + item[prop] + '</div>'));
-                    }
-                    html.append(div);
-                });
-                
-                callback(data, html);
+                callback(data);
             }
         });
     };

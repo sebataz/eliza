@@ -48,9 +48,9 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     }
 
     public function toHTML() {
-        return '<div class="title">'
+        return '<div class="title"><h1>'
             . $this->Title
-            . '</div><div class="content">'
+            . '</h1></div><div class="content">'
             . eliza\beta\Presentation::replaceHTMLFeedReference($this->Content)
             . '</div>';
     }
