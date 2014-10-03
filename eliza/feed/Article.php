@@ -11,6 +11,12 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Tags = array();
     public $File = array();
     
+    public function __construct(array $_array = array()) {
+        parent::__construct($_array);
+        $this->Id = eliza\beta\Utils::uniqueId();
+        $this->Date = time();
+    }
+    
     public static function Feed() {
         $Blog = new eliza\feed\HTMLFeed();
         
