@@ -18,14 +18,28 @@ $.fn.codeview = function(opts) {
 
 
   return this.each(function() { 
-    var editable = this;
+    var codeview = $('<div />');
+    codeview.css('position', 'relative');
+    codeview.css('margin', '1em');
+    codeview.css('border', 'dashed 1px #ccc');
+    codeview.css('padding', '15px');
+    
+    var editable = $(this);
+    codeview.insertBefore(editable);
+    editable.appendTo(codeview);
     
     var button = $('<button />');
+    button.css('position', 'absolute');
+    button.css('top', '0');
+    button.css('left', '0');
     button.text('code');
-    button.insertBefore(this);
+    codeview.append(button);
     
     var textarea = $('<textarea />');
-    textarea.insertBefore(this);
+    textarea.css('margin', '0');
+    textarea.css('padding', '.7em');
+    textarea.css('width', '98%');
+    textarea.appendTo(codeview);
     textarea.hide();
     
     button.click(function (e) {

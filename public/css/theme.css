@@ -8,6 +8,7 @@ strong {font-weight: bold; letter-spacing: -.1em;}
 h1 {color: #fb0; font-size: 2.1em; margin-bottom: 1.3em; letter-spacing: -.1em}
 h3 {font-size: 1.7em; margin-top: 1.3em; letter-spacing: -.1em;}
 
+label {background-color: #fff; margin: 1em;}
 form {display: inline; }
 input, select {display: inline; margin: 1em; }
 input.wide, select.wide {width: 31em;}

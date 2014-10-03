@@ -15,9 +15,9 @@ function Eliza (url) {
         return this;
     };
     
-    this.call = function (callback, verbose) {
+    this.call = function (callback) {
         $.ajax({
-            url : this.source + (verbose ? '&verbose=1' : ''),
+            url : this.source,
             type: this.method,
             data : this.data,
             success : function (data) {

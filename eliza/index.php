@@ -18,7 +18,23 @@ try {
     if (count ($_POST)) {
         if (eliza\beta\Response::hasPrivilege()) {
             if ($feed) {
-                $Feed = new eliza\feed\XMLFeed(array(new $feed($_POST)));
+                
+                $Feed = new eliza\feed\HTMLFeed(array(new $feed()));
+                
+                if (isset($_POST['Id'])) {
+                    
+                    $ToOverwrite = eliza\beta\Response::feed($feed)
+                        ->filterBy('Id', $_POST['Id']);
+                        
+                    if ($ToOverwrite->count())
+                        $Feed->first()->mergeWith(
+                            $ToOverwrite->first()->toArray()
+                        );
+                    
+                }
+                
+                $Feed->first()->mergeWith($_POST);
+                
                 eliza\beta\Utils::writeFile(
                     eliza\beta\GlobalContext::Configuration()->Feed->Location
                     . strtolower($feed) . DS 
@@ -28,11 +44,12 @@ try {
             }
         }
             
-        if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose'))
+        if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('redirect'))
             header('Location: '. $_SERVER['HTTP_REFERER']);
             
         header('Content-Type: application/json');
-        echo json_encode(array(array('collected'=>(array)$Feed)));
+        echo '{"feed":' . $Feed->JSONFeed() . ',';
+        echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
         
         die();
     }
@@ -58,7 +75,8 @@ try {
             isset($_GET['lmt']) ? $_GET['lmt'] : null,
             isset($_GET['off']) ? $_GET['off'] : null
         );
-        
+     
+    header('Content-Type: application/json');     
     echo '{"feed":' . $Feed->JSONFeed() . ',';
     echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
             
@@ -66,7 +84,7 @@ try {
 //                                  fallback                                  //
 //----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
-    if (!eliza\beta\GlobalContext::Globals()->Get->defaultValue('verbose')) 
+    if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('redirect')) 
         throw $O;
     
     header('Content-Type: application/json');

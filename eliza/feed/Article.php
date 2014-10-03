@@ -26,7 +26,8 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             $Article->Date = (int) $ArticleXml->date;
             $Article->Headline = (string) html_entity_decode($ArticleXml->headline);
             $Article->Text = (string) html_entity_decode($ArticleXml->text);
-            $Article->Tags = explode(', ', $ArticleXml->tags);
+            if (isset($ArticleXml->tags))
+                $Article->Tags = explode(', ', $ArticleXml->tags);
             $Article->File = $Xml;
             
             $Article->Draft = $ArticleXml->draft == 0 ? false : true;

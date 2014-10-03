@@ -7,6 +7,11 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public $Content = '';
     public $File = array();
     
+    public function __construct(array $array = array()) {
+        parent::__construct($array);
+        $this->Id = eliza\beta\Utils::uniqueId();
+    }
+    
     public static function Feed() {
         $Site = new eliza\feed\HTMLFeed();
         

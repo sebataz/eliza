@@ -3,7 +3,7 @@
 namespace eliza\beta;
 
 class Response {
-    public static function Feed($_feed, $_args) {
+    public static function Feed($_feed, $_args = array()) {
         Feed::load($_feed);
         return $_feed::__Feed($_args);
     }
