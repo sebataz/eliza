@@ -62,6 +62,10 @@ class Utils {
         return false;
     }
     
+    public static function deleteFile($_path_to_file) {
+        return unlink(ROOT . $_path_to_file);
+    }
+    
     public static function uniqueId() {
         return time() . substr(microtime(),2,3);
     }
