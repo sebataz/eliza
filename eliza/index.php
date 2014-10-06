@@ -73,21 +73,20 @@ try {
 //----------------------------------------------------------------------------//
 //                                  always                                    //
 //----------------------------------------------------------------------------//      
-    if ($feed 
-    && !eliza\beta\GlobalContext::Globals()->Get->defaultValue('redirect')) {
-        header('Content-Type: application/json');     
-        echo '{"feed":' . $Feed->JSONFeed() . ',';
-        echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
+    if (!$feed || isset($_GET['redirect'])) 
+        header('Location: '. $_SERVER['HTTP_REFERER']);
+        
+    header('Content-Type: application/json');     
+    echo '{"feed":' . $Feed->JSONFeed() . ',';
+    echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
     
-    } else header('Location: '. $_SERVER['HTTP_REFERER']);
-      
 
       
 //----------------------------------------------------------------------------//
 //                                  fallback                                  //
 //----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
-    if (eliza\beta\GlobalContext::Globals()->Get->defaultValue('redirect')) 
+    if (isset($_GET['redirect'])) 
         throw $O;
     
     header('Content-Type: application/json');
