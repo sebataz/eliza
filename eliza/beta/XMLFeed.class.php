@@ -8,7 +8,6 @@ interface XMLFeedI {
 
 class XMLFeed extends JSONFeed {
     public function XMLFeed() {
-        @header('Content-type: application/xml');
         $xml = '<?xml version="1.0" encoding="UTF-8"?>';
         
         foreach ($this as $Object) {
