@@ -15,15 +15,15 @@ class XMLFeed extends JSONFeed {
     }
     
     final public static function ObjectToXML($_Object) {
-        $xml = "\n";
+        $xml = '';
     
         foreach ($_Object as $prop => $value) {
             if ($value instanceof \eliza\beta\Object)
-                $xml .= "\t" . '<' . strtolower($prop) . '>'
+                $xml .= '<' . strtolower($prop) . '>' . "\n"
                     . self::ObjectToXML($value)
                     . '</' . strtolower($prop) . '>' . "\n";
             elseif ($value instanceof \eliza\beta\Collection)
-                $xml .= "\t" . '<' . strtolower($prop) . '>'
+                $xml .= '<' . strtolower($prop) . '>' . "\n"
                     . self::CollectionToXML($value)
                     . '</' . strtolower($prop) . '>' . "\n";
             elseif (is_array($value)) {
@@ -40,7 +40,7 @@ class XMLFeed extends JSONFeed {
     }
     
     final public static function CollectionToXML($_Collection) {
-        $xml = "\n";
+        $xml = '';
         
         foreach ($_Collection as $Object) {
             $xml .= "\n" . '<' . strtolower(get_class($Object)) . '>' . "\n";
