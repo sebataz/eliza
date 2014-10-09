@@ -22,10 +22,8 @@ class GlobalContext extends Collection {
         static $Configuration;
         
         if (!$Configuration) {
-            include (ELIZA . 'config.php');
-            
-            if (file_exists(ROOT . 'config.php'))
-                include (ROOT . 'config.php');
+            if (file_exists(ELIZA . 'config.php'))
+                include (ELIZA . 'config.php');
             
             $Configuration = new self($cfg);
         }
