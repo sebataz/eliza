@@ -9,5 +9,8 @@ $cfg['Feed']['Location'] = 'feeds' . DS;
 $cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article' . DS;
 $cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page' . DS;
 
+// Response settings
+$cfg['XMLResponse'] = false;
+
 // Custom settings
 

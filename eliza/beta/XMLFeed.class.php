@@ -8,10 +8,7 @@ interface XMLFeedI {
 
 class XMLFeed extends JSONFeed {
     public function XMLFeed() {
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>'
-            . self::CollectionToXML($this);
-            
-        return $xml;
+        return self::CollectionToXML($this);
     }
     
     final public static function ObjectToXML($_Object) {
