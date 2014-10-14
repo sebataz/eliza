@@ -12,7 +12,7 @@ class Node extends eliza\beta\Feed {
     public static function Feed($_directory = '.') {  
         if (!file_exists(ROOT . $_directory)) oops('the directory ' . $_directory . ' does not exist');
 
-        $Directory = new eliza\feed\JSONFeed();
+        $Directory = new eliza\feed\HTMLFeed();
         
         foreach (scandir(self::__path($_directory)) as $node) {
             /* IGNORE FILES */

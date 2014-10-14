@@ -6,10 +6,11 @@
 //                                  response                                  //
 //----------------------------------------------------------------------------//
 include '../eliza/beta.php';
+eliza\beta\Presentation::buffered();
 if (empty($_REQUEST)) oops('you did not request anything');
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
-    $args = $feed ? array_slice($_GET, 1) : array();
+    $args = isset($_GET['args']) ? $_GET['args'] : array();
     
     
     
@@ -75,7 +76,7 @@ try {
 //----------------------------------------------------------------------------//      
     if (!$feed || isset($_GET['redirect'])) 
         header('Location: '. $_SERVER['HTTP_REFERER']);
-        
+                
     header('Content-Type: application/json');     
     echo '{"feed":' . $Feed->JSONFeed() . ',';
     echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
@@ -86,9 +87,12 @@ try {
 //                                  fallback                                  //
 //----------------------------------------------------------------------------//  
 } catch (eliza\beta\Oops $O) {
-    if (isset($_GET['redirect'])) 
+    if (isset($_GET['redirect'])) {
+        header("Content-Type:text/html");
         throw $O;
+    }
     
+    eliza\beta\Presentation::flush();
     header('Content-Type: application/json');
     echo json_encode(array(
         'oops'=>$O->getMessage(),
