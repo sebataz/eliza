@@ -62,7 +62,9 @@ try {
                     eliza\beta\GlobalContext::Configuration()->Feed->Location
                     . strtolower($feed) . DS 
                     . $Feed->first()->Id . '.xml',     
-                    $Feed->XMLFeed()
+                    
+                    '<?xml version="1.0" encoding="UTF-8"?>'
+                    . $Feed->XMLFeed()
                 );
             }
             
@@ -76,11 +78,25 @@ try {
 //----------------------------------------------------------------------------//      
     if (!$feed || isset($_GET['redirect'])) 
         header('Location: '. $_SERVER['HTTP_REFERER']);
+<<<<<<< HEAD
                 
     header('Content-Type: application/json');     
     echo '{"feed":' . $Feed->JSONFeed() . ',';
     echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
+=======
+>>>>>>> 8125cc8bf0ab2d3e79fd80ceb3a4f7341c49085c
     
+    else {
+        if (eliza\beta\GlobalContext::Configuration()->defaultValue('XMLResponse')) {
+            header ("Content-Type:text/xml");
+            echo '<?xml version="1.0" encoding="UTF-8"?>'; 
+            echo '<feed>' . $Feed->XMLFeed() . '</feed>'; 
+        } else {
+            header('Content-Type: application/json');     
+            echo '{"feed":' . $Feed->JSONFeed() . ',';
+            echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
+        }
+    }
 
       
 //----------------------------------------------------------------------------//
