@@ -78,13 +78,6 @@ try {
 //----------------------------------------------------------------------------//      
     if (!$feed || isset($_GET['redirect'])) 
         header('Location: '. $_SERVER['HTTP_REFERER']);
-<<<<<<< HEAD
-                
-    header('Content-Type: application/json');     
-    echo '{"feed":' . $Feed->JSONFeed() . ',';
-    echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
-=======
->>>>>>> 8125cc8bf0ab2d3e79fd80ceb3a4f7341c49085c
     
     else {
         if (eliza\beta\GlobalContext::Configuration()->defaultValue('XMLResponse')) {
