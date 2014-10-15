@@ -80,7 +80,10 @@ try {
         header('Location: '. $_SERVER['HTTP_REFERER']);
     
     else {
-        if (eliza\beta\GlobalContext::Configuration()->defaultValue('XMLResponse')) {
+        if (
+            eliza\beta\GlobalContext::Configuration()
+            ->defaultValue('XMLResponse')
+        ) {
             header ("Content-Type:text/xml");
             echo '<?xml version="1.0" encoding="UTF-8"?>'; 
             echo '<feed>' . $Feed->XMLFeed() . '</feed>'; 
