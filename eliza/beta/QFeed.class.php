@@ -27,7 +27,11 @@ class QFeed extends CollectionFeed {
         }
         
         $Search->sortBy('Relevance', SORT_DESC);
-        return $Search;
+        foreach ($Search as $Item) 
+            $array[] = $Item->Result;
+        
+        $this->exchangeArray($array);
+        return $this;
     }
     
     public function filterBy($_prop = false, $_value = false) {

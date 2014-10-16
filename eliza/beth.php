@@ -45,7 +45,7 @@ eliza\beta\Presentation::buffered();
                         $('#content').html(html);
                         
                         // plugins
-                        html.find(".preview").preview();
+                        html.find(".preview").preview()
                         Prism.highlightAll();
                 });
             });
@@ -54,10 +54,19 @@ eliza\beta\Presentation::buffered();
     <body>
         
         <div id="feeds">
-        <ul>
-        <?php foreach (eliza\beta\Feed::Node('eliza/feed') as $Feed): ?>
-            <li><a href="?<?php echo $Feed->Name ?>"><?php echo $Feed->Name; ?></a></li>
-        <?php endforeach; ?>
+            <?php foreach (eliza\beta\Feed::Node('eliza/feed') as $Feed): ?>
+            <span><a href="?<?php echo $Feed->Name ?>"><?php echo $Feed->Name; ?></a></span>
+            <?php endforeach; ?>:
+            
+            <form action="beth.php" method="GET">
+                <input type="hidden" name="<?php echo key($_GET); ?>" />
+                
+                
+                <input type="text" name="q" placeholder="search..." />
+                
+                
+                <button type="submit">get</button>
+            </form>
         </div>
         
         <div id="content">

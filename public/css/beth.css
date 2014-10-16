@@ -8,20 +8,10 @@ pre {line-height: 1em; font-size: .8em}
 kbd {font-family: monospace;}
 li {list-style: square; margin-left: 1.3em; line-height:1.3em;}
 
-
-div#container {width: 78em; margin: 0 auto;}
-div#index {position: fixed; top: 10em; width: 23em; padding: 1.3em 0; font-size: .8em; text-align: right;}
-div#page{margin-left: 21em; width: 30em; padding: 10em 0;}
-
-div#index img {width: 17em; margin-bottom: 1.3em;}
-
-div#page div.title {color: #fb0; font-size: 2.1em; margin-bottom: 1.3em; letter-spacing: -.1em}
-div#page div.content {font-size: .9em; text-align: justify;}
-
+form, input, select {display: inline;}
 
 
 /*** Layout of things ***/
-#feeds {float: left; margin: 1em;}
-#content {margin-left: 10em;}
+
 
 #content > div {border: dashed 1px #ccc; margin: .3em; padding: .3em;}
