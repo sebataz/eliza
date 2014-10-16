@@ -9,7 +9,7 @@ function Eliza (url) {
         this.data = data;
         this.method = data ? 'POST' : 'GET';
         this.source = this.url + '?' + query;
-        //console.log(this.source);
+        // console.log(this.source);
         //console.log(this.method);
         //console.log(this.data);
         return this;

@@ -1,0 +1,24 @@
+body {font-family: tahoma; color: #3f3f3f;}
+a {text-decoration: none; color: #67a; letter-spacing: -.1em;}
+a:hover {color: #e30; text-decoration: underline;}
+p {margin: 1em 0; line-height: 1.3em;}
+strong {font-weight: bold; letter-spacing: -.1em}
+h3 {font-size: 1.7em; margin-top: 1.3em; letter-spacing: -.1em}
+pre {line-height: 1em; font-size: .8em}
+kbd {font-family: monospace;}
+li {list-style: square; margin-left: 1.3em; line-height:1.3em;}
+
+
+div#container {width: 78em; margin: 0 auto;}
+div#index {position: fixed; top: 10em; width: 23em; padding: 1.3em 0; font-size: .8em; text-align: right;}
+div#page{margin-left: 21em; width: 30em; padding: 10em 0;}
+
+div#index img {width: 17em; margin-bottom: 1.3em;}
+
+div#page div.title {color: #fb0; font-size: 2.1em; margin-bottom: 1.3em; letter-spacing: -.1em}
+div#page div.content {font-size: .9em; text-align: justify;}
+
+
+
+/*** Layout of things ***/
+#feeds {float: left; margin: 1em;}
