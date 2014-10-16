@@ -45,7 +45,7 @@ eliza\beta\Presentation::buffered();
                         $('#content').html(html);
                         
                         // plugins
-                        html.find(".preview").preview()
+                        html.find(".preview").preview();
                         Prism.highlightAll();
                 });
             });

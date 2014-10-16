@@ -22,3 +22,6 @@ div#page div.content {font-size: .9em; text-align: justify;}
 
 /*** Layout of things ***/
 #feeds {float: left; margin: 1em;}
+#content {margin-left: 10em;}
+
+#content > div {border: dashed 1px #ccc; margin: .3em; padding: .3em;}
