@@ -3,6 +3,11 @@
 include 'beta.php';
 eliza\beta\Presentation::buffered();
 
+
+$feed = class_exists(key($_GET)) ? key($_GET) : null;
+$args = isset($_GET['args']) ? $_GET['args'] : array();
+
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,15 +63,37 @@ eliza\beta\Presentation::buffered();
             <span><a href="?<?php echo $Feed->Name ?>"><?php echo $Feed->Name; ?></a></span>
             <?php endforeach; ?>:
             
+            <?php if ($feed): $Empty = new $feed(); ?>
             <form action="beth.php" method="GET">
-                <input type="hidden" name="<?php echo key($_GET); ?>" />
-                
+                <input type="hidden" name="<?php echo $feed; ?>" />
                 
                 <input type="text" name="q" placeholder="search..." />
                 
+                <select name="by">
+                <?php foreach ($Empty as $prop => $val): ?>
+                    <option value="<?php echo $prop; ?>"><?php echo $prop; ?></option>
+                <?php endforeach; ?>
+                </select>
+                
+                <input type="text" name="val" placeholder="filter by..." />
+                
+                <select name="srt">
+                <?php foreach ($Empty as $prop => $val): ?>
+                    <option value="<?php echo $prop; ?>"><?php echo $prop; ?></option>
+                <?php endforeach; ?>
+                </select>
+                
+                <select name="ord" >
+                    <option value="<?php echo SORT_ASC; ?>">asc</option>
+                    <option value="<?php echo SORT_DESC; ?>">desc</option>
+                </select>
+                
+                <input type="text" name="lmt" placeholder="limit by..." />
+                <input type="text" name="off" placeholder="offset..." />
                 
                 <button type="submit">get</button>
             </form>
+            <?php endif; ?>
         </div>
         
         <div id="content">
