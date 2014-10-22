@@ -9,6 +9,9 @@ $cfg['Feed']['Location'] = 'feeds' . DS;
 $cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article' . DS;
 $cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page' . DS;
 
+// Response settings
+$cfg['XMLResponse'] = false;
+
 // Custom settings
 $cfg['Me']['blog'] = 'http://sebataz.ch/';
 $cfg['Me']['about me'] = "http://sebataz.ch/seba/";
