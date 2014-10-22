@@ -34,9 +34,6 @@ try {
                 isset($_GET['lmt']) ? $_GET['lmt'] : null,
                 isset($_GET['off']) ? $_GET['off'] : null
             );
-            
-    if ($Feed->count() < 1)
-        $Feed->append($feed ? new $feed() : new eliza\beta\Object());
      
      
 
@@ -46,6 +43,9 @@ try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (eliza\beta\Response::hasPrivilege() && $feed) {
             
+            if ($Feed->count() < 1)
+                $Feed->append($feed ? new $feed() : new eliza\beta\Object());
+            
             if (count($_POST) < 1) {
                 eliza\beta\Utils::deleteFile(
                     eliza\beta\GlobalContext::Configuration()->Feed->Location
@@ -53,7 +53,10 @@ try {
                     . $Feed->first()->Id . '.xml'
                 );
                 
-                header('Location: '. $_SERVER['HTTP_ORIGIN']);
+                header(
+                    'Location: ' . 
+                    preg_replace('/\?.*/', '', $_SERVER['HTTP_REFERER'])
+                );
             
             } else {
                 $Feed->first()->mergeWith($_POST);
@@ -62,9 +65,7 @@ try {
                     eliza\beta\GlobalContext::Configuration()->Feed->Location
                     . strtolower($feed) . DS 
                     . $Feed->first()->Id . '.xml',     
-                    
-                    '<?xml version="1.0" encoding="UTF-8"?>'
-                    . $Feed->XMLFeed()
+                    $Feed->XMLFeed()
                 );
             }
             
