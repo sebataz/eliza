@@ -2,28 +2,18 @@
 <script type="text/javascript" src="/public/plugin/zeroclipboard/dist/ZeroClipboard.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function()
-{
-    
-                var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
-              moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
-              debug: false
-            } );
-
-            clientTarget.on( "load", function(clientTarget)
-            {
-                $('#flash-loaded').fadeIn();
-
-                clientTarget.on( "complete", function(clientTarget, args) {
-                    clientTarget.setText( args.text );
-                    $('#target-to-copy-text').fadeIn();
-                } );
-            } );
-        client.on( "copy", function (event) {
-      var clipboard = event.clipboardData;
-      clipboard.setData( "application/rtf", $("#hidden-description").text() );
-   });
+$(document).ready(function() {
+    var clientTarget = new ZeroClipboard( $("#target-to-copy"), {
+        moviePath: "http://www.paulund.co.uk/playground/demo/zeroclipboard-demo/zeroclipboard/ZeroClipboard.swf",
+        debug: false
     });
+
+    clientTarget.on( "load", function(clientTarget) {
+        clientTarget.on( "complete", function(clientTarget, args) {
+            clientTarget.setText( args.text );
+        });
+    });
+});
 </script>
 
 
