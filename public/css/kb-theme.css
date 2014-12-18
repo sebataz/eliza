@@ -285,6 +285,12 @@ div.kb div.description {
     text-align: justify;
 }
 
+div.kb  div#hidden-description {
+    display: none;
+    color: #000;
+    background-color: #fff;
+}
+
 div.kb div.solution {
     text-align: justify;
     padding: .3em .7em;
