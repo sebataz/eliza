@@ -50,7 +50,7 @@ class QFeed extends CollectionFeed {
                 $char_found = $char_found > $matches ? $char_found : $matches;
                 
             } else {
-                if (preg_match_all('/\b' . preg_quote($_term, '/') . '\b/i', $Object, $matches))
+                if (preg_match_all('/' . preg_quote($_term, '/') . '/i', $Object, $matches))
                     $char_found = $char_found > (count($matches[0])/strlen($Object)) ? $char_found : (count($matches[0])/strlen($Object));
             }
         }

@@ -36,7 +36,7 @@ span.button  {
     color: #3b5998; 
     font-weight: bold;
     text-decoration: none;
-    font-family: "Arial Black";
+    font-family: Verdana;
     font-size: 2em;
     unicode-bidi:bidi-override;
     direction:rtl;
@@ -97,7 +97,7 @@ div#background-bottom div.title  a {
     padding: 0;
     margin: 0;
     font-size: 1em;
-    font-family: "Arial Black";
+    font-family: Verdana;
     color: #293e64;
     text-align: right;
 }
@@ -110,7 +110,7 @@ div#background-bottom a {
     margin: 5px 0;
     font-weight: bold;
     text-decoration: none;
-    font-family: "Arial Black";
+    font-family: Verdana;
 }
 
 div#search {
@@ -132,7 +132,7 @@ div#search input.search {
     background-color: #4c6aa9; 
     color: rgba(255,255,255,.4);
     border: none;
-    font-family: "Arial Black";
+    font-family: Verdana;
     font-size: 32px;
 }
 
@@ -165,7 +165,7 @@ div#search table.type td a {
     margin: 5px 0;
     font-weight: bold;
     text-decoration: none;
-    font-family: "Arial Black";
+    font-family: Verdana;
 }
 
 div#search table.type td a.active {
@@ -447,7 +447,7 @@ ul {
 }
 
 ol {
-    list-style: lower-alpha;
+    list-style: decimal;
 }
 
 kbd {

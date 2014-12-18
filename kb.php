@@ -31,7 +31,7 @@
     <div>
     <?php foreach ($Kb->Related as $id): $Related = eliza\beta\Feed::Kb()->getBy('Id', $id); ?>
         <div class="solution">
-            <a class="title" href="?id=<?php echo $id, '&', $querystring; ?>">#<span class="id"><?php echo $id; ?></span>: <?php echo $Related->Issue; ?></a>
+            <a class="title" href="?kb=<?php echo $id, '&', $querystring; ?>">#<span class="id"><?php echo $id; ?></span>: <?php echo $Related->Issue; ?></a>
             <?php echo $Related->Description; ?>
         </div>
     <?php endforeach; ?>

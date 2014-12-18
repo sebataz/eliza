@@ -14,7 +14,7 @@
                 console.log("suggest for " + term);
                 
                 $.ajax({
-                    url: location.origin+"/service/proxy.php?tags&c=kb&t=" + term + "&tc=0",
+                    url: location.origin+"/eliza/?Kb&term=" + term,
                     context: $( this ).parent()
                 }).done(function( suggestion ) {
                 console.log(suggestion);

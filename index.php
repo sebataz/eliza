@@ -40,13 +40,13 @@ $Kb = !isset($_GET['kb']) && $KnowledgeBase->count()
         <link rel="stylesheet" type="text/css" href="../public/css/reset.css">
         <link rel="stylesheet" type="text/css" href="../public/css/kb-theme.css">
         
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="../public/js/jquery-1.10.2.js"></script>
+        <script src="../public/js/jquery-ui.js"></script>
         
-        <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
-        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
-        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
-        <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushPlain.js" type="text/javascript"></script>
+        <link href="../public/plugin/shBrush/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <script src="../public/plugin/shBrush/shCore.js" type="text/javascript"></script>
+        <script src="../public/plugin/shBrush/shAutoloader.js" type="text/javascript"></script>
+        <script src="../public/plugin/shBrush/shBrushPlain.js" type="text/javascript"></script>
         
         <script type="text/javascript">        
             SyntaxHighlighter.defaults['toolbar'] = false;
