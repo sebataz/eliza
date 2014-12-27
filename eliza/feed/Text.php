@@ -36,9 +36,9 @@ class Text extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     }
 
     public function toHTML() {
-        return '<div id="title"><h1><a href="?id=' . $this->Id . '">'
+        return '<div id="title"><h1>'
             . $this->Title
-            . '</a></h1></div><div id="text">'
+            . '</h1></div><div id="text">'
             . eliza\beta\Presentation::replaceHTMLFeedReference($this->Text)
             . '</div>';
     }
