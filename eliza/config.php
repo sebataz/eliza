@@ -8,6 +8,7 @@ $cfg['Lock']['test'] = 'test1234';
 $cfg['Feed']['Location'] = 'feeds' . DS;
 $cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article' . DS;
 $cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page' . DS;
+$cfg['Feed']['LocationText'] = $cfg['Feed']['Location'] . 'text' . DS;
 
 // Response settings
 $cfg['XMLResponse'] = false;

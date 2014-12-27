@@ -69,3 +69,18 @@ div#page {width: 31em; float: right;}
 div#index img {width: 17em;}
 div#index li {margin: 1em;}
 div#index li ul li a {color: #bbb;}
+
+
+
+/** Riid **/
+#container { position: relative; width: 980px; margin: 3em auto; }
+#outbox { position: absolute; width: 780px; margin-top: 50px; padding-left: 200px; padding-bottom: 150px; z-index: -2; background: url('../img/coffee-stain.png') no-repeat right bottom; }
+#box { margin-top: -5px; margin-left: -5px; border: 10px solid #fff; width: 600px; min-height: 750px; box-shadow: 5px 5px 20px #666; }
+#foot { font-size: .9em; color: #777; padding-left: 50px; }
+.shadow { background-color: #fff; box-shadow: 5px 5px 20px #666; width: 620px; margin-top: -5px; margin-left: -5px; padding-top: 1px; padding-bottom: 5px; }
+
+#foot a { color: #333; }
+
+table.index {width: 100%; margin-bottom: .5em;}
+table.index tr td {padding: 0 .3em;}
+table.index tr td:nth-child(2) {border-bottom: dotted 1px #ccc; width: 100%}
