@@ -11,6 +11,20 @@ class Text extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         parent::__construct($array);
         $this->Id = eliza\beta\Utils::uniqueId();
     }
+     
+    public function save() {
+        if (eliza\beta\Response::hasPrivilege())
+            parent::save();
+        else
+            oops('not allowed');    
+    }
+       
+    public function delete() {
+        if (eliza\beta\Response::hasPrivilege())
+            parent::delete();
+        else
+            oops('not allowed');    
+    }
     
     public static function Feed() {
         $Site = new eliza\feed\HTMLFeed();

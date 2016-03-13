@@ -18,17 +18,14 @@ td {padding: .3em;}
 
 /** Layeout **/
 div#top-bar {position: absolute; top: 0; width: 100%; min-height: 1.3em; border-bottom: dashed 1px #ddd;}
-div#bottom-bar {min-height: 13em; width: 100%; background-image: url('../img/grey_wash_wall.png');  box-shadow: 0px -1px 26px 0px rgba(50, 50, 50, 0.87);}
-div#content {width: 50em; margin: 0 auto; text-align: justify;}
-
-
 div#top-bar div#form {position: absolute; right: 0; padding-right: 1.3em;}
 
+div#navigation {position:fixed; top: 0; left: 0; margin-left: 1em; width: 10em; background: url('../img/nu-sebataz.png') no-repeat top center; background-size: 10em 10em;}
+div#navigation div.navigation-area:first-child {margin-top: 10em;}
+div#navigation div.navigation-area {margin-top: 1em; margin-left: 3em;}
+div#navigation div.navigation-area ul {margin-left: 1em;}
 
-div#bottom-bar div#columns {margin: 0 auto; width: 41em; padding: 3em; font-size: 1.3em;}
-div#bottom-bar div#columns div {width: 13em; float: left; text-align: center;}
-div#bottom-bar div#columns a {color: #78b}
-div#bottom-bar div#columns a:hover {color: #e30; text-decoration: underline;}
+div#content {max-width: 40em; margin-left: 14em; text-align: justify;}
 
 /** Components **/
 div.spinner { width: 100%; height: 15px; background: url('../img/spinner.gif') no-repeat center center; }
@@ -59,16 +56,17 @@ div.article img {max-width: 48em;}
 div.article ol li {list-style: square; margin: 1.3em;}
 div.article pre {font-size: .9em;}
 
+div.comment {margin: 2em 0;}
+div.comment div.comment-author {font-size: .8em; font-weight: bold; color: #aaa;}
+
+div.comment-form  {margin: 2em 0;}
+input.comment-author {border: solid 1px #aaa;}
+textarea.comment-text {width:100%; height: 10em; border: solid 1px #aaa;}
 
 
 
 /** Saiiit **/
-div#index {width: 17em; margin-top:10em;}
-div#page {width: 31em; float: right;}
-
-div#index img {width: 17em;}
-div#index li {margin: 1em;}
-div#index li ul li a {color: #bbb;}
+div#navigation li ul li a {margin: .5em; color: #bbb;}
 
 
 

@@ -20,6 +20,26 @@ abstract class Feed extends Object {
         return get_object_vars($this);
     }
     
+    public function save () {
+        $XmlFeed = new \eliza\feed\XMLFeed(array($this));
+    
+        Utils::writeFile(
+            GlobalContext::Configuration()->Feed->Location
+            . strtolower($this->getClass()) . DS
+            . $this->Id . '.xml',
+            
+            $XmlFeed->XMLFeed()
+        );
+    }
+    
+    public function delete () {
+        eliza\beta\Utils::deleteFile(
+            eliza\beta\GlobalContext::Configuration()->Feed->Location
+            . strtolower($this->getClass()) . DS 
+            . $this->Id . '.xml'
+        );
+    }
+    
     public static function __callStatic($_feed, $_args) {
         self::load($_feed);
         return $_feed::__Feed($_args);

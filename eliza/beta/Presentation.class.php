@@ -39,11 +39,11 @@ class Presentation {
     }
     
     // prototype [Feed arg1 arg2 /]
-    // prototype with query [Feed arg1 arg2]{method1:arg1,arg2 method2:arg1,arg2}
+    // prototype with query [Feed arg1 arg2 /]{method1:arg1,arg2 method2:arg1,arg2}
     public static function replaceHTMLFeedReference($_content) {
         $replacedContent = '';
-        $replacedContent = preg_replace_callback('/\[(.*?)\s\/\](\{(.*)\})?/', function($matches) {
-        
+        $replacedContent = preg_replace_callback('/\[(.[^\]]*?)\s\/\](\{(.*?)\})?/', function($matches) {
+
             $callback = explode(' ', $matches[1]);
             $Feed = Response::Feed($callback[0], array_slice($callback, 1));
             
@@ -56,7 +56,9 @@ class Presentation {
             
             if ($Feed instanceof \eliza\feed\HTMLFeed)
                 return $Feed->HTMLFeed();
+
             
+            oops('HTML for "' . $callback[0] . '" could not be loaded');
             return $matches[0];
         }, $_content);
     

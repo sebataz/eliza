@@ -9,17 +9,18 @@ $cfg['Feed']['Location'] = 'feeds' . DS;
 $cfg['Feed']['LocationArticle'] = $cfg['Feed']['Location'] . 'article' . DS;
 $cfg['Feed']['LocationPage'] = $cfg['Feed']['Location'] . 'page' . DS;
 $cfg['Feed']['LocationText'] = $cfg['Feed']['Location'] . 'text' . DS;
+$cfg['Feed']['LocationComment'] = $cfg['Feed']['Location'] . 'comment' . DS;
 
 // Response settings
 $cfg['XMLResponse'] = false;
 
 // Custom settings
-$cfg['Me']['blog'] = 'http://sebataz.ch/';
-$cfg['Me']['about me'] = "http://sebataz.ch/seba/";
-$cfg['Me']['curriculum'] = "https://careers.stackoverflow.com/rigoni";
+$cfg['Navigation']['sebataz']['blog'] = 'blog.php';
+$cfg['Navigation']['sebataz']['about me'] = "about.php";
+$cfg['Navigation']['sebataz']['curriculum'] = "https://careers.stackoverflow.com/rigoni";
 
-$cfg['Projects']['eliza'] = "http://eliza.sebataz.ch/";
+$cfg['Navigation']['projects']['eliza'] = "http://eliza.sebataz.ch/";
 
-$cfg['Comunities']['github.com'] = 'https://github.com/sebataz';
-$cfg['Comunities']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
-$cfg['Comunities']['stackoverflow.com'] = 'http://stackoverflow.com/users/935075/sebataz';
+$cfg['Navigation']['comunities']['github.com'] = 'https://github.com/sebataz';
+$cfg['Navigation']['comunities']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
+$cfg['Navigation']['comunities']['stackoverflow.com'] = 'http://stackoverflow.com/users/935075/sebataz';

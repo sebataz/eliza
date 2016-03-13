@@ -17,6 +17,20 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         $this->Date = time();
     }
     
+    public function save() {
+        if (eliza\beta\Response::hasPrivilege())
+            parent::save();
+        else
+            oops('not allowed');    
+    }
+    
+    public function delete() {
+        if (eliza\beta\Response::hasPrivilege())
+            parent::delete();
+        else
+            oops('not allowed');    
+    }
+    
     public static function Feed() {
         $Blog = new eliza\feed\HTMLFeed();
         
@@ -80,10 +94,9 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         
         return $ByMonth;
     }
-
+    
     public function toHTML() {
         return '<div class="title">'
-            . '<img class="avatar" src="eliza/public/img/' . $this->Author . '-avatar.jpg" />'
             . '<h1><a href="?id=' . $this->Id . '">'
             . $this->Title
             . '</a></h1><div class="date">'

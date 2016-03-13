@@ -11,7 +11,7 @@ if (empty($_REQUEST)) oops('you did not request anything');
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = isset($_GET['args']) ? $_GET['args'] : array();
-    
+    $privilege = eliza\beta\Response::hasPrivilege();
     
     
 //----------------------------------------------------------------------------//
@@ -41,17 +41,13 @@ try {
 //                                method: post                                //
 //----------------------------------------------------------------------------//
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (eliza\beta\Response::hasPrivilege() && $feed) {
+        if ($feed) {
             
             if ($Feed->count() < 1)
                 $Feed->append($feed ? new $feed() : new eliza\beta\Object());
             
             if (count($_POST) < 1) {
-                eliza\beta\Utils::deleteFile(
-                    eliza\beta\GlobalContext::Configuration()->Feed->Location
-                    . strtolower($feed) . DS 
-                    . $Feed->first()->Id . '.xml'
-                );
+                $Feed->first()->delete();
                 
                 header(
                     'Location: ' . 
@@ -60,13 +56,7 @@ try {
             
             } else {
                 $Feed->first()->mergeWith($_POST);
-                
-                eliza\beta\Utils::writeFile(
-                    eliza\beta\GlobalContext::Configuration()->Feed->Location
-                    . strtolower($feed) . DS 
-                    . $Feed->first()->Id . '.xml',     
-                    $Feed->XMLFeed()
-                );
+                $Feed->first()->save();
             }
             
         }
