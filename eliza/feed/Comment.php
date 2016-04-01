@@ -17,7 +17,7 @@ class Comment extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         parent::save();
     }
     
-    public static function Feed($_origin = 0) {
+    public static function Feed($_origin = null) {
         $Comments = new eliza\feed\HTMLFeed();
         
         foreach (eliza\beta\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationComment) as $Xml) {
@@ -26,7 +26,7 @@ class Comment extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
         
             $CommentXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));
             
-            if ((string)$CommentXml->origin != (string)$_origin) continue;
+            if (($_origin !== null) && ((string)$CommentXml->origin != (string)$_origin)) continue;
             
             $Comment = new self();
             $Comment->Id = $Xml->Name;

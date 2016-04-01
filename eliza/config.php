@@ -17,8 +17,8 @@ $cfg['XMLResponse'] = false;
 // Custom settings
 $cfg['Navigation']['sebataz']['blog'] = 'blog.php';
 $cfg['Navigation']['sebataz']['about me'] = "about.php";
-$cfg['Navigation']['sebataz']['curriculum'] = "https://careers.stackoverflow.com/rigoni";
 
+$cfg['Navigation']['projects']['nutshell'] = "https://github.com/sebataz/nutshell";
 $cfg['Navigation']['projects']['eliza'] = "http://eliza.sebataz.ch/";
 
 $cfg['Navigation']['comunities']['github.com'] = 'https://github.com/sebataz';
