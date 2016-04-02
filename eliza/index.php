@@ -7,7 +7,7 @@
 //----------------------------------------------------------------------------//
 include '../eliza/beta.php';
 eliza\beta\Presentation::buffered();
-if (empty($_REQUEST)) oops('you did not request anything');
+if (empty($_REQUEST) && empty($_FILES)) oops('you did not request anything');
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = isset($_GET['args']) ? $_GET['args'] : array();
@@ -59,6 +59,20 @@ try {
                 $Feed->first()->save();
             }
             
+        }
+        
+        if (!empty($_FILES)) {
+            if ( ! is_dir(ROOT . $_POST['location']))
+                mkdir(ROOT . $_POST['location']);
+        
+            for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
+                move_uploaded_file($_FILES['file']['tmp_name'][$i],
+                    ROOT . $_POST['location'] . DS .
+                    $_FILES['file']['name'][$i]) or die ('aaaaaaaaaaaaargh');
+            }
+            
+            $feed = 'Node';
+            $Feed = eliza\beta\Feed::Node($_POST['location']);
         }
     }
     
