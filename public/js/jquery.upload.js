@@ -40,20 +40,14 @@ $.fn.upload = function(location) {
               formData.append('file[]', files[i]);
             }
             
-            $.ajax({
-              url: 'eliza/eliza/index.php?',
-              data: formData,
-              processData: false,
-              contentType: false,
-              type: 'POST',
-              success: function(data){
+            Eli.query(null, formData, true).call(function (data) {
                 console.log(data);
                 $this.html('');
                 for (var i = 0; i < data.feed.length; i++) {
                     $this.append('<div>' + data.feed[i].Url + '</div>');
                 }
-              }
             });
+           
             
             return false
         })

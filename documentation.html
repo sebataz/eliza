@@ -94,8 +94,8 @@ echo eliza\beta\Feed::Item()->limit(1)->HTMLFeed();
                 <p>An examaple using jQuery:<p>
                 <pre><code class="language-javascript">
 // GET Request
-new Eliza('eliza/index.php').query('Item&lmt=1&off=0').call(function(response, html){
-    $('#response').append(html);
+new Eliza('eliza/index.php').query('Item&lmt=1&off=0').call(function(response){
+    $('#response').append(response.html);
 });
 
 //Post Request
