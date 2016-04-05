@@ -35,7 +35,8 @@ div.spinner.fixed { position: fixed; height: 100%; }
 div#preview { /* box-shadow: 0 0 200px #fff; */ }
 
 div#preview img { display: block; }
-
+div.gallery {text-align: center;}
+div.gallery div.image {display: inline-block;}
 
 
 
@@ -47,8 +48,6 @@ div.article div.author {margin-bottom: 3em;}
 div.article div.headline {margin: 0 2em;}
 div.article div.text {margin: 2em 3em;}
 
-div.article div.gallery {text-align: center;}
-div.article div.gallery div.image {display: inline-block;}
 
 div.article h1 {margin: 0;}
 div.article h1 a {color: #fb0;}

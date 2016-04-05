@@ -22,12 +22,16 @@ class Utils {
         switch (pathinfo($_url_to_image, PATHINFO_EXTENSION)){
             case 'jpeg':
             case 'jpg':
+            case 'JPEG':
+            case 'JPG':
                 $image  = imagecreatefromjpeg($_url_to_image);
                 break;
             case 'png':
+            case 'PNG':
                 $image  = imagecreatefrompng($_url_to_image);
                 break;
             case 'gif':
+            case 'GIF':
                 $image = imagecreatefromgif($_url_to_image);
         }
         
@@ -68,5 +72,35 @@ class Utils {
     
     public static function uniqueId() {
         return time() . substr(microtime(),2,3);
+    }
+    
+    public static function queryDatabase($_query) {
+        static $DatabaseConnection;
+        
+        if (!$DatabaseConnection)
+            $DatabaseConnection = new \PDO(
+                'mysql:host=' . GlobalContext::Configuration()->Mysql->Hostname
+                . ';dbname=' . GlobalContext::Configuration()->Mysql->Database
+                , GlobalContext::Configuration()->Mysql->Username
+                , GlobalContext::Configuration()->Mysql->Password
+                , [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]
+            );
+        
+        // return $DatabaseConnection->query($_query, \PDO::FETCH_ASSOC);
+        
+        try {
+            $Collection = new Collection();
+        
+            foreach ($DatabaseConnection->query($_query, \PDO::FETCH_ASSOC) as $row) {
+                $Collection->append(new Object($row));
+            }
+            
+            return $Collection;
+        } catch (\PDOException $E) {
+            if ($E->getCode() == "HY000") // general error produced by cycling a non-dataset query
+                return true;
+            else throw $E;        
+        }
+        
     }
 }

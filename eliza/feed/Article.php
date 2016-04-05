@@ -100,7 +100,7 @@ class Article extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
             . '<h1><a href="?id=' . $this->Id . '">'
             . $this->Title
             . '</a></h1><div class="date">'
-            . date('d M', $this->Date)
+            . date('d F Y', $this->Date)
             . '</div></div><div class="author">by '
             . $this->Author
             . '</div><div class="headline">'

@@ -9,6 +9,13 @@ class Node extends eliza\beta\Feed {
     public $Url = '';
     public $IsDir = false;
     
+    public function delete() {
+        if (eliza\beta\Response::hasPrivilege())
+            unlink($this->Path);
+        else
+            oops('not allowed');    
+    }
+    
     public static function Feed($_directory = '.') {  
         if (!file_exists(ROOT . $_directory)) oops('the directory ' . $_directory . ' does not exist');
 
