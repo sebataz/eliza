@@ -45,7 +45,7 @@ class Utils {
         $thumb = imagecreatetruecolor($thumb_width, $thumb_height);
 
         // generate thumb
-        imagecopyresized($thumb, $image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
+        imagecopyresampled($thumb, $image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
 
         // save thumb
         imagejpeg($thumb, $path_to_thumb);

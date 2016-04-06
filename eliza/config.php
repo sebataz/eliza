@@ -22,6 +22,8 @@ $cfg['XMLResponse'] = false;
 
 // Custom settings
 $cfg['Navigation']['sebataz']['blog'] = 'blog.php';
+$cfg['Navigation']['sebataz']['read more'] = "read.php";
+$cfg['Navigation']['sebataz']['i miei disegni'] = "disegni.php";
 $cfg['Navigation']['sebataz']['about me'] = "about.php";
 
 $cfg['Navigation']['projects']['nutshell'] = "https://github.com/sebataz/nutshell";
