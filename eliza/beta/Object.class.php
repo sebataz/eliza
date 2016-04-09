@@ -17,4 +17,15 @@ class Object {
         $class = str_replace('\\','',substr('\\' . get_called_class(), strrpos(get_called_class(), '\\')+1));
         return $_with_namespace ? get_called_class() : $class;
     }
+    
+    /**
+     * Casts an object to another class, by serializing the object and then
+     * unserializing it to the new class instance.
+     * 
+     * @param string $_clazz_name A class name.
+     * @return Object The casted object.
+     */
+    public function castTo($_clazz_name) {
+        return unserialize(preg_replace('/^O:\d+:"[^"]++"/', 'O:' . strlen($_clazz_name) . ':"' . $_clazz_name . '"', serialize($this)));
+    }
 }

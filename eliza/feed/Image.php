@@ -31,6 +31,6 @@ class Image extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
              . ' ;height:'.(($this->ThumbSize  > 0) ? $this->ThumbSize  : 'auto')
              . ' ;vertical-align: middle;"><a href="' . $this->File->Url 
              . '" target="_blank" class="preview"><img src="' . $this->Thumb 
-             . '" /></a></div>' . "\n";
+             . '" alt="' . $this->Name . '"/></a></div>' . "\n";
     }
 }

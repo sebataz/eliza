@@ -32,3 +32,5 @@ $cfg['Navigation']['projects']['eliza'] = "http://eliza.sebataz.ch/";
 $cfg['Navigation']['comunities']['github.com'] = 'https://github.com/sebataz';
 $cfg['Navigation']['comunities']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
 $cfg['Navigation']['comunities']['stackoverflow.com'] = 'http://stackoverflow.com/users/935075/sebataz';
+
+$cfg['Navigation']['beta']['chat'] = 'chat.php';

@@ -33,8 +33,8 @@ abstract class Feed extends Object {
     }
     
     public function delete () {
-        eliza\beta\Utils::deleteFile(
-            eliza\beta\GlobalContext::Configuration()->Feed->Location
+        Utils::deleteFile(
+            GlobalContext::Configuration()->Feed->Location
             . strtolower($this->getClass()) . DS 
             . $this->Id . '.xml'
         );
@@ -54,7 +54,7 @@ abstract class Feed extends Object {
               . $_feed . '.php';
               
         if (class_exists($_feed)) return;
-        if (!file_exists($feed)) oops();
+        if (!file_exists($feed)) oops('class ' . $_feed . ' was not found');
         require_once $feed;
     }
 }
