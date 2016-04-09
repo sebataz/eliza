@@ -9,8 +9,8 @@ class Disegni extends Image {
         parent::save();
     }
     
-    public function updateViews() {
-        $meta_disegno = 'feeds/disegni/' . $this->Id . '.xml';
+    public function __wakeup() {
+        $meta_disegno = 'feeds/disegni/' . $this->Name . '.xml';
         
         if (file_exists(ROOT . $meta_disegno)) {
             $DisegnoXml = new eliza\beta\Collection((array)simplexml_load_file(ROOT . $meta_disegno));
@@ -25,7 +25,6 @@ class Disegni extends Image {
         foreach ($RawGallery as $Image) {
             $Disegno = $Image->castTo('Disegni');
             $Disegno->Id = $Image->Name;
-            $Disegno->updateViews();
             $Gallery->append($Disegno);
         }
         
