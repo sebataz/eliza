@@ -36,7 +36,7 @@ div#preview { /* box-shadow: 0 0 200px #fff; */ }
 
 div#preview img { display: block; }
 div.gallery {text-align: center;}
-div.gallery div.image, div.gallery div.disegni {display: inline-block;}
+div.gallery div.image, div.gallery div.imageviews {display: inline-block;}
 
 
 

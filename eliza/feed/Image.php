@@ -1,6 +1,6 @@
 <?php
 
-class Image extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
+class Image extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public $Name = '';
     public $Thumb = '';
     public $ThumbSize = 0; 
@@ -9,7 +9,7 @@ class Image extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public static function Feed($_gallery, $thumb_size = 0) {
         $Gallery = new eliza\feed\HTMLFeed();
         
-        $GalleryFolder = eliza\beta\Feed::Node($_gallery);
+        $GalleryFolder = eliza\feed\Feed::Node($_gallery);
         
         foreach ($GalleryFolder as $Img) {
             $Image = new self();

@@ -1,6 +1,6 @@
 <?php
 
-class GitHistory extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
+class GitHistory extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public $Hash = '';
     public $Author = '';
     public $Date = '';

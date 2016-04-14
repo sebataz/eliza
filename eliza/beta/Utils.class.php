@@ -103,4 +103,21 @@ class Utils {
         }
         
     }
+    
+    public static function readXMLFromFile($_path) {
+        return new Object((array)simplexml_load_file($_path));
+    }
+    
+    public static function readXMLFromDirectory($_directory) {
+        $Collection = new Collection();
+        
+        foreach (Feed::Node($_directory) as $Xml) {
+            if ($Xml->IsDir) continue;
+            if ($Xml->Extension != '.xml') continue;
+        
+            $Collection->append(self::readXMLFromFile($Xml->Path));
+        }
+        
+        return $Collection; 
+    }
 }

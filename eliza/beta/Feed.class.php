@@ -1,8 +1,8 @@
 <?php
 
-namespace eliza\beta;
+namespace eliza\feed;
 
-abstract class Feed extends Object {
+abstract class Feed extends \eliza\beta\Object {
     public function __get($_prop){ oops(OOPS); }
     public function __set($_prop, $_val) { oops(OOPS); }
     
@@ -21,10 +21,9 @@ abstract class Feed extends Object {
     }
     
     public function save () {
-        $XmlFeed = new \eliza\feed\XMLFeed(array($this));
-    
-        Utils::writeFile(
-            GlobalContext::Configuration()->Feed->Location
+        $XmlFeed = new XMLFeed(array($this));
+        \eliza\beta\Utils::writeFile(
+            \eliza\beta\GlobalContext::Configuration()->Feed->Location
             . strtolower($this->getClass()) . DS
             . $this->Id . '.xml',
             
@@ -33,8 +32,8 @@ abstract class Feed extends Object {
     }
     
     public function delete () {
-        Utils::deleteFile(
-            GlobalContext::Configuration()->Feed->Location
+        \eliza\beta\Utils::deleteFile(
+            \eliza\beta\GlobalContext::Configuration()->Feed->Location
             . strtolower($this->getClass()) . DS 
             . $this->Id . '.xml'
         );
@@ -50,10 +49,9 @@ abstract class Feed extends Object {
     }
     
     public static function load($_feed) {
-        $feed = ELIZA . 'feed' . DS 
-              . $_feed . '.php';
-              
         if (class_exists($_feed)) return;
+        
+        $feed = ELIZA . 'feed' . DS . $_feed . '.php';
         if (!file_exists($feed)) oops('class ' . $_feed . ' was not found');
         require_once $feed;
     }

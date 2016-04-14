@@ -68,7 +68,7 @@ try {
             for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
                 move_uploaded_file($_FILES['file']['tmp_name'][$i],
                     ROOT . $_POST['location'] . DS .
-                    $_FILES['file']['name'][$i]) or die ('aaaaaaaaaaaaargh');
+                    $_FILES['file']['name'][$i]);
             }
             
             $feed = 'Node';

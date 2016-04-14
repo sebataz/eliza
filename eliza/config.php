@@ -1,7 +1,6 @@
 <?php
 
 // Main settings
-$cfg['Title'] = 'sebataz.ch';
 $cfg['Lock']['test'] = 'test1234';
 
 // Feeds settings
@@ -19,18 +18,3 @@ $cfg['Mysql']['Database'] = 'test';
 
 // Response settings
 $cfg['XMLResponse'] = false;
-
-// Custom settings
-$cfg['Navigation']['sebataz']['blog'] = 'blog.php';
-$cfg['Navigation']['sebataz']['read more'] = "read.php";
-$cfg['Navigation']['sebataz']['i miei disegni'] = "disegni.php";
-$cfg['Navigation']['sebataz']['about me'] = "about.php";
-
-$cfg['Navigation']['projects']['nutshell'] = "https://github.com/sebataz/nutshell";
-$cfg['Navigation']['projects']['eliza'] = "http://eliza.sebataz.ch/";
-
-$cfg['Navigation']['comunities']['github.com'] = 'https://github.com/sebataz';
-$cfg['Navigation']['comunities']['sourceforge.net'] = 'https://sourceforge.net/users/sebataz';
-$cfg['Navigation']['comunities']['stackoverflow.com'] = 'http://stackoverflow.com/users/935075/sebataz';
-
-$cfg['Navigation']['beta']['chat'] = 'chat.php';

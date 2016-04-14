@@ -1,6 +1,6 @@
 <?php 
 
-class Node extends eliza\beta\Feed {
+class Node extends eliza\feed\Feed {
     public $Name = '';
     public $Filename = '';
     public $Extension = '';

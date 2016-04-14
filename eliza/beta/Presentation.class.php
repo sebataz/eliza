@@ -26,7 +26,7 @@ class Presentation {
             $buffer = self::flush();
             $buffer = self::replaceHTMLFeedReference($buffer);
             if (self::$_cache) file_put_contents(self::$_cache, $buffer);
-            echo $buffer; //might be bug: die();
+            echo $buffer;
         } catch (\Exception $e) {
             include ELIZA . 'oops.php'; die();
         }
@@ -42,7 +42,7 @@ class Presentation {
     // prototype with query [Feed arg1 arg2 /]{method1:arg1,arg2 method2:arg1,arg2}
     public static function replaceHTMLFeedReference($_content) {
         $replacedContent = '';
-        $replacedContent = preg_replace_callback('/\[(.[^\]]*?)\s\/\](\{(.*?)\})?/', function($matches) {
+        $replacedContent = preg_replace_callback('/\[(.*?[^\]])\s\/\](\{(.*?)\})?/', function($matches) {
 
             $callback = explode(' ', $matches[1]);
             $Feed = Response::Feed($callback[0], array_slice($callback, 1));

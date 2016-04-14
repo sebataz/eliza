@@ -1,6 +1,6 @@
 <?php
 
-class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
+class Page extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Parent = 0;
     public $Title = '';
@@ -29,7 +29,7 @@ class Page extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public static function Feed() {
         $Site = new eliza\feed\HTMLFeed();
         
-        foreach (eliza\beta\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationPage) as $Xml) {
+        foreach (eliza\feed\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationPage) as $Xml) {
             if ($Xml->IsDir) continue;
         
             $PageXml = new eliza\beta\Collection((array)simplexml_load_file($Xml->Path));

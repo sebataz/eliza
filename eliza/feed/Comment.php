@@ -1,6 +1,6 @@
 <?php
 
-class Comment extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
+class Comment extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public $Id = 0;
     public $Origin = 0;
     public $Author = '';
@@ -20,7 +20,7 @@ class Comment extends eliza\beta\Feed implements eliza\feed\HTMLFeedI {
     public static function Feed($_origin = null) {
         $Comments = new eliza\feed\HTMLFeed();
         
-        foreach (eliza\beta\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationComment) as $Xml) {
+        foreach (eliza\feed\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationComment) as $Xml) {
             if ($Xml->IsDir) continue;
         
         
