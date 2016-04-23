@@ -5,7 +5,6 @@ class Page extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public $Parent = 0;
     public $Title = '';
     public $Content = '';
-    public $File = array();
     
     public function __construct(array $array = array()) {
         parent::__construct($array);
@@ -36,10 +35,9 @@ class Page extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
             
             $Page = new self();
             $Page->Id = $Xml->Name;
-            $Page->Parent = (int) $PageXml->parent;
+            $Page->Parent = $PageXml->parent;
             $Page->Title = (string) $PageXml->title;
             $Page->Content = (string) html_entity_decode($PageXml->content);
-            $Page->File = $Xml;
             
             $Site->append($Page);
         }
@@ -58,18 +56,30 @@ class Page extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
                 $index .= (eliza\beta\Response::hasPrivilege()?'id':'id');
                 $index .= '=' . $Page->Id . '">' . $Page->Title . '</a>';
                 $index .= self::buildIndexHTML($_FeedCollection, $Page->Id) . '</li>';
+                
+                
+                
             }
         }
-            
+        
+        if (eliza\beta\Response::hasPrivilege()) {
+            $index .= '<li><form id="new-page-at-' . $_parent . '" action="eliza\eliza\index.php?Page&by=Id&redirect=1" method="POST">';
+            $index .= '<input type="hidden" name="Parent" value="' . $_parent . '" />';
+            $index .= '<input type="hidden" name="Title" value="edit title" />';
+            $index .= '<input type="hidden" name="Content" value="edit content" />';
+            $index .= '<a href="#" onclick="document.getElementById(\'new-page-at-' . $_parent . '\').submit();">new page here</a>';
+            $index .= '</form></li>';
+        }
         
         $index .= '</ul>';
         return $index;
     }
 
     public function toHTML() {
-        return '<div class="title"><h1>'
+        return '<div id="title" contenteditable="' . (eliza\beta\Response::hasPrivilege()?'true':'false') . '">'
             . $this->Title
-            . '</h1></div><div class="content">'
+            . '</div>' . PHP_EOL
+            . '<div id="content" contenteditable="' . (eliza\beta\Response::hasPrivilege()?'true':'false') . '">'
             . eliza\beta\Presentation::replaceHTMLFeedReference($this->Content)
             . '</div>';
     }

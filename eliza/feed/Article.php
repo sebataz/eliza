@@ -33,7 +33,7 @@ class Article extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     
     public static function Feed() {
         $Blog = new eliza\feed\HTMLFeed();
-        
+                
         foreach (eliza\feed\Feed::Node(eliza\beta\GlobalContext::Configuration()->Feed->LocationArticle) as $Xml) {
             if ($Xml->IsDir) continue;
         

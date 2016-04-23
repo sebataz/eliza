@@ -30,7 +30,7 @@
                         <?php endif; ?>
                     </ul>
                 </p><br /><br />
-                <?php if ($e): ?>
+                <?php if ($e instanceof \eliza\beta\Oops): ?>
                     <h1 class="wtf">Wtf?</h1><div id="stacktrace"><?php $e->printStackTrace(); ?></div>
                 <?php endif; ?>
             </div>

@@ -1,13 +1,18 @@
-$.fn.preview = function() {
+$.fn.preview = function(spinner_img) {
     return this.each(function() {
         $(this).click(function (e) {
             e.preventDefault();
             var loaded = false;
             var foreground = $('<div id="foreground" />');
             var preview = $('<div id="preview"/>');
-            var spinner = $('<div class="spinner fixed"/>');
             var image = $('<img>');
             
+            var spinner = $('<div class="spinner fixed"/>');
+            spinner.css('position', 'fixed');
+            spinner.css('width', '100%');
+            spinner.css('height', '100%');
+            spinner.css('background', 'url(\'' + spinner_img + '\') no-repeat center center');
+                        
             foreground.append(spinner);
 
             image.attr('src', $(this).attr('href'));

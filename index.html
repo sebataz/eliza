@@ -43,14 +43,14 @@
                     <h3>What she features</h3>                    
                     <p>The project includes a <strong>PHP library</strong> and several <strong>jQuery plugins</strong>, the communication between the PHP and JavaScript layers uses <strong>JSON</strong>.</p>
                     <p>eliza responds to a request using a feed source which can be formatted in <strong>PHP, JSON, XML, HTML</strong>.</p>
-                    <p>eliza already includes some basic feeds that you can use: GitHistory, Node (files), Image, Page.</p>
+                    <p>eliza already includes some basic feeds that you can use: GitHistory, Node (files), Image, ImageViews, Page, Article, Comment.</p>
                     <p>Moreover, eliza has a simple <strong>buffering and caching</strong> system for your pages.</p>
                     
                     <h3>How she works</h3>
                     <p>Basically you need two files to work with eliza, a <strong>source class (feed)</strong> and a <strong>html template or page</strong>.</p>
                     <p>An example of feed:</p>
                     <pre><code class="language-php">
-class Item extends eliza\beta\Feed {
+class Item extends eliza\feed\Feed {
     public $Value = '';
     
     public static function Feed() {
@@ -64,7 +64,7 @@ class Item extends eliza\beta\Feed {
                     </code></pre>
                     <p>An example of page:</p>
                     <pre><code class="language-php">
-echo eliza\beta\Response::HTMLFeed('Item');
+echo eliza\feed\Feed::Item()->HTMLFeed();
                     </code></pre>
                     <p>Please have a look at the <a href="documentation.html">documentation page</a>.</p>
                     <h3>Where to get her</h3>

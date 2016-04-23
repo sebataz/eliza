@@ -44,7 +44,7 @@ class Comment extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public function toHTML() {
         return '<div class="comment-author">'
             . $this->Author
-            . ' :</div><div class="comment-text">'
+            . ':</div><div class="comment-text">'
             . $this->Text
             . '</div>';
     }

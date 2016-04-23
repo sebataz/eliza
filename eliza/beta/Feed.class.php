@@ -3,8 +3,8 @@
 namespace eliza\feed;
 
 abstract class Feed extends \eliza\beta\Object {
-    public function __get($_prop){ oops(OOPS); }
-    public function __set($_prop, $_val) { oops(OOPS); }
+    public function __get($_prop){ oops($_prob . ' not found in ' . $this->getClass()); }
+    public function __set($_prop, $_val) { oops($_prob . ' not found in ' . $this->getClass()); }
     
     public function __construct(array $_array = array()) {
         foreach (get_class_vars(get_called_class()) as $key => $default)
@@ -39,20 +39,13 @@ abstract class Feed extends \eliza\beta\Object {
         );
     }
     
-    public static function __callStatic($_feed, $_args) {
-        self::load($_feed);
-        return $_feed::__Feed($_args);
-    }
-    
-    public static function __Feed($_args) {
-        return call_user_func_array(array(get_called_class(), 'Feed'), $_args);
-    }
-    
-    public static function load($_feed) {
-        if (class_exists($_feed)) return;
+    public static function __callStatic ($_feed, $_args) {
+        if (!class_exists($_feed)) {
+            $feed = ELIZA . 'feed' . DS . $_feed . '.php';
+            if (!file_exists($feed)) oops('feed ' . $_feed . ' was not found');
+            require_once $feed;
+        }
         
-        $feed = ELIZA . 'feed' . DS . $_feed . '.php';
-        if (!file_exists($feed)) oops('class ' . $_feed . ' was not found');
-        require_once $feed;
+        return call_user_func_array(array($_feed, 'Feed'), $_args);
     }
 }

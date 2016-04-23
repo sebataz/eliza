@@ -7,11 +7,12 @@
 //----------------------------------------------------------------------------//
 include '../eliza/beta.php';
 eliza\beta\Presentation::buffered();
+eliza\beta\Response::hasPrivilege();
 if (empty($_REQUEST) && empty($_FILES)) oops('you did not request anything');
+
 try {
     $feed = class_exists(key($_GET)) ? key($_GET) : null;
     $args = isset($_GET['args']) ? $_GET['args'] : array();
-    $privilege = eliza\beta\Response::hasPrivilege();
     
     
 //----------------------------------------------------------------------------//
@@ -20,7 +21,7 @@ try {
     if (!$feed)
         $Feed = new eliza\feed\HTMLFeed();
     else
-        $Feed = eliza\beta\Response::Feed($feed, $args)
+        $Feed = eliza\feed\Feed::__callStatic($feed, $args)
             ->Q(isset($_GET['q']) ? $_GET['q'] : false)
             ->filterBy(
                 isset($_GET['by']) ? $_GET['by'] : false,
@@ -42,7 +43,7 @@ try {
 //----------------------------------------------------------------------------//
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($feed) {
-            
+                   
             if ($Feed->count() < 1)
                 $Feed->append($feed ? new $feed() : new eliza\beta\Object());
             
@@ -62,7 +63,7 @@ try {
         }
         
         if (!empty($_FILES)) {
-            if ( ! is_dir(ROOT . $_POST['location']))
+            if (!file_exists(ROOT . $_POST['location']))
                 mkdir(ROOT . $_POST['location']);
         
             for ($i = 0; $i < count($_FILES['file']['name']); $i++) {

@@ -11,7 +11,7 @@ class HTMLFeed extends XMLFeed {
         $html = '';
         
         foreach ($this as $Object) {
-            $html .= "\n" . '<div class="' . strtolower(get_class($Object)) . '">' . "\n";
+            $html .= "\n" . '<div class="' . strtolower($Object->getClass()) . '">' . "\n";
             
             if ($Object instanceof HTMLFeedI) $html .= $Object->toHTML();
             else

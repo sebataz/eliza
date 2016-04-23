@@ -48,7 +48,6 @@ $.fn.upload = function(location) {
         
         var $this = $(this);
         $this.css('margin', '1em');
-        $this.css('width', '100%');
         $this.css('min-height', '7em');
         $this.css('border', 'dashed 1px #ccc');
         $this.css('padding', '15px');

@@ -47,10 +47,10 @@
                 
                 <h3>How to write a feed</h3>
                 <p>In order for a feed to be loaded automatically it must be located in the folder <strong>eliza/feed/</strong></p>
-                <p>Mainly a feed is composed by a <strong>public static function Feed()</strong>, which returns a collection of item.</p>
+                <p>Mainly a feed is composed by its properties and the method <strong>public static function Feed()</strong>, which returns a collection of item.</p>
                 <p>An item is defined by a class that <strong>extends eliza\beta\Feed</strong>. Here is a feed example:</p>
                 <pre><code class="language-php">
-class Item extends eliza\beta\Feed {
+class Item extends eliza\feed\Feed {
     public $Value = '';
     
     public static function Feed() {
@@ -65,8 +65,8 @@ class Item extends eliza\beta\Feed {
                 <p>More advanced examples can be found in the folder eliza/feed/.</p>
                 
                 <h3>Querying a feed</h3>
-                <p>Querying feeds can be done using different intefaces: <strong>PHP, pseudoHTML, jQuery</strong>.</p>
-                <p>The PHP intefaces are mainly two: the <strong>Response</strong> class and the <strong>Feed</strong> class.</p>
+                <p>Querying feeds can be done using different interfaces: <strong>PHP, pseudoHTML, jQuery</strong>.</p>
+                <p>Examples using PHP and pseudoHTML:</p>
                 <pre><code class="language-php">
 // to directly invoke a formatted collection, ready to echo         
 echo eliza\beta\Response::HTMLFeed('Item');
@@ -82,23 +82,23 @@ echo eliza\beta\Feed::Item()->limit(1)->HTMLFeed();
                 </code></pre>
                 <p>All filter methods available are:
                     <ul>
-                        <li><strong>Q</strong>(q): searchs a collections for <strong>q</strong></li>
-                        <li><strong>filterBy</strong>(by, val): filter a collection using property <strong>by</strong> and value <strong>val</strong></li>
+                        <li><strong>Q</strong>(q): searches a collections for <strong>q</strong></li>
+                        <li><strong>filterBy</strong>(by, val): filters a collection using property <strong>by</strong> and value <strong>val</strong></li>
                         <li><strong>sortBy</strong>(srt, ord): sorts a collection for property <strong>srt</strong> in order <strong>ord</strong></li>
                         <li><strong>limit</strong>(lmt, off): limits a collection to only <strong>lmt</strong> items starting from <strong>off</strong></li>
                     </ul>
                 </p>
                 
                 <h3>Requests and responses</h3>
-                <p>All request can directly be addressed to the file <strong>eliza/index.php</strong>. This file can negotiate <strong>GET</strong> and <strong>POST</strong> requests.</p>
-                <p>An examaple using jQuery:<p>
+                <p>All request can directly be addressed to the file <strong>eliza/index.php</strong>. This file can negotiate <strong>GET</strong>, <strong>POST</strong> requests and file uploads.</p>
+                <p>Examples using jQuery:<p>
                 <pre><code class="language-javascript">
 // GET Request
 new Eliza('eliza/index.php').query('Item&lmt=1&off=0').call(function(response){
     $('#response').append(response.html);
 });
 
-//Post Request
+// POST Request
 new Eliza('eliza/index.php').query('Page', {
     Value: 'A value'
 }).call(function(response, html){

@@ -16,7 +16,7 @@ class Node extends eliza\feed\Feed {
             oops('not allowed');    
     }
     
-    public static function Feed($_directory = '.') {  
+    public static function Feed($_directory = '.') {
         if (!file_exists(ROOT . $_directory)) oops('the directory ' . $_directory . ' does not exist');
 
         $Directory = new eliza\feed\HTMLFeed();
