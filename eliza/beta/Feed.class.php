@@ -3,8 +3,8 @@
 namespace eliza\feed;
 
 abstract class Feed extends \eliza\beta\Object {
-    public function __get($_prop){ oops($_prob . ' not found in ' . $this->getClass()); }
-    public function __set($_prop, $_val) { oops($_prob . ' not found in ' . $this->getClass()); }
+    public function __get($_prop){ oops($_prop . ' not found in ' . $this->getClass()); }
+    public function __set($_prop, $_val) { oops($_prop . ' not found in ' . $this->getClass()); }
     
     public function __construct(array $_array = array()) {
         foreach (get_class_vars(get_called_class()) as $key => $default)

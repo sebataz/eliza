@@ -36,7 +36,7 @@ class QFeed extends CollectionFeed {
         $array = array();
         foreach ((array)$this as $key => $Object)
             if (self::__filter($_value, $Object->$_prop))
-                $array[] = $this->get($key);
+                $array[] = $this->offsetGet($key);
              
         $this->exchangeArray($array);
         return $this;

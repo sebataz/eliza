@@ -63,7 +63,7 @@ class Page extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
         }
         
         if (eliza\beta\Response::hasPrivilege()) {
-            $index .= '<li><form id="new-page-at-' . $_parent . '" action="eliza\eliza\index.php?Page&by=Id&redirect=1" method="POST">';
+            $index .= '<li><form id="new-page-at-' . $_parent . '" action="' . ELIZA_URI . 'index.php?Page&by=Id&redirect=1" method="POST">';
             $index .= '<input type="hidden" name="Parent" value="' . $_parent . '" />';
             $index .= '<input type="hidden" name="Title" value="edit title" />';
             $index .= '<input type="hidden" name="Content" value="edit content" />';

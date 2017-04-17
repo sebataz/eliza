@@ -8,9 +8,14 @@
     define ('DS', DIRECTORY_SEPARATOR);
     define ('ROOT', preg_replace('/\/|\\\/', DS, $_SERVER['DOCUMENT_ROOT'] . DS));
     define ('ELIZA', __DIR__ . DS); 
-    define ('BASE_URI', 'http://' . $_SERVER['HTTP_HOST'] . '/');
     
-    define ('DEBUG', 1);
+    define ('BASE_URI', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+    define ('ELIZA_URI', BASE_URI . 
+        preg_replace('#/+#', '/', 
+            str_replace('\\', '/', 
+                str_replace(ROOT, '', ROOT . DS . dirname(__DIR__) . DS))));
+    
+    define ('DEBUG', 0);
     
     
 

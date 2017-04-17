@@ -25,7 +25,7 @@ class Object {
      * @param string $_clazz_name A class name.
      * @return Object The casted object.
      */
-    public function castTo($_clazz_name) {
-        return unserialize(preg_replace('/^O:\d+:"[^"]++"/', 'O:' . strlen($_clazz_name) . ':"' . $_clazz_name . '"', serialize($this)));
+    public function castTo($_class_name) {
+        return unserialize(preg_replace('/^O:\d+:"[^"]++"/', 'O:' . strlen($_class_name) . ':"' . $_class_name . '"', serialize($this)));
     }
 }

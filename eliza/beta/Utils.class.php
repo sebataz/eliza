@@ -111,7 +111,7 @@ class Utils {
     public static function readXMLFromDirectory($_directory) {
         $Collection = new Collection();
         
-        foreach (Feed::Node($_directory) as $Xml) {
+        foreach (\eliza\feed\Feed::Node($_directory) as $Xml) {
             if ($Xml->IsDir) continue;
             if ($Xml->Extension != '.xml') continue;
         

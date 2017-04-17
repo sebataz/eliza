@@ -6,8 +6,13 @@
 //                                  response                                  //
 //----------------------------------------------------------------------------//
 include '../eliza/beta.php';
+
+if (DEBUG) var_dump(array('GET'=>$_GET, 'POST'=>$_POST, 'FILES'=>$_FILES)); 
+if (DEBUG) die();
+
 eliza\beta\Presentation::buffered();
 eliza\beta\Response::hasPrivilege();
+
 if (empty($_REQUEST) && empty($_FILES)) oops('you did not request anything');
 
 try {
@@ -44,16 +49,14 @@ try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($feed) {
                    
+            // create a new feed if there are none matched
             if ($Feed->count() < 1)
                 $Feed->append($feed ? new $feed() : new eliza\beta\Object());
             
+            // delete a feed if POST is empty
             if (count($_POST) < 1) {
                 $Feed->first()->delete();
                 
-                header(
-                    'Location: ' . 
-                    preg_replace('/\?.*/', '', $_SERVER['HTTP_REFERER'])
-                );
             
             } else {
                 $Feed->first()->mergeWith($_POST);
@@ -62,18 +65,25 @@ try {
             
         }
         
+        /*
+         * File upload
+         */
         if (!empty($_FILES)) {
-            if (!file_exists(ROOT . $_POST['location']))
-                mkdir(ROOT . $_POST['location']);
-        
-            for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
-                move_uploaded_file($_FILES['file']['tmp_name'][$i],
-                    ROOT . $_POST['location'] . DS .
-                    $_FILES['file']['name'][$i]);
-            }
+            if (eliza\beta\Response::hasPrivilege()) {
+                if (!file_exists(ROOT . $_POST['location']))
+                    mkdir(ROOT . $_POST['location']);
             
-            $feed = 'Node';
-            $Feed = eliza\beta\Feed::Node($_POST['location']);
+                move_uploaded_file($_FILES['file']['tmp_name'],
+                    ROOT . $_POST['location'] . DS .
+                    $_FILES['file']['name']);
+                
+                // return uploaded file
+                $feed = 'Node';
+                $Feed = eliza\feed\Feed::Node($_POST['location'])
+                    ->filterBy('Filename', $_FILES['file']['name'])
+                    ->limit(1);
+            } else
+                oops('you cannot upload files');
         }
     }
     

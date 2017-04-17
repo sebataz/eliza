@@ -5,18 +5,12 @@ namespace eliza\beta;
 class GlobalContext extends Collection {
     public function set($_key, $_value) { }
     public function __set($_key, $_value) { }
-    public static function Globals(){
-        static $Globals;
-        
-        if (!$Globals) 
-            $Globals = new self(array(
-                'Server' => $_SERVER,
-                'Get' => $_GET,
-                'Post' => $_POST
-            ));
-            
-        return $Globals;
-    }
+    
+    public static function Server() { return new self($_SERVER); }
+    
+    public static function Get() { return new self($_GET); }
+    public static function Post() { return new self($_POST); }
+    public static function Files() { return new self($_FILES); }
 
     public static function Configuration() {
         static $Configuration;

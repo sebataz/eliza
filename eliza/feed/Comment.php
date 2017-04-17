@@ -14,7 +14,9 @@ class Comment extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     public function save() {
         $this->Text = htmlentities($this->Text);
         $this->Author = htmlentities($this->Author);
-        parent::save();
+                
+        if (!eliza\beta\GlobalContext::Post()->defaultValue('terms_conditions'))
+            parent::save();
     }
     
     public static function Feed($_origin = null) {
@@ -51,8 +53,9 @@ class Comment extends eliza\feed\Feed implements eliza\feed\HTMLFeedI {
     
     public static function createForm($_id = 0) {
         echo '<div class="comment-form">
-                <form action="eliza/eliza/index.php?Comment&by=Id&redirect=1" method="POST">
+                <form action="' . ELIZA_URI . 'eliza/index.php?Comment&by=Id&redirect=1" method="POST">
                     <input type="hidden" name="Origin" value="'.$_id.'" />
+                    <div style="width:0; height:0"><input type="checkbox" name="terms_conditions" /></div>
                     <div><input type="text" name="Author" value="Anonymous" class="comment-author" /></div>
                     <div><textarea name="Text" class="comment-text"></textarea></div>
                     <button type="submit">post</button>

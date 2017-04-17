@@ -13,7 +13,7 @@ class Node extends eliza\feed\Feed {
         if (eliza\beta\Response::hasPrivilege())
             unlink($this->Path);
         else
-            oops('not allowed');    
+            oops('you cannot delete files');    
     }
     
     public static function Feed($_directory = '.') {
