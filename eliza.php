@@ -35,8 +35,8 @@
     spl_autoload_extensions('.class.php');
     spl_autoload_register(null, false);
     spl_autoload_register(function ($_class) {
-        // removes the I suffix from the invoked interface
-        $_class = preg_replace('/(I)$/', '', $_class);
+        // removes the _I suffix from the invoked interface
+        $_class = preg_replace('/(_I)$/', '', $_class);
         
         // defines class definition file and path to namespace
         $class = @end(explode('\\', $_class)) . '.class.php';
@@ -71,7 +71,8 @@
     
     // debug codes
     if (!defined('OOPS')) define('OOPS', 'there is something fishy going on');
-    if (!defined('PROPERTY_NOT_DEFINED')) define('PROPERTY_NOT_DEFINED', 'property %s::$%s is not defined');
+    if (!defined('NOT_DEFINED')) define('NOT_DEFINED', '%s is not defined');
+    if (!defined('NOT_DEFINED_PROPERTY')) define('NOT_DEFINED_PROPERTY', 'property %s::$%s is not defined');
     if (!defined('REQUEST_EMPTY')) define('REQUEST_EMPTY', 'you did not request anything');
     if (!defined('PERMISSION_DENIED')) define('PERMISSION_DENIED', 'you do not have permission to perform this operation');
     if (!defined('PERMISSION_DENIED_UPLOAD')) define('PERMISSION_DENIED_UPLOAD', 'you do not have permission to upload files');

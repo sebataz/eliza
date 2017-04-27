@@ -13,13 +13,13 @@ class XMLDocument extends Feed {
     }
     
     public static function Feed($_directory = '.') {
-        $XMLFeed = new HTMLFeed();
+        $XMLFeed = new CollectionFeed();
         foreach (Feed::File($_directory) as $XmlFile) {
             if ($XmlFile->IsDir) continue;
             
             $XMLFeed->append(
                 new static(
-                    eliza\XMLFeed::SimpleXMLToArray(
+                    CollectionXML::SimpleXMLToArray(
                         simplexml_load_string(
                             $XmlFile->content()))));
         }

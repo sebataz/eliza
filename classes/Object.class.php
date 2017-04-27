@@ -8,6 +8,17 @@ class Object {
             $this->$prop = $value;
     }
     
+    public function mergeWith(array $_array = array()) {
+        foreach (get_object_vars($this) as $prop => $value)
+            $this->$prop = array_key_exists($prop, $_array) ? $_array[$prop] : $value;
+    }
+    
+    public function toArray() {
+        return get_object_vars($this);
+    }
+    
+    
+    
     /**
      * Returns the name of the called class.
      * 

@@ -2,11 +2,11 @@
 
 namespace eliza;
 
-interface XMLFeedI {
+interface CollectionXML_I {
     public function toXML();
 }
 
-class XMLFeed extends JSONFeed {
+class CollectionXML extends CollectionJSON {
     public function __construct($_xml = array()) {
         if (is_array($_xml)) parent::__construct();
         if (is_string($_xml)) 
@@ -15,7 +15,7 @@ class XMLFeed extends JSONFeed {
             parent::__construct(static::SimpleXMLToArray($_xml));
     }
 
-    public function XMLFeed() {
+    public function XML() {
         return self::CollectionToXML($this);
     }
     

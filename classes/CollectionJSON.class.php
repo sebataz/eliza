@@ -2,17 +2,17 @@
 
 namespace eliza;
 
-interface JSONFeedI {
+interface CollectionJSON_I {
     public function toJSON();
 }
 
-class JSONFeed extends CollectionFeed {
+class CollectionJSON extends CollectionQuery {
     public function __construct($_json = array()) {
         if (is_array($_json)) parent::__construct($_json);
         else parent::__construct(static::JSONToArray($_json));
     }
 
-    public function JSONFeed() {
+    public function JSON() {
         $array = (array)$this;
         return json_encode($array);
     }

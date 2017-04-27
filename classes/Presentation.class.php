@@ -72,9 +72,9 @@ class Presentation {
                 
                 
                 // return HTML content
-                if ($FeedCollection instanceof HTMLFeed)
-                    return $FeedCollection->HTMLFeed();
-                elseif ($FeedCollection instanceof HTMLFeedI)
+                if ($FeedCollection instanceof CollectionHTML)
+                    return $FeedCollection->HTML();
+                elseif ($FeedCollection instanceof CollectionHTML_I)
                     return $FeedCollection->toHTML();
             
             } catch (Oops $O) { if (DEBUG) throw $O; }

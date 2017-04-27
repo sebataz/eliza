@@ -58,7 +58,7 @@ class Utils {
             list($thumb_width, $thumb_height) = getimagesize($path_to_thumb);
         }
         
-        $Thumb = \Image::describeNode($path_to_thumb);
+        $Thumb = Image::describeNode($path_to_thumb);
         $Thumb->Width = $thumb_width;
         $Thumb->Height = $thumb_height;
         

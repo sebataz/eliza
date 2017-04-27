@@ -2,18 +2,18 @@
 
 namespace eliza;
 
-interface HTMLFeedI {
+interface CollectionHTML_I {
     public function toHTML();
 }
 
-class HTMLFeed extends XMLFeed {
-    public function HTMLFeed() {
+class CollectionHTML extends CollectionXML {
+    public function HTML() {
         $html = '';
         
         foreach ($this as $Object) {
             $html .= "\n" . '<div class="' . strtolower($Object->getClass()) . '">' . "\n";
             
-            if ($Object instanceof HTMLFeedI) $html .= $Object->toHTML();
+            if ($Object instanceof CollectionHTML_I) $html .= $Object->toHTML();
             else
                 foreach ($Object as $key => $prop)
                     if (!is_array($prop) && !is_object($prop))

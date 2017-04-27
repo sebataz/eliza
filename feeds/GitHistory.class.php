@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class GitHistory extends Feed implements HTMLFeedI {
+class GitHistory extends Feed implements CollectionHTML_I {
     public $Hash = '';
     public $Author = '';
     public $Date = '';
@@ -10,7 +10,7 @@ class GitHistory extends Feed implements HTMLFeedI {
 
     public static function Feed() {
         /** GIT history **/
-        $GitHistory = new HTMLFeed();
+        $GitHistory = new CollectionFeed();
         $Commit = null;
         
         // query git for history

@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class Image extends Node implements HTMLFeedI {
+class Image extends Node implements CollectionHTML_I {
     public $Width = 0;
     public $Height = 0;
     public $Thumb = null;
@@ -24,7 +24,8 @@ class Image extends Node implements HTMLFeedI {
         return $Gallery;
     }
     
-    public function toHTML() {
+    // this must go here!!!
+    public function toHTML() {oops();
         return "\t" . '<div class="thumb" style="display:inline-block;'
              . 'width:' . $this->Thumb->Width
              . '; height:' . $this->Thumb->Height

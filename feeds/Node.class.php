@@ -18,7 +18,7 @@ class Node extends Feed {
     }
     
     public static function Feed($_directory = '.') {
-        $Directory = new HTMLFeed();
+        $Directory = new CollectionFeed();
         
         foreach (scandir(self::__path($_directory)) as $node) {
             /* IGNORE FILES */
