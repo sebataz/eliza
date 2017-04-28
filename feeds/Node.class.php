@@ -24,8 +24,8 @@ class Node extends Feed {
             /* IGNORE FILES */
             // ignoring non-file
             if (($node == '.') || ($node == '..') 
-            // ignoring hidden file, preceded with _
-            || preg_match('/^_.*$/', $node))
+            // ignoring hidden file with prefix __
+            || preg_match('/^__$/', $node))
                 continue;
             
             
