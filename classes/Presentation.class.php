@@ -40,7 +40,7 @@ class Presentation {
     
     public static function flush() {
         $buffer = ob_get_contents();
-        ob_end_clean();
+        if ($buffer) ob_end_clean();
         return $buffer;
     }
     
@@ -53,7 +53,7 @@ class Presentation {
                 // build a collection feed, the collection should be initiated with
                 // HTMLFeed when defining the feed class
                 $callback = explode(' ', $matches[1]);
-                $FeedCollection = Response::query($callback[0], array_slice($callback, 1));
+                $CollectionFeed = Request::feed($callback[0], array_slice($callback, 1));
                 
                 // $matches[3]: collection methods to be invoked with relative arguments
                 if (count($matches) > 3) {
@@ -64,25 +64,24 @@ class Presentation {
                         
                         // Make the method call. The method as of now can return both
                         // a feed collection or a single feed.
-                        $FeedCollection = call_user_func_array(
-                            array($FeedCollection, $feed_callback[0]), // $FeedCollection->$feed_callback[0]
+                        $CollectionFeed = call_user_func_array(
+                            array($CollectionFeed, $feed_callback[0]), // $CollectionFeed->$feed_callback[0]
                             explode(',', $feed_callback[1])); // $args = $feed_callback[1]
                     }
                 }
                 
                 
                 // return HTML content
-                if ($FeedCollection instanceof CollectionHTML)
-                    return $FeedCollection->HTML();
-                elseif ($FeedCollection instanceof CollectionHTML_I)
-                    return $FeedCollection->toHTML();
+                if ($CollectionFeed instanceof CollectionHTML)
+                    return $CollectionFeed->HTML();
+                elseif ($CollectionFeed instanceof CollectionHTML_I)
+                    return $CollectionFeed->toHTML();
             
             } catch (Oops $O) { if (DEBUG) throw $O; }
-            // of course if $FeedCollection does not provide the HTML output, by
+            // of course if $CollectionFeed does not provide the HTML output, by
             // extending HTMLFeed or implementing HTMLFeedI, a nasty message 
             // will be outputted!!!
             oops('HTML for "' . $matches[0] . '" could not be loaded');
-            return '';
             
         }, $_content_with_pseudo_tag);
     

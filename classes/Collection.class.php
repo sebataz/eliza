@@ -6,10 +6,10 @@ class Collection extends \ArrayObject {
     public function __get($_key) { return $this->offsetGet($_key); }
     public function __set($_key, $_value) { $this->offsetSet($_key, $_value); }
 
-    public function __construct(array $_array = array()) {    
+    public function __construct(array $_array = array()) {
         foreach($_array as $key => $value) {
             if(is_array($value))
-                $value = new self($value);
+                $value = new static($value);
             
             parent::offsetSet($key, $value);
         }
@@ -20,7 +20,8 @@ class Collection extends \ArrayObject {
     }
     
     public function first() {
-        return $this->offsetGet(0);
+        foreach ($this as $first)
+            return $first;
     }
     
     public function append($_Collection) {

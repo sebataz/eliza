@@ -12,7 +12,7 @@ class Node extends Feed {
     public $IsDir = false;
     
     public function delete() {
-        if (!Response::hasPrivilege(array(), 'DeleteFile')) oops(PERMISSION_DENIED);
+        if (!Request::hasPrivilege(array(), 'DeleteFile')) oops(PERMISSION_DENIED);
         
         unlink($this->Path);
     }
@@ -20,7 +20,7 @@ class Node extends Feed {
     public static function Feed($_directory = '.') {
         $Directory = new CollectionFeed();
         
-        foreach (scandir(self::__path($_directory)) as $node) {
+        foreach (scandir(self::__path(ROOT . $_directory)) as $node) {
             /* IGNORE FILES */
             // ignoring non-file
             if (($node == '.') || ($node == '..') 
@@ -29,7 +29,7 @@ class Node extends Feed {
                 continue;
             
             
-            $Directory->append(static::describeNode($_directory . DS . $node));
+            $Directory->append(static::describeNode(ROOT . $_directory . DS . $node));
         }
         
         return $Directory;
@@ -57,9 +57,9 @@ class Node extends Feed {
     }
     
     private static function __path($_directory) {
-        if (!file_exists(ROOT . str_replace(ROOT, '', $_directory))) 
+        if (!file_exists($_directory)) 
             oops('the directory ' . $_directory . ' does not exist');
     
-        return realpath(ROOT . str_replace(ROOT, '', $_directory)) . DS;
+        return realpath($_directory) . DS;
     }
 }

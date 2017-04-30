@@ -3,7 +3,7 @@
 namespace eliza;
 
 class GlobalContext extends Collection {
-    public function set($_key, $_value) { }
+    public function offsetSet($_key, $_value) { }
     public function __set($_key, $_value) { }
     
     public static function Server() { return new self($_SERVER); }

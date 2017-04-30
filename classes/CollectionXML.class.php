@@ -8,7 +8,7 @@ interface CollectionXML_I {
 
 class CollectionXML extends CollectionJSON {
     public function __construct($_xml = array()) {
-        if (is_array($_xml)) parent::__construct();
+        if (is_array($_xml)) parent::__construct($_xml);
         if (is_string($_xml)) 
             parent::__construct(static::SimpleXMLToArray(simplexml_load_string($_xml)));
         if ($_xml instanceof SimpleXMLElement)
@@ -20,40 +20,31 @@ class CollectionXML extends CollectionJSON {
     }
     
     final public static function ObjectToXML($_Object) {
-        $xml = '';
+        $xml = "\n" . '<' . $_Object->getClass() . '>' . "\n";
     
         foreach ($_Object as $prop => $value) {
+        
             if ($value instanceof Object)
                 $xml .= '<' . $prop . '>' . "\n"
                     . self::ObjectToXML($value)
                     . '</' . $prop . '>' . "\n";
+                    
             elseif ($value instanceof Collection)
-                $xml .= '<' . $prop . '>' . "\n"
-                    . self::CollectionToXML($value)
-                    . '</' . $prop . '>' . "\n";
-            elseif (is_array($value)) {
+                foreach ($value as $val)
+                    $xml .= "\t" . '<' . $prop . '><![CDATA['
+                        . self::ObjectToXML($value) . ']]></' . $prop . '>' . "\n";
+
+            elseif (is_array($value))
                 foreach ($value as $val)
                     $xml .= "\t" . '<' . $prop . '><![CDATA['
                         . $value . ']]></' . $prop . '>' . "\n";
-            }
+           
             else
                 $xml .= "\t" . '<' . $prop . '><![CDATA['
                     . $value . ']]></' . $prop . '>' . "\n";
         }
         
-        return $xml;
-    }
-    
-    final public static function CollectionToXML($_Collection) {
-        $xml = '';
-        
-        foreach ($_Collection as $Object) {
-            $xml .= "\n" . '<' . get_class($Object) . '>' . "\n";
-            $xml .= self::ObjectToXML($Object);
-            $xml .= '</' . get_class($Object) . '>' . "\n";
-        }
-        
-        return $xml;
+        return $xml . '</' . $_Object->getClass() . '>' . "\n";
     }
     
     public static function SimpleXMLToArray($_Xml) {

@@ -10,12 +10,19 @@ class Object {
     
     public function mergeWith($_array = array()) {
         if (is_object($_array)) $_array = get_object_vars($_array);
-        foreach (get_object_vars($this) as $prop => $value)
-            $this->$prop = array_key_exists($prop, $_array) ? $_array[$prop] : $value;
+        foreach ($_array as $prop => $value)
+            $this->$prop = $value;
+            
+        return $this;
     }
     
     public function toArray() {
         return get_object_vars($this);
+    }
+    
+    public function dump() {
+        if (DEBUG) var_dump($this);
+        else echo json_encode($this);
     }
     
     

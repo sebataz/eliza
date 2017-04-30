@@ -34,7 +34,11 @@
 //----------------------------------------------------------------------------//
     spl_autoload_extensions('.class.php');
     spl_autoload_register(null, false);
+    
+    // eliza classes autoload
     spl_autoload_register(function ($_class) {
+        if (in_array($_class, get_declared_classes())) return;
+        
         // removes the _I suffix from the invoked interface
         $_class = preg_replace('/(_I)$/', '', $_class);
         
@@ -47,6 +51,25 @@
         elseif (file_exists(ELIZA . 'feeds' . DS . $class))
             require_once ELIZA . 'feeds' . DS . $class;
     }, false);
+    
+    // Autoloads a class from a configured path in config.php
+    spl_autoload_register(function ($_class) {
+    
+        // You can define the path to one or more classes that you wish to
+        // autoload by setting the configuration variable $cfg['PathToClass']
+        // in the config.php file.
+        $path_to_class = eliza\GlobalContext::Configuration()->PathToClass;
+        
+        // Default class extension should be used for the class to be autoloaded:
+        // default extension is .class.php. You can change the default below:
+        $class_extension = '.class.php';
+        
+        foreach (is_array($path_to_class) ? $path_to_class : array($path_to_class) 
+        as $path)
+            if (file_exists(ROOT . $path . DS . $_class . $class_extension))
+                require_once ROOT .$path . DS . $_class . $class_extension;
+    }, true);
+    
 
     
 
@@ -73,7 +96,7 @@
     if (!defined('OOPS')) define('OOPS', 'there is something fishy going on');
     if (!defined('NOT_DEFINED')) define('NOT_DEFINED', '%s is not defined');
     if (!defined('NOT_DEFINED_PROPERTY')) define('NOT_DEFINED_PROPERTY', 'property %s::$%s is not defined');
-    if (!defined('REQUEST_EMPTY')) define('REQUEST_EMPTY', 'you did not request anything');
+    if (!defined('EMPTY_REQUEST')) define('EMPTY_REQUEST', 'you did not request anything');
     if (!defined('PERMISSION_DENIED')) define('PERMISSION_DENIED', 'you do not have permission to perform this operation');
     if (!defined('PERMISSION_DENIED_UPLOAD')) define('PERMISSION_DENIED_UPLOAD', 'you do not have permission to upload files');
     if (!defined('PERMISSION_DENIED_CONTENT')) define('PERMISSION_DENIED_CONTENT', 'you are not worthy of this content');

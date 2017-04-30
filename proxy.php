@@ -7,7 +7,7 @@
 //----------------------------------------------------------------------------//
 include 'eliza.php';
 
-if (DEBUG) var_dump(array('GET'=>$_GET, 'POST'=>$_POST, 'FILES'=>$_FILES)); 
+if (0) var_dump(array('GET'=>$_GET, 'POST'=>$_POST, 'FILES'=>$_FILES)); 
 
 eliza\Presentation::buffered();
 eliza\Response::hasPrivilege();
@@ -15,27 +15,29 @@ eliza\Response::hasPrivilege();
 if (empty($_REQUEST) && empty($_FILES)) oops(REQUEST_EMPTY);
 
 try {
-    $feed = class_exists(key($_GET)) ? key($_GET) : null;
+    $feed = class_exists('eliza\\'.key($_GET)) ? key($_GET) : null;
     $args = isset($_GET['args']) ? $_GET['args'] : array();
     
 //----------------------------------------------------------------------------//
 //                                method: get                                 //
 //----------------------------------------------------------------------------//  
     if (!$feed)
-        $Feed = new eliza\HTMLFeed();
+        $Feed = new eliza\CollectionFeed();
     else
         $Feed = eliza\Response::query($feed, $args);
-        $Feed->getById(
-            isset($_GET['id']) ? $_GET['id'] : null);
+        
+        if (isset($_GET['id']))
+            $Feed->getById($_GET['id']);
+            
         $Feed->sortBy(
             isset($_GET['srt']) ? $_GET['srt'] : null,
             isset($_GET['ord']) ? $_GET['ord'] : null);
+            
         $Feed->limit(
             isset($_GET['lmt']) ? $_GET['lmt'] : null,
             isset($_GET['off']) ? $_GET['off'] : null);
      
      
-
 //----------------------------------------------------------------------------//
 //                                method: post                                //
 //----------------------------------------------------------------------------//
@@ -95,11 +97,11 @@ try {
         ) {
             header ("Content-Type:text/xml");
             echo '<?xml version="1.0" encoding="UTF-8"?>'; 
-            echo '<feed>' . $Feed->XMLFeed() . '</feed>'; 
+            echo '<feed>' . $Feed->XML() . '</feed>'; 
         } else {
             header('Content-Type: application/json');     
-            echo '{"feed":' . $Feed->JSONFeed() . ',';
-            echo '"html":' . json_encode($Feed->HTMLFeed()) . '}';
+            echo '{"feed":' . $Feed->JSON() . ',';
+            echo '"html":' . json_encode($Feed->HTML()) . '}';
         }
     }
 
