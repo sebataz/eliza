@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class XMLDocument extends Feed {
+abstract class XMLDocument extends Feed {
     
     public function __construct(array $_raw = array()) {
         parent::__construct($_raw);
@@ -10,15 +10,17 @@ class XMLDocument extends Feed {
             $this->Id = $_raw['Id'];
     }
     
-    public static function Feed($_directory = '.') {
+    public static function Feed() {
+        $feed_directory = 'feeds' .  DS . strtolower(static::getClass());
         $XMLFeed = new CollectionFeed();
-        foreach (Feed::File(FEEDS . $_directory) as $XmlFile) {            
-            $XMLFeed->append(
-                new static(
-                    CollectionXML::SimpleXMLToArray(
-                        simplexml_load_string(
-                            $XmlFile->content()))));
-        }
+        foreach (Feed::File($feed_directory . DS) as $XmlFile)
+            if ($XmlFile->Extension == '.xml')
+                $XMLFeed->append(
+                    new static(
+                        CollectionXML::SimpleXMLToArray(
+                            simplexml_load_string(
+                                $XmlFile->content()))));
+        
         
         return $XMLFeed;
     }

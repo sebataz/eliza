@@ -16,11 +16,16 @@ class CollectionXML extends CollectionJSON {
     }
 
     public function XML() {
-        return self::CollectionToXML($this);
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n<Feed>\n";
+        
+        foreach ($this as $Object)
+            $xml .= self::ObjectToXML($Object);
+        
+        return $xml . '</Feed>';
     }
     
     final public static function ObjectToXML($_Object) {
-        $xml = "\n" . '<' . $_Object->getClass() . '>' . "\n";
+        $xml = '<' . $_Object->getClass() . '>' . "\n";
     
         foreach ($_Object as $prop => $value) {
         
@@ -30,9 +35,8 @@ class CollectionXML extends CollectionJSON {
                     . '</' . $prop . '>' . "\n";
                     
             elseif ($value instanceof Collection)
-                foreach ($value as $val)
-                    $xml .= "\t" . '<' . $prop . '><![CDATA['
-                        . self::ObjectToXML($value) . ']]></' . $prop . '>' . "\n";
+                $xml .= "\t" . '<' . $prop . '>'
+                     . $value->XML() . '</' . $prop . '>' . "\n";
 
             elseif (is_array($value))
                 foreach ($value as $val)
