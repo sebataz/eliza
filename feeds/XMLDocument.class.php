@@ -3,13 +3,6 @@
 namespace eliza;
 
 abstract class XMLDocument extends Feed {
-    
-    public function __construct(array $_raw = array()) {
-        parent::__construct($_raw);
-        if (isset($_raw['Id']))
-            $this->Id = $_raw['Id'];
-    }
-    
     public static function Feed() {
         $feed_directory = 'feeds' .  DS . strtolower(static::getClass());
         $XMLFeed = new CollectionFeed();
@@ -31,9 +24,5 @@ abstract class XMLDocument extends Feed {
         $Feed->mergeWith($this);
         if (!Request::hasPrivilege(array(), 'SaveFeed')) oops(PERMISSION_DENIED);
         File::touch($_path)->content(CollectionXML::ObjectToXML($Feed));
-    }
-    
-    private function __getRelativePath() {
-        return 'feeds' . DS . lowercase($this->getClass()) . DS . $this->Id . '.xml';
     }
 }

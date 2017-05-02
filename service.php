@@ -28,11 +28,9 @@ if (class_exists('eliza\\' . key($_GET))
 ////////////////////////////////////////////////////////////////////////////////
 
 
+
 //----------------------------------------------------------------------------//
-//                             handles a request                              //
-//----------------------------------------------------------------------------//
-//----------------------------------------------------------------------------//
-//                                method: POST                                //
+//                                handles POST                                //
 //----------------------------------------------------------------------------//
 if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {  
     $Feed = $feed_query_id ? 
@@ -49,55 +47,33 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
              
     // uploads file
     if ($Feed instanceof eliza\File
-    && !empty($feed_arguments)
     && eliza\GlobalContext::Files()->first()
     && !is_array(eliza\GlobalContext::Files()->first()->tmp_name))
         eliza\File::describeNode(
             eliza\GlobalContext::Files()->first()->tmp_name)
             ->uploadTo(
-                ROOT . $feed_arguments[0] . DS . 
-                eliza\GlobalContext::Files()->first()->name);
+                ROOT . (!empty($feed_arguments) ? $feed_arguments[0] : '') 
+                 . DS . eliza\GlobalContext::Files()->first()->name);
 }
 
 
 
 //----------------------------------------------------------------------------//
-//                                method: GET                                 //
+//                                handles GET                                 //
 //----------------------------------------------------------------------------//
 if ($feed_query_id) 
-    $CollectionFeed = new eliza\CollectionFeed(array(
+    $Collection = new eliza\Collection(array(
         eliza\Request::feed($feed_name, $feed_arguments)
             ->getById($feed_query_id)));
 
 else {
-    $CollectionFeed = eliza\Request::feed($feed_name, $feed_arguments);
-    $CollectionFeed = ($feed_query_by) ? 
-        $CollectionFeed->getBy($feed_query_by, $feed_query_value) :
-        $CollectionFeed;
-    $CollectionFeed->sortBy($feed_query_sort, $feed_query_order);
-    $CollectionFeed->limit($feed_query_limit, $feed_query_offset);
+    $Collection = eliza\Request::feed($feed_name, $feed_arguments);
+    $Collection = ($feed_query_by) ? 
+        $Collection->getBy($feed_query_by, $feed_query_value) :
+        $Collection;
+    $Collection->sortBy($feed_query_sort, $feed_query_order);
+    $Collection->limit($feed_query_limit, $feed_query_offset);
 }
-
-
-
-//----------------------------------------------------------------------------//
-//                                   always                                   //
-//----------------------------------------------------------------------------// 
-if (!function_exists('out')) {
-    function out($_Collection = null) { 
-        if ($_Collection 
-        && eliza\GlobalContext::Configuration()->XMLResponse) {
-            header ('Content-Type: text/xml');
-            echo $_Collection->XML();
-            
-        } elseif ($_Collection 
-        && !eliza\GlobalContext::Configuration()->XMLResponse) {
-            header ('Content-Type: application/json');
-            echo $_Collection->JSON();}
-    }
-}
-
-out($CollectionFeed);
 
 
 
@@ -106,14 +82,37 @@ out($CollectionFeed);
 //----------------------------------------------------------------------------// 
     $buffer = eliza\Presentation::flush();
     if (eliza\GlobalContext::Server()->defaultValue('HTTP_REFERER') && !DEBUG) {           
-        out(new eliza\CollectionXML(array(
+        $Collection = new eliza\CollectionXML(array(
             'oops' => $O->getMessage(),
-            'wtf' =>$O->getTrace(), 
+            'wtf' => $O->getTrace(), 
             'output-buffer' => $buffer,
             'request' => $_REQUEST
-        )));
+        ));
         
     } else throw $O;    
-}//--------------------------------end feed.php-------------------------------// 
+}//---------------------------------------------------------------------------//
+//                                 echo stuff                                 //
 //----------------------------------------------------------------------------// 
-
+eliza\Presentation::buffered();
+        
+if ($Collection
+&& eliza\GlobalContext::Configuration()->XMLResponse) {
+    header ('Content-Type: text/xml');
+    echo '<?xml version="1.0" encoding="UTF-8"?>'; 
+    if ($Collection instanceof eliza\CollectionFeed)
+        echo sprintf('<Feed>%s</Feed>',
+            $Collection->XML());
+    else
+        echo $Collection->XML();
+    
+} elseif ($Collection
+&& !eliza\GlobalContext::Configuration()->XMLResponse) {
+    header ('Content-Type: application/json');
+    if ($Collection instanceof eliza\CollectionFeed)
+        echo sprintf('{"feed":%s,"html":%s}',
+            $Collection->JSON(),
+            json_encode($Collection->HTML()));
+    else
+        echo $Collection->JSON();
+}//-------------------------------end service.php-----------------------------// 
+//----------------------------------------------------------------------------// 

@@ -7,7 +7,7 @@
 //----------------------------------------------------------------------------//
     
     // debug status
-    if (!defined('DEBUG')) define ('DEBUG', 1);
+    if (!defined('DEBUG')) define ('DEBUG', 0);
     
     // directories definition
     if (!defined('DS')) define ('DS', DIRECTORY_SEPARATOR);
@@ -92,10 +92,11 @@
         oops(func_get_arg(1).' in '.func_get_arg(2).' at '.func_get_arg(3)); 
     }, E_ALL & ~E_STRICT);
     
-    // debug codes
+    // Oops codes
     if (!defined('OOPS')) define('OOPS', 'there is something fishy going on');
     if (!defined('NOT_DEFINED')) define('NOT_DEFINED', '%s is not defined');
     if (!defined('NOT_DEFINED_PROPERTY')) define('NOT_DEFINED_PROPERTY', 'property %s::$%s is not defined');
+    if (!defined('NOT_DEFINED_METHOD')) define('NOT_DEFINED_METHOD', 'method %s::%s() is not defined');
     if (!defined('EMPTY_REQUEST')) define('EMPTY_REQUEST', 'you did not request anything');
     if (!defined('PERMISSION_DENIED')) define('PERMISSION_DENIED', 'you do not have permission to perform this operation');
     if (!defined('PERMISSION_DENIED_UPLOAD')) define('PERMISSION_DENIED_UPLOAD', 'you do not have permission to upload files');

@@ -19,14 +19,16 @@ abstract class Feed extends Object {
         return time() . substr(microtime(),2,3);
     }
     
-    public static function Feed() { return new CollectionFeed(); } // prevents infinite recursion if Feed::Feed()
     public static function __callStatic ($_feed, $_args) {
-        if (class_exists($_feed))
+        if (method_exists($_feed, 'Feed'))
             return call_user_func_array(array($_feed, 'Feed'), $_args);
             
-        if (class_exists('eliza\\' . $_feed))
+        if (method_exists('eliza\\' . $_feed, 'Feed'))
             return call_user_func_array(array('eliza\\' . $_feed, 'Feed'), $_args);
             
-        oops(NOT_DEFINED, !$_feed ? 'null' : $_feed);
+        oops(NOT_DEFINED_METHOD, array(!$_feed ? 'null' : $_feed, 'Feed'));
     }
+    
+    // ACHTUNG: method below prevents infinite recursion if Feed::Feed() is called
+    public static function Feed() { return new CollectionFeed(); } 
 }
