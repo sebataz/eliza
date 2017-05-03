@@ -25,12 +25,12 @@ class CollectionXML extends CollectionJSON {
         foreach ($_Object as $key => $value) {
             $tag_open = '<' . (is_string($key) ? $key : 'Value') . '>';
             $tag_close = '</' . (is_string($key) ? $key : 'Value') . '>' . "\n";
-        
-            if ($value instanceof Object)
-                $xml .= $tag_open . self::ObjectToXML($value) . $tag_close . "\n";
                 
-            elseif ($value instanceof CollectionXML_I)
+            if ($value instanceof CollectionXML_I)
                 $xml .= $tag_open . $value->toXML() . $tag_close . "\n";
+        
+            elseif ($value instanceof Object)
+                $xml .= $tag_open . self::ObjectToXML($value) . $tag_close . "\n";
                 
             elseif ($value instanceof CollectionXML)
                 $xml .= $tag_open . $value->XML() . $tag_close . "\n";
@@ -38,9 +38,12 @@ class CollectionXML extends CollectionJSON {
             elseif (is_string($value)
             || is_int($value)
             || is_bool($value))
-                $xml .= $tag_open . $value . $tag_close . "\n";
+                $xml .= $tag_open . '<![CDATA[' . $value . ']]>' . $tag_close . "\n";
                 
             elseif (is_array($value))
+                $xml .= $tag_open . (new self($value))->XML() . $tag_close;
+            
+            else
                 oops(OOPS);
         }
         

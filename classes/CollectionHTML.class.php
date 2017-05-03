@@ -8,23 +8,21 @@ interface CollectionHTML_I {
 
 class CollectionHTML extends CollectionXML {
     public function HTML() {
-        return '<div class="' . basename(get_called_class()) . '">' 
-            . self::ObjectToHTML($this) 
-            . '</div>';
+        return self::ObjectToHTML($this);
     }
     
     final public static function ObjectToHTML($_Object) {
-        $html = '<div class="' . basename(get_class($_Object)) . '">' . "\n";
-    
+        $html = '';
+        
         foreach ($_Object as $key => $value) {
             $tag_open = '<span class="' . (is_string($key) ? $key : '') . '">';
-            $tag_close = '</span>';
+            $tag_close = '</span>' . "\n";
         
-            if ($value instanceof Object)
-                $html .= $tag_open . self::ObjectToHTML($value) . $tag_close;
+            if ($value instanceof CollectionHTML_I)
+                $html .= $value->toHTML();
                 
-            elseif ($value instanceof CollectionHTML_I)
-                $html .= $tag_open . $value->toHTML() . $tag_close;
+            elseif ($value instanceof Object)
+                $html .= $tag_open . self::ObjectToHTML($value) . $tag_close;
                 
             elseif ($value instanceof CollectionHTML)
                 $html .= $tag_open . $value->HTML() . $tag_close;
@@ -35,9 +33,12 @@ class CollectionHTML extends CollectionXML {
                 $html .= $tag_open . $value . $tag_close;
                 
             elseif (is_array($value))
+                $html .= $tag_open . (new self($value))->HTML() . $tag_close;
+                
+            else
                 oops(OOPS);
         }
         
-        return $html . '</div>' . "\n";
+        return $html;
     }
 }

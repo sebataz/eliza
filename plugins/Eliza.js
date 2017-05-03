@@ -1,7 +1,11 @@
 (function(){
 
 
-    this.Eliza = function ( service ) { this.service = service; }
+    this.Eliza = function ( service , feed , feed_arguments ) { 
+        this.service = service; 
+        this.feed = feed; 
+        this.feed_arguments = feed_arguments;
+    }
     this.Feed = function(){}
     
     Eliza.ajax = function (url, get, post, callback) {
@@ -32,7 +36,7 @@
                     if (null != JSON.parse(x.responseText).oops)
                         Eliza.oops(JSON.parse(x.responseText).oops);
                     
-                    else                
+                    else if (null != callback)
                         callback(JSON.parse(x.responseText));
                     
                 } catch (e) {
@@ -46,35 +50,38 @@
         }
     };
     
-    Eliza.prototype.query = function(feed, feed_id) {
+    // tu mi ritorni un oggetto Feed
+    Eliza.Feed = function(feed_type, ) {
+        console.log('building feed: ' + json.feed);
+    }
+    
+    Eliza.prototype.query = function(options, callback) {
+    
         console.log('querying feed: ' + feed + ' at ' + this.service);
         
     }
     
-    Eliza.Feed = function(json) {
-        console.log('building feed: ' + json.feed);
-    }
+    
     
     
     
     
     
     Eliza.oops = function (excuse) {
-    console.log(excuse);
-    
-    var body = document.querySelector('body');
-    var oops = document.createElement('div');
-    body.insertBefore(oops, body.firstChild);
-    oops.innerHTML 
-        = '<div id="oops" style="width: 100%; padding: .3em; background-color: #ffffe6; font-size: .7em;">'
-        + '<span style="font-weight: bold">Oops: </span>'
-        + excuse
-        + '</div>';
+        console.log(excuse);
         
-    
-    window.setTimeout(function () {
-        oops.parentNode.removeChild(oops);
-    }, 3000);
-};
-
+        var body = document.querySelector('body');
+        var oops = document.createElement('div');
+        body.insertBefore(oops, body.firstChild);
+        oops.innerHTML 
+            = '<div id="oops" style="width: 100%; padding: .3em; background-color: #ffffe6; font-size: .7em;">'
+            + '<span style="font-weight: bold">Oops: </span>'
+            + excuse
+            + '</div>';
+            
+        
+        window.setTimeout(function () {
+            oops.parentNode.removeChild(oops);
+        }, 3000);
+    };
 })();

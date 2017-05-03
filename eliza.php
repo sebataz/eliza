@@ -7,7 +7,7 @@
 //----------------------------------------------------------------------------//
     
     // debug status
-    if (!defined('DEBUG')) define ('DEBUG', 0);
+    if (!defined('DEBUG')) define ('DEBUG', 1);
     
     // directories definition
     if (!defined('DS')) define ('DS', DIRECTORY_SEPARATOR);
