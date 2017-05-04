@@ -29,7 +29,8 @@ class CollectionHTML extends CollectionXML {
                 
             elseif (is_string($value)
             || is_int($value)
-            || is_bool($value))
+            || is_bool($value)
+            || is_null($value))
                 $html .= $tag_open . $value . $tag_close;
                 
             elseif (is_array($value))

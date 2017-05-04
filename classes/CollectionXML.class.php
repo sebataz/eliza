@@ -37,7 +37,8 @@ class CollectionXML extends CollectionJSON {
                 
             elseif (is_string($value)
             || is_int($value)
-            || is_bool($value))
+            || is_bool($value)
+            || is_null($value))
                 $xml .= $tag_open . '<![CDATA[' . $value . ']]>' . $tag_close . "\n";
                 
             elseif (is_array($value))

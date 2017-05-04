@@ -61,18 +61,22 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
 //----------------------------------------------------------------------------//
 //                                handles GET                                 //
 //----------------------------------------------------------------------------//
-if ($feed_query_id) 
-    $Collection = new eliza\Collection(array(
+if ($feed_query_id) {
+    $Collection = new eliza\CollectionFeed(array(
         eliza\Request::feed($feed_name, $feed_arguments)
             ->getById($feed_query_id)));
 
-else {
+}else {
     $Collection = eliza\Request::feed($feed_name, $feed_arguments);
-    $Collection = ($feed_query_by) ? 
-        $Collection->getBy($feed_query_by, $feed_query_value) :
-        $Collection;
-    $Collection->sortBy($feed_query_sort, $feed_query_order);
-    $Collection->limit($feed_query_limit, $feed_query_offset);
+    
+    if ($feed_query_by)
+        $Collection->getBy($feed_query_by, $feed_query_value);
+    
+    if ($feed_query_sort)
+        $Collection->sortBy($feed_query_sort, $feed_query_order);
+        
+    if ($feed_query_limit)
+        $Collection->limit($feed_query_limit, $feed_query_offset);
 }
 
 
