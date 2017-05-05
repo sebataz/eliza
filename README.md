@@ -1,8 +1,6 @@
 
 eliza
-=====
-a kiss javascript/php set of APIs
----------------------------------
+-----
                      
 eliza is a set of API designed to simplify the storage of information for web
 sites and applications. The concept is __kiss__ (Keep It Simple Stupid!) feed 
