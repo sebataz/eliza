@@ -44,7 +44,7 @@ An example of feed:
 ```
 
 An example of page:
-```php
+```html
     <?php include 'eliza.php'; ?>
     <!DOCTYPE html>
     <html lang="en">
