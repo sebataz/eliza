@@ -87,7 +87,7 @@ ElizaService.prototype.response = function ( callback ) {
             
                 if (null != JSON.parse(_Service._request.responseText).oops) {
                     ElizaService.oops(JSON.parse(_Service._request.responseText).oops);
-                    console.log(_Servie._request.responseText);
+                    console.log(JSON.parse(_Service._request.responseText));
                 }
                 
                 else if (null != callback) {

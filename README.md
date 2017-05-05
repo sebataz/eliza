@@ -1,40 +1,65 @@
-eliza
-=====
 
-### a kiss javascript/php set of APIs
-eliza is a set of **API** meant to simplify the creation of **web applications**.
+                                     eliza
+                        a kiss javascript/php set of APIs
+                        ---------------------------------
+                     
+eliza is a set of API designed to simplify the storage of information for web
+sites and applications. The concept is **kiss** (Keep It Simple Stupid!) feed 
+classes define how information is stored, which eliza uses to create 
+collections of feeds ready to be echoed.
 
-The concept is **kiss** (Keep It Simple Stupid), a feed class generates a **collection of items**, formatted and ready to be echoed.
 
-### What she features
-The project includes a **PHP library** and several **jQuery plugins**, the communication between the PHP and JavaScript layers uses **JSON**.
+What she features
+-----------------
 
-eliza responds to a request using a feed source which can be formatted in **PHP, JSON, XML, HTML**.
+# eliza organizes feeds into **collections**.
+# eliza can handle feed requests addressed to the **service.php** file; 
+  the output can be configured to be either JSON or XML. 
+# **ElizaService.js** implements all the asynchronous calls to service.php. 
+# eliza makes use of **pseudo-tags** in order to directly render collections 
+  into HTML. 
+# eliza implements a basic check for privileges based on **roles and 
+  permissions**, configurable in the global config.php.
+# eliza has a simple **buffering and caching** system for your pages.
+# eliza already provides some types of feed that you can extend: Node, File, 
+  Image, XMLDocument.
 
-eliza already includes some basic feeds that you can use: GitHistory, Node (files), Image, Page.
 
-Moreover, eliza has a simple **buffering and caching** system for your pages.
+How she works
+-------------
 
-### How she works
-Basically you need two files to work with eliza, a **source class (feed)** and a **html template or page**.
+Basically, all you need to work with eliza are two files, a **feed class** and 
+a **html template or page** (and some stored information, of course).
 
 An example of feed:
 ```php
-    class Item extends eliza\beta\Feed {
-        public $Value = '';
-        
-        public static function Feed {
-
-            $Collection = new eliza\feed\JSONFeed();
-            $Collection->add(new self(array('Hello World!');
-            
-            return $Collection
-            
-        }
+    class AFeed extends eliza\XMLDocument {
+        public $AValue;
     }
 ```
 
 An example of page:
 ```php
-    echo eliza\beta\Response::HTMLFeed('Item');
+    <?php include 'eliza.php'; ?>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            [AFeed /]
+        </body>
+    </html>
 ```
+
+
+Documentation
+-------------
+
+The most recent documentation can be found at https://sebataz.ch/api/eliza/docs/
+
+
+eliza was coded by
+------------------
+
+sebataz <sebastien.rigoni@gmail.com>
