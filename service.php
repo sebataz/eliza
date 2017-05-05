@@ -48,12 +48,17 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
     // uploads file
     if ($Feed instanceof eliza\File
     && eliza\GlobalContext::Files()->first()
-    && !is_array(eliza\GlobalContext::Files()->first()->tmp_name))
+    && !is_array(eliza\GlobalContext::Files()->first()->tmp_name)) {
+        $upload_path = !empty($feed_arguments) ?
+            ROOT . $feed_arguments[0] : 
+            FEEDS . strtolower($Feed->getClass());
+            
         eliza\File::describeNode(
             eliza\GlobalContext::Files()->first()->tmp_name)
-            ->uploadTo(
-                ROOT . (!empty($feed_arguments) ? $feed_arguments[0] : '') 
-                 . DS . eliza\GlobalContext::Files()->first()->name);
+            ->uploadAs(
+                $upload_path . DS
+                . eliza\GlobalContext::Files()->first()->name);
+    }
 }
 
 

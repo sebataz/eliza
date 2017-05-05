@@ -97,6 +97,7 @@
     if (!defined('NOT_DEFINED')) define('NOT_DEFINED', '%s is not defined');
     if (!defined('NOT_DEFINED_PROPERTY')) define('NOT_DEFINED_PROPERTY', 'property %s::$%s is not defined');
     if (!defined('NOT_DEFINED_METHOD')) define('NOT_DEFINED_METHOD', 'method %s::%s() is not defined');
+    if (!defined('NOT_DEFINED_CLASS')) define('NOT_DEFINED_CLASS', 'class %s is not defined');
     if (!defined('EMPTY_REQUEST')) define('EMPTY_REQUEST', 'you did not request anything');
     if (!defined('PERMISSION_DENIED')) define('PERMISSION_DENIED', 'you do not have permission to perform this operation');
     if (!defined('PERMISSION_DENIED_UPLOAD')) define('PERMISSION_DENIED_UPLOAD', 'you do not have permission to upload files');

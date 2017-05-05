@@ -20,6 +20,9 @@ abstract class Feed extends Object {
     }
     
     public static function __callStatic ($_feed, $_args) {
+        if (!class_exists($_feed) && !class_exists('eliza\\' . $_feed))
+            oops(NOT_DEFINED_CLASS, $_feed);
+    
         if (method_exists($_feed, 'Feed'))
             return call_user_func_array(array($_feed, 'Feed'), $_args);
             

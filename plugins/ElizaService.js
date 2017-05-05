@@ -6,9 +6,10 @@
 //                            class ElizaService:                             //
 //                          implements ajax request                           //
 //----------------------------------------------------------------------------//
-this.ElizaService = function ( service , feed ) { 
+this.ElizaService = function ( service , feed , feed_arguments ) { 
     this.service = service; 
     this.feed = feed;
+    this.feed_arguments = feed_arguments;
     
     this._request = null;
 }
@@ -61,6 +62,7 @@ ElizaService.ajax = function (url, get, post) {
 ElizaService.prototype.query = function( params ) {
     var Get = Array();
     Get[this.feed] = null;
+    Get['args'] = this.feed_arguments
     Get['id'] = null;
     Get['by'] = null;
     Get['val'] = null;
@@ -83,8 +85,10 @@ ElizaService.prototype.response = function ( callback ) {
         if (_Service._request.readyState > 3) {
             try {
             
-                if (null != JSON.parse(_Service._request.responseText).oops)
+                if (null != JSON.parse(_Service._request.responseText).oops) {
                     ElizaService.oops(JSON.parse(_Service._request.responseText).oops);
+                    console.log(_Servie._request.responseText);
+                }
                 
                 else if (null != callback) {
                     var CollectionFeed = new ElizaService.Collection();
@@ -119,8 +123,6 @@ this.ElizaService.Collection = function( array ) { this._array = array ? array :
 
 ElizaService.Collection.prototype.append = function ( item ) { this._array.push( item ); }
 
-ElizaService.Collection.prototype.dump = function () { console.log(this._array); }
-
 ElizaService.Collection.prototype.first = function () { return this._array[0]; };
 
 ElizaService.Collection.prototype.getBy = function (property, value) {
@@ -146,6 +148,18 @@ ElizaService.Collection.prototype.sortBy = function (property, order = true) {
     }));
 };
 
+ElizaService.Collection.prototype.dump = function () { 
+    var array = Array();
+    
+    console.log('-- Collection --')
+    for ( item in this._array )
+        if ( this._array[item] instanceof ElizaService.Feed )
+            this._array[item].dump();
+        else
+            console.log( this._array[item] );
+    console.log('-- end Collection --');
+}
+
 
 
 
@@ -156,14 +170,23 @@ ElizaService.Collection.prototype.sortBy = function (property, order = true) {
 //                               sub-class Feed:                              //
 //                          implements feed handling                          //
 //----------------------------------------------------------------------------//    
-this.ElizaService.Feed = function( Service , properties ) {    
+this.ElizaService.Feed = function( Service , properties ) {  
     this._Service = Service;
-    for (var key in properties)
-        this[key] = properties[key];
+    this._properties = properties;
 }
 
 ElizaService.Feed.prototype.dump = function () {
-    console.log(this);
+    console.log(this._properties);
+}
+
+ElizaService.Feed.prototype.save = function () {
+    var Get = Array();
+    Get[this._Service.feed] = null;
+    Get['args'] = this._Service.feed_arguments;
+    
+    this._Service._request = ElizaService.ajax(this._Service.service, Get, this._properties);
+        
+    return this._Service;
 }
     
     

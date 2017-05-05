@@ -28,7 +28,7 @@ class File extends Node {
         }
     }
     
-    public function uploadTo($_path_to_file) {
+    public function uploadAs($_path_to_file) {
         if (!Request::hasPrivilege(array(), 'UploadFile')) 
             oops(PERMISSION_DENIED_UPLOAD);
         
