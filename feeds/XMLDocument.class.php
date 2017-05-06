@@ -20,9 +20,21 @@ abstract class XMLDocument extends Feed {
     
     // dude! this goes into XMLDocument, I believe!
     public function saveAs($_path) {
+        if (!Request::hasPrivilege(array(), 'SaveFeed')) oops(PERMISSION_DENIED);
+        if (DEBUG) oops('save feed as ' . $_path);
+        
         $Feed = new static();
         $Feed->mergeWith($this);
-        if (!Request::hasPrivilege(array(), 'SaveFeed')) oops(PERMISSION_DENIED);
+        
         File::touch($_path)->content(CollectionXML::ObjectToXML($Feed));
+    }
+    
+    public function delete() {
+        if (!Request::hasPrivilege(array(), 'DeleteFeed')) oops(PERMISSION_DENIED);
+        if (DEBUG) oops('delete feed ' . $this->Id);
+        
+        Node::describeNode(
+            FEEDS . strtolower($this->getClass()) . DS . $this->Id . '.xml'
+        )->delete();
     }
 }

@@ -13,6 +13,7 @@ class Node extends Feed {
     
     public function delete() {
         if (!Request::hasPrivilege(array(), 'DeleteFile')) oops(PERMISSION_DENIED);
+        if (DEBUG) oops('delete node ' . $this->Path);
         
         unlink($this->Path);
     }
@@ -36,6 +37,8 @@ class Node extends Feed {
     }
     
     public static function describeNode($_path) {
+        if (!file_exists($_path)) oops($_path . ' does not exist');
+    
         $directory = dirname($_path);
         $node = basename($_path);
     

@@ -17,8 +17,8 @@ class File extends Node {
             return file_get_contents($this->Path);
         
         } else {
-            if (!Request::hasPrivilege(array(), 'SaveFile')) 
-                oops(PERMISSION_DENIED);
+            if (!Request::hasPrivilege(array(), 'SaveFile')) oops(PERMISSION_DENIED);
+            if (DEBUG) oops('write content to file ' . $this->Path);
             
             if (!file_exists(dirname($this->Path)))
                 mkdir(dirname($this->Path), 0777, true);
@@ -29,8 +29,8 @@ class File extends Node {
     }
     
     public function uploadAs($_path_to_file) {
-        if (!Request::hasPrivilege(array(), 'UploadFile')) 
-            oops(PERMISSION_DENIED_UPLOAD);
+        if (!Request::hasPrivilege(array(), 'UploadFile')) oops(PERMISSION_DENIED_UPLOAD);
+        if (DEBUG) ('upload file as ' . $_path_to_file);
         
         if (!file_exists(dirname($_path_to_file)))
             mkdir(dirname($_path_to_file));

@@ -32,21 +32,25 @@ if (class_exists('eliza\\' . key($_GET))
 //----------------------------------------------------------------------------//
 //                                handles POST                                //
 //----------------------------------------------------------------------------//
-if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {  
-    $Feed = $feed_query_id ? 
-        eliza\Request::feed($feed_name, $feed_arguments)
-            ->getById($feed_query_id):
-        new $feed_class();
+if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {        
+    if (!$Feed = eliza\Request::feed($feed_name, $feed_arguments)
+        ->getById($feed_query_id))
+        $Feed = new $feed_class();
+        
+    // deletes a feed
+    if (!eliza\GlobalContext::Post()->count()
+    && !eliza\GlobalContext::Files()->count()) 
+        $Feed->delete();
     
     // saves feed to XML file
-    if ($Feed instanceof eliza\XMLDocument)
+    elseif ($Feed instanceof eliza\XMLDocument)
         $Feed->mergeWith(eliza\GlobalContext::Post())
             ->saveAs(
                 FEEDS . strtolower($Feed->getClass()) . DS . $Feed->Id . '.xml'
             );
              
     // uploads file
-    if ($Feed instanceof eliza\File
+    elseif ($Feed instanceof eliza\File
     && eliza\GlobalContext::Files()->first()
     && !is_array(eliza\GlobalContext::Files()->first()->tmp_name)) {
         $upload_path = !empty($feed_arguments) ?
@@ -59,6 +63,8 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
                 $upload_path . DS
                 . eliza\GlobalContext::Files()->first()->name);
     }
+    
+    var_dump($Feed);
 }
 
 

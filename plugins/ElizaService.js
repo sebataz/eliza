@@ -14,20 +14,31 @@ this.ElizaService = function ( service , feed , feed_arguments ) {
     this._request = null;
 }
 
-ElizaService.oops = function (excuse) {
-    console.log(excuse);
+ElizaService.notify = function ( notice ) {
+    console.log( notice );
     
     var body = document.querySelector('body');
-    var oops = document.createElement('div');
-    body.insertBefore(oops, body.firstChild);
-    oops.innerHTML 
-        = '<div id="oops" style="width: 100%; padding: .3em; background-color: #ffffe6; font-size: .7em;">'
-        + '<span style="font-weight: bold">Oops: </span>'
-        + excuse
-        + '</div>';
+    var wrapper = document.createElement('div');
+    wrapper.id = 'notification-wrapper';
+    wrapper.style.position = 'fixed';
+    wrapper.style.bottom = '3em';
+    wrapper.style.width = '100%';
+    wrapper.style.zIndex = 1;
+    
+    var notification = document.createElement('div');
+    notification.innerHTML  = notice;
+    notification.id = 'notification';
+    notification.style.width = '23em';
+    notification.style.margin = '0 auto';
+    notification.style.fontSize = '.7em';
+    notification.style.padding = '.3em';
+    notification.style.backgroundColor = '#ffffe6';
+    
+    wrapper.appendChild(notification)
+    body.appendChild(wrapper);
     
     window.setTimeout(function () {
-        oops.parentNode.removeChild(oops);
+        notification.parentNode.removeChild(notification);
     }, 3000);
 };    
     
@@ -86,7 +97,7 @@ ElizaService.prototype.response = function ( callback ) {
             try {
             
                 if (null != JSON.parse(_Service._request.responseText).oops) {
-                    ElizaService.oops(JSON.parse(_Service._request.responseText).oops);
+                    ElizaService.notify('<span style="font-weight: bold">Oops: </span>' + JSON.parse(_Service._request.responseText).oops);
                     console.log(JSON.parse(_Service._request.responseText));
                 }
                 
@@ -171,22 +182,45 @@ ElizaService.Collection.prototype.dump = function () {
 //                          implements feed handling                          //
 //----------------------------------------------------------------------------//    
 this.ElizaService.Feed = function( Service , properties ) {  
-    this._Service = Service;
-    this._properties = properties;
+    var _Service = Service;
+    
+    for (var property in properties)
+        this[property] = properties;
 }
 
+ElizaService.Feed.prototype.Service = function () { return Service; }
+
 ElizaService.Feed.prototype.dump = function () {
-    console.log(this._properties);
+    for (var property in this)
+        if (this.hasOwnProperty(property))
+            console.log(property + ': ' + this[property]);
 }
 
 ElizaService.Feed.prototype.save = function () {
     var Get = Array();
-    Get[this._Service.feed] = null;
-    Get['args'] = this._Service.feed_arguments;
+    Get[this.Service().feed] = null;
+    Get['args'] = this.Service().feed_arguments;
+    Get['id'] = this.Id ? this.Id : null;
     
-    this._Service._request = ElizaService.ajax(this._Service.service, Get, this._properties);
+    var Post = Array();
+    for (var property in this)
+        if (this.hasOwnProperty(property))
+            Post[property] = this[property];
+    
+    this.Service()._request = ElizaService.ajax(this.Service().service, Get, Post);
         
-    return this._Service;
+    return this.Service();
+}
+
+ElizaService.Feed.prototype.delete = function () {
+    var Get = Array();
+    Get[this.Service().feed] = null;
+    Get['args'] = this.Service().feed_arguments;
+    Get['id'] = this.Id;
+    
+    this.Service()._request = ElizaService.ajax(this.Service().service, Get, {});
+    
+    return this.Service();
 }
     
     
