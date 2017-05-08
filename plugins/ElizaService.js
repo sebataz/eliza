@@ -151,11 +151,12 @@ ElizaService.Collection.prototype.limit = function (limit, offset = 0) {
     return new ElizaService.Collection(this._array.slice(offset, offset+limit)); 
 };
 
-ElizaService.Collection.prototype.sortBy = function (property, order = true) {
+ElizaService.Collection.prototype.sortBy = function (property, order_asc = true) {
     return new ElizaService.Collection(this._array.sort(function(a, b) {
-        var textA = a[property].toUpperCase();
-        var textB = b[property].toUpperCase();
-        return (textA < textB) ? (order?-1:1) : (textA > textB) ? (order?1:-1) : 0;
+        if (order_asc)
+            return (a[property] <= b[property]) ? -1 : 1;
+        else
+            return (a[property] <= b[property]) ? 1 : -1;
     }));
 };
 
@@ -183,17 +184,14 @@ ElizaService.Collection.prototype.dump = function () {
 //----------------------------------------------------------------------------//    
 this.ElizaService.Feed = function( Service , properties ) {  
     var _Service = Service;
+    this.Service = function () { return _Service; }
     
     for (var property in properties)
-        this[property] = properties;
+        this[property] = properties[property];
 }
 
-ElizaService.Feed.prototype.Service = function () { return Service; }
-
 ElizaService.Feed.prototype.dump = function () {
-    for (var property in this)
-        if (this.hasOwnProperty(property))
-            console.log(property + ': ' + this[property]);
+    console.log(this);
 }
 
 ElizaService.Feed.prototype.save = function () {
@@ -204,7 +202,8 @@ ElizaService.Feed.prototype.save = function () {
     
     var Post = Array();
     for (var property in this)
-        if (this.hasOwnProperty(property))
+        if (this.hasOwnProperty(property) 
+        && typeof this[property] != 'function')
             Post[property] = this[property];
     
     this.Service()._request = ElizaService.ajax(this.Service().service, Get, Post);

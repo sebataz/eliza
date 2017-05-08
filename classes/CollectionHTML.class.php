@@ -29,14 +29,15 @@ class CollectionHTML extends CollectionXML {
             elseif ($value instanceof CollectionHTML)
                 $html .= $tag_open . $value->HTML() . $tag_close;
                 
+            elseif (is_array($value))
+                $html .= $tag_open . (new self($value))->HTML() . $tag_close;
+                
             elseif (is_string($value)
             || is_int($value)
             || is_bool($value)
             || is_null($value))
                 $html .= $tag_open . $value . $tag_close;
                 
-            elseif (is_array($value))
-                $html .= $tag_open . (new self($value))->HTML() . $tag_close;
                 
             else
                 oops(OOPS);

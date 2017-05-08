@@ -35,17 +35,18 @@ class CollectionXML extends CollectionJSON {
             elseif ($value instanceof CollectionXML)
                 $xml .= $tag_open . $value->XML() . $tag_close . "\n";
                 
-            elseif (is_string($value)
-            || is_int($value)
-            || is_bool($value)
-            || is_null($value))
-                $xml .= $tag_open . '<![CDATA[' . $value . ']]>' . $tag_close . "\n";
-                
             elseif (is_array($value))
                 $xml .= $tag_open . (new self($value))->XML() . $tag_close;
-            
+                
+            elseif (is_bool($value))
+                $xml .= $tag_open . ($value ? 1 : 0) . $tag_close;
+                
+            elseif (is_numeric($value)
+            || is_null($value))
+                $xml .= $tag_open . $value . $tag_close;
+                
             else
-                oops(OOPS);
+                $xml .= $tag_open . '<![CDATA[' . $value . ']]>' . $tag_close . "\n";
         }
         
         return $xml . '</' . basename(get_class($_Object)) . '>' . "\n";

@@ -2,14 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>eliza | a kiss javascript/php set of APIs</title>
+        <title>eliza</title>
         
         <style>
             body {font-family: 'Tahoma', sans-serif; color: #3f3f3f; line-height: 1.3em;}
             a, a:hover {text-decoration: none; color: #FF5C31; letter-spacing: -.1em;}
             p {margin: 1em 0; text-align: justify;}
             strong {font-weight: bold; letter-spacing: -.1em}
-            h3 {color: #0969A2; font-size: 1.7em; margin-top: 1.3em; letter-spacing: -.1em}
+            h3, h4 {color: #0969A2; letter-spacing: -.1em}
+            h3 {font-size: 1.7em; margin-top: 1.3em;}
+            h4 {font-size: 1.3em; margin-top: .7em; margin-left: .3em;}
+            kbd {font-size: .8em; font-weight: bold; font-family: 'Courier', monospace; background-color: #f5f2f0;}
             pre {line-height: 1em; font-size: .8em}
             li {list-style-type: square; text-align: justify;}
             
@@ -18,42 +21,41 @@
             .index {margin: 0; padding: 0; list-style: none;}
             .index a {display: block; padding: 0 .7em; border-bottom: 1px solid #e0e0e0;}
             
-            div#page {margin: 3em 150px; max-width: 43em;}
-
-
+            div#documentation {margin: 3em 150px; max-width: 43em;}
         </style>
         
-         
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php.min.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
     </head>
     <body>
         <a href="https://github.com/sebataz/eliza"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
-
-        <div id="page">
-            <h3>eliza</h3>
+        <div id="documentation">
+        
+        
+            <!-- #eliza -->
+            <h3 id="eliza">eliza</h3>
             <p>eliza is a set of API designed to simplify the storage of information for web
             sites and applications. The concept is <strong>kiss</strong> (Keep It Simple Stupid!) feed 
             classes define how information is stored, which eliza uses to create 
             collections of feeds ready to be echoed.</p>
             
-            <h3>What she features</h3>
+            <h3 id="features">What she features</h3>
             <ul>
                 <li>eliza organizes <strong>feeds</strong> into <strong>collections</strong>.</li>
                 <li>eliza can handle feed requests addressed to the 
                 <strong>service.php</strong> file; the output can be configured 
-                to be either JSON or XML.</li>
+                to be either <kbd>JSON</kbd> or <kbd>XML</kbd>.</li>
                 <li><strong>ElizaService.js</strong> implements all the asynchronous 
-                calls to service.php.</li>
+                calls to <kbd>service.php<kbd>.</li>
                 <li>eliza makes use of <strong>pseudo-tags</strong> in order to directly render collections 
-                into HTML.</li>
+                into <kbd>HTML</kbd>.</li>
                 <li>eliza implements a basic check for privileges based on <strong>roles and 
-                permissions</strong>, configurable in the global config.php.</li>
+                permissions</strong>, configurable in the global <kbd>config.php</kbd>.</li>
                 <li>eliza has a simple <strong>buffering and caching</strong> system for your pages.</li>
-                <li>eliza already provides some types of feed that you can extend: Node, File, 
-                Image, XMLDocument.</li>
+                <li>eliza already provides some types of feed that you can extend: <kbd>Node</kbd>, <kbd>File</kbd>, 
+                <kbd>Image</kbd>, <kbd>XMLDocument</kbd>.</li>
             </ul>
             
             <h3>How she works</h3>
@@ -80,24 +82,126 @@
         &lt;/body&gt;
     &lt;/html&gt;
             </code></pre>
+            <!-- end #eliza -->
+            
+            
+            <!-- #classes -->
+            <h3 id="classes">Classes</h3>
+            <p>eliza classes are all defined in the namespace <kbd>eliza\</kbd>.</p>
+            <h4>eliza\GlobalContext</h4>
+            <h4>eliza\Presentation</h4>
+            <h4>eliza\Request</h4>
+            <!-- end #classes -->
+            
+            
+            <!-- #feeds -->
+            <h3 id="feeds">How to write a feed</h3>
+            <p>Mainly a feed is composed by its properties and the method 
+            <strong>public static function Feed()</strong>, which returns a 
+            collection of item.</p>
+            <p>An item is defined by a class that <strong>extends eliza\beta\Feed</strong>. 
+            Here is a feed example:</p>
+            <pre><code class="language-php">
+    class Item extends eliza\feed\Feed {
+        public $Value = '';
+        
+        public static function Feed() {
+            $Collection = new eliza\feed\HTMLFeed();
+            $Collection->append(new self(array('Value'=>'Hello World!')));
+            
+            return $Collection;
+            
+        }
+    }
+                </code></pre>
+                <p>More advanced examples can be found in the folder eliza/feed/.</p>
+                
+                <h3>Querying a feed</h3>
+                <p>Querying feeds can be done using different interfaces: <strong>PHP, pseudoHTML, jQuery</strong>.</p>
+                <p>Examples using PHP and pseudoHTML:</p>
+                <pre><code class="language-php">
+    // to directly invoke a formatted collection, ready to echo         
+    echo eliza\beta\Response::HTMLFeed('Item');
+
+    // to invoke, filter and format a collection
+    echo eliza\beta\Feed::Item()->limit(1)->HTMLFeed();
+
+    // to directly echo using pseudoHTML code
+    [Item /]
+
+    // filtering can be applied to pseudoHTML
+    [Item /]{limit:1}
+                </code></pre>
+                <p>All filter methods available are:
+                    <ul>
+                        <li><strong>Q</strong>(q): searches a collections for <strong>q</strong></li>
+                        <li><strong>filterBy</strong>(by, val): filters a collection using property <strong>by</strong> and value <strong>val</strong></li>
+                        <li><strong>sortBy</strong>(srt, ord): sorts a collection for property <strong>srt</strong> in order <strong>ord</strong></li>
+                        <li><strong>limit</strong>(lmt, off): limits a collection to only <strong>lmt</strong> items starting from <strong>off</strong></li>
+                    </ul>
+                </p>
+                
+                <h3>Requests and responses</h3>
+                <p>All request can directly be addressed to the file <strong>eliza/index.php</strong>. This file can negotiate <strong>GET</strong>, <strong>POST</strong> requests and file uploads.</p>
+                <p>Examples using jQuery:<p>
+                <pre><code class="language-javascript">
+    // GET Request
+    new Eliza('eliza/index.php').query('Item&lmt=1&off=0').call(function(response){
+        $('#response').append(response.html);
+    });
+
+    // POST Request
+    new Eliza('eliza/index.php').query('Page', {
+        Value: 'A value'
+    }).call(function(response, html){
+        console.log(response);
+    });     
+                </code></pre>
+                
+                <h3>Errors and exceptions</h3>
+                <p>Errors and exceptions can be fired by calling the method <strong>oops()</strong>, and a <a href="https://sebataz.ch/api/eliza/service.php">warning page</a> with report is called. Example:</p>
+                <pre><code class="language-php">oops('the documentation is over');</code></pre>
+                
+
+            
+            <!-- #usage -->
+            <h3 id="usage">Basic usage</h3>
+            <p>First of all, you need to include the class autoloader and some
+            basic definitions for eliza, you do this by including the main file
+            <kbd>eliza.php</kbd> found in the root directory of this project.</p>
+            <pre><code class="language-php">
+    require 'eliza/eliza.php';  // includes eliza class autoloader and base definitions
+            </code></pre>
+            <!-- end #usage -->                
+            
+            
+            
+            
+            <!-- #versions -->
+            <h3 id="versions">versions</h3>
+            <ul>
+                <li><strong>beta</strong>: main features are being developed and tested
+                (see section <a href="#features" />What she features</a>).</li>
+            </ul>
 
             <h3>eliza was coded by</h3>
             <ul>
                 <li>sebataz <<a href="https://sebataz.ch" target="_blank">sebataz.ch</a>></li>
             </ul>
-        
+            <!-- end #versions -->
+            
         
         </div>
-        
         <div id="index">
             <img id="logo" src="eliza.jpg" />
             <ul class="index">
-                <li class="index"><a href="index.html">eliza</a></li>
-                <li class="index"><a href="feeds.html">feeds</a></li>
-                <li class="index"><a href="collection.html">collections</a></li>
-                <li class="index"><a href="service.html">service</a></li>
-                <li class="index"><a href="usage.html">basic usage</a></li>    
-                <li class="index"><a href="versions.html">versions</a></li>    
+                <li class="index"><a href="#eliza">eliza</a></li>   
+                <li class="index"><a href="#classes">classes</a></li>
+                <li class="index"><a href="#feeds">feeds</a></li>
+                <li class="index"><a href="#collections">collections</a></li>
+                <li class="index"><a href="#service">service</a></li>
+                <li class="index"><a href="#usage">basic usage</a></li> 
+                <li class="index"><a href="#versions">versions</a></li>    
             </ul>
         </div>
         

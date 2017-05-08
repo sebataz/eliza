@@ -20,18 +20,21 @@ abstract class Feed extends Object {
     }
     
     public static function __callStatic ($_feed, $_args) {
-        if (!class_exists($_feed) && !class_exists('eliza\\' . $_feed))
-            oops(NOT_DEFINED_CLASS, $_feed);
+        if (!is_subclass_of($_feed, 'eliza\\Feed')
+        && !is_subclass_of('eliza\\' . $_feed, 'eliza\\Feed'))
+            oops('class ' . $_feed . ' is not a valid Feed');
     
-        if (method_exists($_feed, 'Feed'))
+        if (class_exists($_feed))
             return call_user_func_array(array($_feed, 'Feed'), $_args);
             
-        if (method_exists('eliza\\' . $_feed, 'Feed'))
+        if (class_exists('eliza\\' . $_feed))
             return call_user_func_array(array('eliza\\' . $_feed, 'Feed'), $_args);
-            
-        oops(NOT_DEFINED_METHOD, array(!$_feed ? 'null' : $_feed, 'Feed'));
     }
     
     // ACHTUNG: method below prevents infinite recursion if Feed::Feed() is called
-    public static function Feed() { return new CollectionFeed(); } 
+    public static function Feed() { 
+        // which one ist better?
+        oops(NOT_DEFINED_METHOD, array(get_called_class(), 'Feed')); 
+        //return new CollectionFeed(); 
+    } 
 }
