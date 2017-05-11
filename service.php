@@ -37,8 +37,8 @@ if (!$Feed = eliza\Request::feed($feed_name, $feed_arguments)
     $Feed = new $feed_class();
 
 $Collection = $feed_query_id ? 
-    eliza\Request::feed($feed_name, $feed_arguments) : 
-    new eliza\CollectionFeed(array($Feed));
+    new eliza\CollectionFeed(array($Feed)) :
+    eliza\Request::feed($feed_name, $feed_arguments);
 
 if ($feed_query_by && !$feed_query_id)
     $Collection->getBy($feed_query_by, $feed_query_value);

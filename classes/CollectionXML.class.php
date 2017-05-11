@@ -20,20 +20,20 @@ class CollectionXML extends CollectionJSON {
     }
     
     final public static function ObjectToXML($_Object) {
-        $xml =  "\n" . '<' . basename(get_class($_Object)) . '>' . "\n";
+        $xml =  "\n" . '<' . basename(get_class($_Object)) . '>' . PHP_EOL;
     
         foreach ($_Object as $key => $value) {
             $tag_open = '<' . (is_string($key) ? $key : 'Value') . '>';
-            $tag_close = '</' . (is_string($key) ? $key : 'Value') . '>' . "\n";
+            $tag_close = '</' . (is_string($key) ? $key : 'Value') . '>' . PHP_EOL;
                 
             if ($value instanceof CollectionXML_I)
-                $xml .= $tag_open . $value->toXML() . $tag_close . "\n";
+                $xml .= $tag_open . $value->toXML() . $tag_close . PHP_EOL;
         
             elseif ($value instanceof Object)
-                $xml .= $tag_open . self::ObjectToXML($value) . $tag_close . "\n";
+                $xml .= $tag_open . self::ObjectToXML($value) . $tag_close . PHP_EOL;
                 
             elseif ($value instanceof CollectionXML)
-                $xml .= $tag_open . $value->XML() . $tag_close . "\n";
+                $xml .= $tag_open . $value->XML() . $tag_close . PHP_EOL;
                 
             elseif (is_array($value))
                 $xml .= $tag_open . (new self($value))->XML() . $tag_close;
@@ -46,10 +46,10 @@ class CollectionXML extends CollectionJSON {
                 $xml .= $tag_open . $value . $tag_close;
                 
             else
-                $xml .= $tag_open . '<![CDATA[' . $value . ']]>' . $tag_close . "\n";
+                $xml .= $tag_open . '<![CDATA[' . $value . ']]>' . $tag_close . PHP_EOL;
         }
         
-        return $xml . '</' . basename(get_class($_Object)) . '>' . "\n";
+        return $xml . '</' . basename(get_class($_Object)) . '>' . PHP_EOL;
     }
     
     public static function SimpleXMLToArray($_Xml) {

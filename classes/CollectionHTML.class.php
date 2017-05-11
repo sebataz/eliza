@@ -18,7 +18,7 @@ class CollectionHTML extends CollectionXML {
             $tag_open = '<span class="' 
                 . (is_string($key) ? strtolower($key) : '')
                 . ($value instanceof Object ? strtolower('feed ' . $value->getClass()) : '') . '">';
-            $tag_close = '</span>' . "\n";
+            $tag_close = '</span>' . PHP_EOL;
         
             if ($value instanceof CollectionHTML_I)
                 $html .= $value->toHTML();

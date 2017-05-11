@@ -28,9 +28,10 @@ ElizaService.notify = function ( notice ) {
     var notification = document.createElement('div');
     notification.innerHTML  = notice;
     notification.id = 'notification';
-    notification.style.width = '23em';
+    notification.style.width = '47%';
     notification.style.margin = '0 auto';
     notification.style.fontSize = '.7em';
+    notification.style.wordWrap = 'break-word';
     notification.style.padding = '.3em';
     notification.style.backgroundColor = '#ffffe6';
     

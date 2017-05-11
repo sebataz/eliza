@@ -31,11 +31,11 @@ class Image extends File implements CollectionHTML_I {
     // this must go here!!!
     public function toHTML() {
         return <<<EOT
-\n<div id="{$this->Id}" class="thumb" style="width:{$this->Thumb->Width}px; height:{$this->Thumb->Height}px;">
-    <a href="{$this->Url}" target="_blank">
+\n<a href="{$this->Url}" target="_blank">
+    <div id="{$this->Id}" class="thumb" style="width:{$this->Thumb->Width}px; height:{$this->Thumb->Height}px;">
         <img src="{$this->Thumb->Url}" alt="{$this->Name}"/>
-    </a>
-</div>\n
+    </div>
+</a>\n
 EOT;
     }
     

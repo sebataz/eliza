@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class File extends Node {
+class File extends Node implements CollectionHTML_I {
     public static function Feed($_directory = '.') {
         $File = new CollectionFeed();
         foreach (parent::Feed($_directory) as $Node)
@@ -37,6 +37,16 @@ class File extends Node {
         
         if (!move_uploaded_file($this->Path, $_path_to_file))
             oops('File could not be uploaded');
+    }
+    
+    public function toHTML() {
+        return <<<EOT
+\n<div id="{$this->Id}" class="file">
+    <a href="{$this->Url}" target="_blank">
+        <span class="filename">{$this->Filename}<span>
+    </a>
+</div>\n
+EOT;
     }
     
     public static function touch($_path_to_file) {
