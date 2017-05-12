@@ -18,7 +18,7 @@ class Node extends Feed {
         unlink($this->Path);
     }
     
-    public static function Feed($_directory = '.') {
+    public static function Feed($_directory = '.'/*, $_extensions_white_list = '', $_recursive = false*/) {
         $Directory = new CollectionFeed();
         
         foreach (scandir(self::__path(ROOT . $_directory)) as $node) {

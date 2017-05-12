@@ -7,6 +7,10 @@ class Image extends File implements CollectionHTML_I {
     public $Height = 0;
     public $Thumb = null;
     
+    public function Thumb($_size = '230') {
+    
+    }
+    
     public static function Feed($_gallery = '.', $thumb_size = 0) {
         $Files = parent::Feed($_gallery);
         $Gallery = new CollectionFeed();

@@ -80,7 +80,8 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
             eliza\GlobalContext::Files()->first()->tmp_name)
             ->uploadAs(
                 $upload_path . DS
-                . eliza\GlobalContext::Files()->first()->name));
+                . preg_replace('/[^A-Za-z0-9\-_\.\[\]\(\)]/', '', 
+                    eliza\GlobalContext::Files()->first()->name)));
     }
 }
 

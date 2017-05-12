@@ -216,9 +216,9 @@ ElizaService.Feed.prototype.delete = function () {
     var Get = Array();
     Get[this.Service().feed] = null;
     Get['args'] = this.Service().feed_arguments;
-    Get['id'] = this.Id;
     
-    this.Service()._request = ElizaService.ajax(this.Service().service, Get, {});
+    if (Get['id'] = this.Id)
+        this.Service()._request = ElizaService.ajax(this.Service().service, Get, {});
     
     return this.Service();
 }

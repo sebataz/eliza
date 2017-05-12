@@ -1,6 +1,18 @@
 (function () {
+    ElizaPlugin.plugins.selection = function ( ) {
+        this.DOMElement(function () {
+            var check_to_delete = document.createElement('input');
+            check_to_delete.type = 'checkbox';
+            check_to_delete.style.position = 'absolute'; 
+            check_to_delete.style.top = 0;
+            check_to_delete.style.right = 0;
+            this.style.position = 'relative';
+            this.appendChild(check_to_delete);
+        });
+    };
+    
     ElizaPlugin.plugins.upload = function ( location ) {
-        var location = location;
+        var UploadService = new ElizaService('../api/eliza/service.php', 'File', location);
         this.DOMElement(function () {
             var upload_with_eliza = this;
         
@@ -21,7 +33,19 @@
                         if (nodes[i].getElementsByTagName('input')[0].checked) {
                             var file = nodes[i].id;
                             
-                            console.log(file);
+                            // deletes files
+                            var File = new ElizaService.Feed(UploadService);
+                            File.Id = file;
+                            
+                            File.delete().response(function () {
+                                UploadService.query().response(function (C, HTML) {
+                                    upload_with_eliza.innerHTML = HTML;
+                                    ElizaPlugin.byClassName('file').selection();
+                                    upload_with_eliza.appendChild(add_files);
+                                    upload_with_eliza.appendChild(delete_files);
+                                    ElizaService.notify('files were deleted succesfully');
+                                });
+                            });
                         }
                     }
                 }
@@ -39,33 +63,36 @@
             add_files.appendChild(input_add_files);
 
             a_add_files.href = '#';
-            a_add_files.innerHTML = '<span class="filename">add<br /> files</span>';
+            a_add_files.innerHTML = '<span class="filename">add files</span>';
             a_add_files.onclick = function () {input_add_files.click();};
 
             input_add_files.type = 'file';
             input_add_files.style.display = 'none';
             input_add_files.multiple = true;
             input_add_files.onchange = function () {
-                console.log(this.files);
+                
+                // uploads files
+                for (var file in this.files) {
+                    var File = new ElizaService.Feed(
+                        UploadService, 
+                        {file:this.files[file]}
+                    );
+                    
+                    File.save().response(function(Collection, HTML){
+                        upload_with_eliza.innerHTML = HTML;
+                        ElizaPlugin.byClassName('file').selection();
+                        upload_with_eliza.appendChild(add_files);
+                        upload_with_eliza.appendChild(delete_files);
+                        ElizaService.notify('files were uploaded succesfully');
+                    });
+                }
+                    
+                
             };
 
-            var Uploads = new ElizaService('../api/eliza/service.php', 'File', 'feeds/download/');
-            Uploads.query().response(function (Collection, HTML) {
+            UploadService.query().response(function (Collection, HTML) {
                 upload_with_eliza.innerHTML = HTML;
-                
-                
-                
-                var files = document.getElementsByClassName('file');
-                for(var i = 0; i < files.length; i++) {
-                    var check_to_delete = document.createElement('input');
-                    check_to_delete.type = 'checkbox';
-                    check_to_delete.style.position = 'absolute'; 
-                    check_to_delete.style.top = 0;
-                    check_to_delete.style.right = 0;
-                    files[i].style.position = 'relative';
-                    files[i].appendChild(check_to_delete);
-                }
-                
+                ElizaPlugin.byClassName('file').selection();    
                 upload_with_eliza.appendChild(add_files);
                 upload_with_eliza.appendChild(delete_files);
             });        
