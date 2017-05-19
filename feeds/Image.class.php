@@ -5,45 +5,32 @@ namespace eliza;
 class Image extends File implements CollectionHTML_I {
     public $Width = 0;
     public $Height = 0;
-    public $Thumb = null;
+    
+    public static function describeFile($_path_to_file) {
+        if (list($image_width, $image_height) = getimagesize($_path_to_file)) {
+            $Image = parent::describeFile($_path_to_file);
+            $Image->Width = $image_width;
+            $Image->Height = $image_height;
+            return $Image;
+        } else oops($_path_to_file . ' is not an image');
+    }
     
     public function Thumb($_size = '230') {
-    
-    }
-    
-    public static function Feed($_gallery = '.', $thumb_size = 0) {
-        $Files = parent::Feed($_gallery);
-        $Gallery = new CollectionFeed();
-        
-        foreach ($Files as $File)   {
-            if (list($image_width, $image_height) = getimagesize($File->Path)) {
-                $Image = new static();
-                $Image->mergeWith($File);
-                $Image->Width = $image_width;
-                $Image->Height = $image_height;
-                
-                if ($thumb_size > 0) $Image->Thumb = self::createImageThumbnail($File->Url, $thumb_size);
-                else $Image->Thumb = new static((array)$Image);
-                
-                $Gallery->append($Image);
-            }
-        }
-        
-        return $Gallery;
+        if (preg_match('/ico/i', $this->Extension)) return $this;
+        return self::createImageThumbnail($this->Url, $_size);
     }
         
-    // this must go here!!!
     public function toHTML() {
         return <<<EOT
-\n<a href="{$this->Url}" target="_blank">
-    <div id="{$this->Id}" class="thumb" style="width:{$this->Thumb->Width}px; height:{$this->Thumb->Height}px;">
-        <img src="{$this->Thumb->Url}" alt="{$this->Name}"/>
-    </div>
-</a>\n
+\n<div id="{$this->Id}" class="thumb file">
+    <a href="{$this->Url}" target="_blank">
+        <img src="{$this->Thumb()->Url}" alt="{$this->Name}"/>
+        <span class="filename">{$this->Filename}</span>
+    </a>
+</div>\n
 EOT;
     }
     
-    // should this go into Image?
     final public static function createImageThumbnail($_url_to_image, $_thumb_size) {
         $thumb_name =  md5($_url_to_image) . '_' . $_thumb_size . '.jpg';
         $thumb_url = 'http://' . $_SERVER['HTTP_HOST'] . '/temp/thumb/' . $thumb_name;
@@ -73,9 +60,10 @@ EOT;
                 case 'gif':
                 case 'GIF':
                     $image = imagecreatefromgif($_url_to_image);
+                    break;
                 
                 default: 
-                    return null; 
+                    return null;
                     // oops($_url_to_image . ' is not a recognized image');
             }
             
@@ -98,7 +86,7 @@ EOT;
             list($thumb_width, $thumb_height) = getimagesize($path_to_thumb);
         }
         
-        $Thumb = static::describeNode($path_to_thumb);
+        $Thumb = static::describeFile(TEMP . 'thumb' . DS . $thumb_name);
         $Thumb->Width = $thumb_width;
         $Thumb->Height = $thumb_height;
         

@@ -11,7 +11,6 @@ class GlobalContext extends Collection {
     
     public static function Get() { return new self($_GET); }
     public static function Post() { return new self($_POST); }
-    public static function Files() { return new self($_FILES); }
 
     public static function Configuration() {
         static $Configuration;
@@ -47,17 +46,43 @@ class GlobalContext extends Collection {
         return $Session;
     }
     
-    public static function Querystring($_include = array()) {
-        if (!is_array($_include)) $_include = array($_include);
-        $querystring = array();
+    public static function Files() { 
+        static $Files;
         
-        foreach ($_GET as $key => $value) {
-            if (in_array($key, $_include) || empty($_include))
-                $querystring[$key] = $value;
+        if (!$Files) {
+            $arr_files = array();
+            
+            foreach ($_FILES as $request_file => $file_descriptor) {
+                $arr_files[$request_file] = array();
+                
+                if (!is_array($file_descriptor['error'])) {
+                    $file_descriptor['name'] = array($file_descriptor['name']);
+                    $file_descriptor['type'] = array($file_descriptor['type']);
+                    $file_descriptor['tmp_name'] = array($file_descriptor['tmp_name']);
+                    $file_descriptor['error'] = array($file_descriptor['error']);
+                    $file_descriptor['size'] = array($file_descriptor['size']);
+                }
+                
+                foreach ($file_descriptor['error'] as $key => $error)
+                    $arr_files[$request_file][] = new self(array(
+                        'Type' => $file_descriptor['type'][$key],
+                        'TmpName' => $file_descriptor['tmp_name'][$key],
+                        'Error' => $file_descriptor['error'][$key],
+                        'Size' => $file_descriptor['size'][$key],
+                        'Name' => preg_replace('/[^A-Za-z0-9\-_\.\[\]\(\)]/', '', 
+                            basename($file_descriptor['name'][$key]))
+                    ));
+                    
+                
+            }
+            
+            $Files = new self($arr_files);
         }
         
-        // the preg_ will prevent the overwriting of array get variables, by removing the explicit index
-        return empty($querystring)
-             ? '' : ('&' . preg_replace('/%5B[0-9]*%5D/', '[]', http_build_query($querystring)));
+        return $Files;
+        
+    
+    return new self($_FILES); 
+    
     }
 }

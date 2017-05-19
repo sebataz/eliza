@@ -74,18 +74,11 @@ ElizaService.ajax = function (url, get, post) {
 ElizaService.prototype.query = function( params ) {
     var Get = Array();
     Get[this.feed] = null;
-    Get['args'] = this.feed_arguments
-    Get['id'] = null;
-    Get['by'] = null;
-    Get['val'] = null;
-    Get['srt'] = null;
-    Get['ord'] = null;
-    Get['lmt'] = null;
-    Get['off'] = null;
+    Get['args[]'] = this.feed_arguments;
     
     for ( param in params )
             Get[param] = params[param];
-    
+            
     this._request = ElizaService.ajax(this.service, Get, null);
     
     return this;
@@ -198,7 +191,7 @@ ElizaService.Feed.prototype.dump = function () {
 ElizaService.Feed.prototype.save = function () {
     var Get = Array();
     Get[this.Service().feed] = null;
-    Get['args'] = this.Service().feed_arguments;
+    Get['args[]'] = this.Service().feed_arguments;
     Get['id'] = this.Id ? this.Id : null;
     
     var Post = Array();
@@ -206,7 +199,7 @@ ElizaService.Feed.prototype.save = function () {
         if (this.hasOwnProperty(property) 
         && typeof this[property] != 'function')
             Post[property] = this[property];
-    
+            
     this.Service()._request = ElizaService.ajax(this.Service().service, Get, Post);
         
     return this.Service();

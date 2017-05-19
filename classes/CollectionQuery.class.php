@@ -4,12 +4,14 @@ namespace eliza;
 
 class CollectionQuery extends Collection {
     public function getBy($_property, $_value) {
-        $Collection = new static();
+        $array = array();
         
         foreach ($this as $Feed)
-            if ($Feed->$_property == $_value)
-                $Collection->append($Feed);
-        return $Collection;
+            if ($Feed->$_property === $_value)
+                $array[] = $Feed;
+                
+        $this->exchangeArray($array);
+        return $this;
     }
     
     public function sortBy($_prop, $_order = SORT_ASC /* or SORT_DESC*/)  {

@@ -12,7 +12,7 @@
     };
     
     ElizaPlugin.plugins.upload = function ( location ) {
-        var UploadService = new ElizaService('../api/eliza/service.php', 'File', location);
+        var UploadService = new ElizaService('../api/eliza/service.php', 'FileContent', location);
         this.DOMElement(function () {
             var upload_with_eliza = this;
         
@@ -46,6 +46,7 @@
                                     ElizaService.notify('files were deleted succesfully');
                                 });
                             });
+                            
                         }
                     }
                 }
@@ -70,20 +71,23 @@
             input_add_files.style.display = 'none';
             input_add_files.multiple = true;
             input_add_files.onchange = function () {
+            
                 
                 // uploads files
-                for (var file in this.files) {
+                for (var i = 0; i < this.files.length; i++) {
                     var File = new ElizaService.Feed(
                         UploadService, 
-                        {file:this.files[file]}
+                        {file:this.files[i]}
                     );
                     
-                    File.save().response(function(Collection, HTML){
-                        upload_with_eliza.innerHTML = HTML;
-                        ElizaPlugin.byClassName('file').selection();
-                        upload_with_eliza.appendChild(add_files);
-                        upload_with_eliza.appendChild(delete_files);
-                        ElizaService.notify('files were uploaded succesfully');
+                    File.save().response(function(){
+                        UploadService.query().response(function (Collection, HTML) {
+                            upload_with_eliza.innerHTML = HTML;
+                            ElizaPlugin.byClassName('file').selection();
+                            upload_with_eliza.appendChild(add_files);
+                            upload_with_eliza.appendChild(delete_files);
+                            ElizaService.notify('files were uploaded succesfully');
+                        });
                     });
                 }
                     

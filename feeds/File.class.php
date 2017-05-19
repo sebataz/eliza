@@ -2,59 +2,67 @@
 
 namespace eliza;
 
-class File extends Node implements CollectionHTML_I {
-    public static function Feed($_directory = '.') {
-        $File = new CollectionFeed();
-        foreach (parent::Feed($_directory) as $Node)
-            if (!$Node->IsDir)
-                $File->append(new static($Node->toArray()));
+class File extends Feed {
+    public $Filename = '';
+    public $IsDir = false;
+    public $Extension = '';
+    public $AbsolutePath = '';
+    public $Datetime = 0;
+    
+    // use these ;)
+    public $Name = ''; // = $this->Id
+    public $Path = '';
+    public $Url = '';
+
+    // all path must be passed relative to ROOT
+    public static function Feed($_directory = '.', $_ext_white_list = '') {
+        $Directory = new CollectionFeed();
+        
+        foreach (scandir(ROOT . $_directory) as $file) {
+            if (($file == '.') || ($file == '..'))
+                continue;
                 
+            $File = static::describeFile(ROOT . $_directory . DS . $file);
+            if(!$File)continue;
+
+            $regex = str_replace('.', '^$', $_ext_white_list); // use '.' for file without extension
+            $regex = '/(' . str_replace(',', '|', $regex) . ')/i';
+            if (!preg_match($regex, $File->Extension))
+                continue;
+            
+            $Directory->append($File);
+        }
+        
+        return $Directory;
+    }
+    
+    
+    
+    public static function describeFile($_path_to_file) {
+        if (!file_exists($_path_to_file)) oops($_path_to_file . ' does not exist');
+        
+        $File = new static();
+        $File->AbsolutePath = realpath($_path_to_file);
+        $File->Path = str_replace(ROOT, '', $File->AbsolutePath);
+        $File->Filename = basename($File->Path);
+        $File->Id = $File->Name = pathinfo($File->Filename, PATHINFO_FILENAME);
+        $File->Extension = pathinfo($File->Filename, PATHINFO_EXTENSION);
+        $File->Datetime = filemtime($File->AbsolutePath);
+        $File->IsDir = is_dir($File->AbsolutePath);
+        $File->Url = BASE_URI . addslashes($File->Path);
+        
         return $File;
     }
-
-    public function content($_string = null, $_overwrite = true) {
-        if ($_string === null) {
-            return file_get_contents($this->Path);
+    
+    public function deleteFromDisk() {
+        if (!Request::hasPrivilege(array(), 'DeleteFile')) oops(PERMISSION_DENIED);
         
-        } else {
-            if (!Request::hasPrivilege(array(), 'SaveFile')) oops(PERMISSION_DENIED);
-            if (DEBUG) oops('write content to file ' . $this->Path);
-            
-            if (!file_exists(dirname($this->Path)))
-                mkdir(dirname($this->Path), 0777, true);
-                
-            if (!file_put_contents($this->Path, $_string, $_overwrite ? 0 : FILE_APPEND))
-                oops(OOPS);
+        if (file_exists($this->AbsolutePath)) {
+            if (DEBUG) oops('delete file ' . $this->AbsolutePath);
+            if ($this->IsDir)
+                rmdir($this->AbsolutePath);
+            else
+                unlink($this->AbsolutePath);
         }
-    }
-    
-    public function uploadAs($_path_to_file) {
-        if (!Request::hasPrivilege(array(), 'UploadFile')) oops(PERMISSION_DENIED_UPLOAD);
-        if (DEBUG) ('upload file as ' . $_path_to_file);
-        
-        if (!file_exists(dirname($_path_to_file)))
-            mkdir(dirname($_path_to_file));
-        
-        if (!move_uploaded_file($this->Path, $_path_to_file))
-            oops('File could not be uploaded');
-    }
-    
-    public function toHTML() {
-        return <<<EOT
-\n<div id="{$this->Id}" class="file">
-    <a href="{$this->Url}" target="_blank">
-        <span class="filename">{$this->Filename}<span>
-    </a>
-</div>\n
-EOT;
-    }
-    
-    public static function touch($_path_to_file) {
-        if (!file_exists(dirname($_path_to_file))) 
-            mkdir(dirname($_path_to_file));
-            
-        if (!touch($_path_to_file)) oops(OOPS);
-        
-        return File::describeNode($_path_to_file);
     }
 }
