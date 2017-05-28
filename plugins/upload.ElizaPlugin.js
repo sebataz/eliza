@@ -12,7 +12,7 @@
     };
     
     ElizaPlugin.plugins.upload = function ( location ) {
-        var UploadService = new ElizaService('../api/eliza/service.php', 'FileContent', location);
+        var UploadService = new ElizaService('../api/eliza/service.php', 'FileContent', [location]);
         this.DOMElement(function () {
             var upload_with_eliza = this;
         

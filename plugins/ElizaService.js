@@ -6,10 +6,14 @@
 //                            class ElizaService:                             //
 //                          implements ajax request                           //
 //----------------------------------------------------------------------------//
-this.ElizaService = function ( service , feed , feed_arguments ) { 
-    this.service = service; 
-    this.feed = feed;
-    this.feed_arguments = feed_arguments;
+this.ElizaService = function ( service_url , feed , feed_arguments ) { 
+    this.url = service_url; 
+    
+    this.base_query = [];
+    this.base_query[feed] = null;
+    
+    if (feed_arguments)
+        this.base_query['args'] = Array.isArray(feed_arguments) ? feed_arguments : [];
     
     this._request = null;
 }
@@ -72,13 +76,7 @@ ElizaService.ajax = function (url, get, post) {
 };
     
 ElizaService.prototype.query = function( params ) {
-    var Get = Array();
-    Get[this.feed] = null;
-    Get['args[]'] = this.feed_arguments;
-    
-    for ( param in params )
-            Get[param] = params[param];
-            
+    var Get = Array.prototype.push.apply(base_query, params);
     this._request = ElizaService.ajax(this.service, Get, null);
     
     return this;
@@ -189,10 +187,7 @@ ElizaService.Feed.prototype.dump = function () {
 }
 
 ElizaService.Feed.prototype.save = function () {
-    var Get = Array();
-    Get[this.Service().feed] = null;
-    Get['args[]'] = this.Service().feed_arguments;
-    Get['id'] = this.Id ? this.Id : null;
+    this.Service().base_query['id'] = this.Id ? this.Id : null;
     
     var Post = Array();
     for (var property in this)
@@ -200,18 +195,17 @@ ElizaService.Feed.prototype.save = function () {
         && typeof this[property] != 'function')
             Post[property] = this[property];
             
-    this.Service()._request = ElizaService.ajax(this.Service().service, Get, Post);
+    this.Service()._request = ElizaService.ajax(this.Service().url, this.Service().base_query, Post);
         
     return this.Service();
 }
 
 ElizaService.Feed.prototype.delete = function () {
-    var Get = Array();
-    Get[this.Service().feed] = null;
-    Get['args'] = this.Service().feed_arguments;
+    if (!this.Id) return;
     
-    if (Get['id'] = this.Id)
-        this.Service()._request = ElizaService.ajax(this.Service().service, Get, {});
+    this.Service().base_query['id'] = this.Id;
+    
+    this.Service()._request = ElizaService.ajax(this.Service().url, this.Service().base_query, {});
     
     return this.Service();
 }

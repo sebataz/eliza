@@ -1,6 +1,8 @@
 <?php include 'eliza.php';
 
-
+var_dump($_GET);
+var_dump($_POST);
+die();
 try {//-----------------------------------------------------------------------//
 //                               defines query                                //
 //----------------------------------------------------------------------------//
@@ -45,15 +47,14 @@ if ($feed_query_sort && !$feed_query_id)
     
 if ($feed_query_limit && !$feed_query_id)
     $Collection->limit($feed_query_limit, $feed_query_offset);
-    
-if ($Collection->count() <= 0)
-    $Collection->append(new $feed_class());  
 
 //----------------------------------------------------------------------------//
 //                                handles POST                                //
 //----------------------------------------------------------------------------//
 if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {    
-            
+        
+    if ($Collection->count() <= 0)
+        $Collection->append(new $feed_class());              
                 
     // uploads all posted files
     $upload_path = !empty($feed_arguments) ? 

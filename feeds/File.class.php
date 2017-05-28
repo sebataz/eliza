@@ -18,19 +18,19 @@ class File extends Feed {
     public static function Feed($_directory = '.', $_ext_white_list = '') {
         $Directory = new CollectionFeed();
         
+        $_ext_white_list = str_replace(',', '|', preg_quote($_ext_white_list));
         foreach (scandir(ROOT . $_directory) as $file) {
-            if (($file == '.') || ($file == '..'))
-                continue;
-                
-            $File = static::describeFile(ROOT . $_directory . DS . $file);
-            if(!$File)continue;
-
-            $regex = str_replace('.', '^$', $_ext_white_list); // use '.' for file without extension
-            $regex = '/(' . str_replace(',', '|', $regex) . ')/i';
-            if (!preg_match($regex, $File->Extension))
+        
+            // match non-files
+            if (preg_match('/^(\.|\.\.)$/', $file)
+            
+            // match white listed extensions
+            || !preg_match('/(' . $_ext_white_list . ')$/i',  
+                pathinfo($file, PATHINFO_EXTENSION)))
                 continue;
             
-            $Directory->append($File);
+            $Directory->append(
+                static::describeFile(ROOT . $_directory . DS . $file));
         }
         
         return $Directory;

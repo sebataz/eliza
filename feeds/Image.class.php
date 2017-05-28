@@ -6,6 +6,10 @@ class Image extends File implements CollectionHTML_I {
     public $Width = 0;
     public $Height = 0;
     
+    public static function Feed($_directory = '.', $_ext_white_list = 'jpg,jpeg,png,gif') {
+        return parent::Feed($_directory, $_ext_white_list);
+    }
+    
     public static function describeFile($_path_to_file) {
         if (list($image_width, $image_height) = getimagesize($_path_to_file)) {
             $Image = parent::describeFile($_path_to_file);
@@ -61,10 +65,6 @@ EOT;
                 case 'GIF':
                     $image = imagecreatefromgif($_url_to_image);
                     break;
-                
-                default: 
-                    return null;
-                    // oops($_url_to_image . ' is not a recognized image');
             }
             
             $image_width = imagesx($image);
