@@ -24,13 +24,15 @@ class Collection extends \ArrayObject {
             return $first;
     }
     
-    public function append($_Collection) {
+    public function append($_Object) {
+       parent::append($_Object);
+    }
+    
+    public function concat($_Collection) {
         if ($_Collection instanceof self)
             foreach ($_Collection as $Value)
                 parent::append($Value);
-        else
-            parent::append($_Collection);
-    }    
+    }
     
     public function shuffle() {
         $array = (array) $this;

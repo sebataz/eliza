@@ -1,121 +1,145 @@
 (function(){//----------------------------------------------------------------//
 //                               ElizaService.js                              //
 //----------------------------------------------------------------------------//
+var scripts = document.getElementsByTagName('script');
+var __file__ = scripts[scripts.length-1].src;
 
 //----------------------------------------------------------------------------//
 //                            class ElizaService:                             //
 //                          implements ajax request                           //
 //----------------------------------------------------------------------------//
-this.ElizaService = function ( service_url , feed , feed_arguments ) { 
-    this.url = service_url; 
+this.ElizaService = function ( service_url ) { 
+    var _url = service_url;
     
-    this.base_query = [];
-    this.base_query[feed] = null;
-    
-    if (feed_arguments)
-        this.base_query['args'] = Array.isArray(feed_arguments) ? feed_arguments : [];
-    
-    this._request = null;
+    this.xhr = null;
+    this.request = function (get, post) {
+        try {
+            
+            var GetVariables = Array();
+            var PostVariables = post ? new FormData() : null;
+            
+            // encode data for query
+            if (post) for (var property in post)
+                    PostVariables.append(property, post[property]);
+                    
+            if (get) Object.keys(get).forEach(function (property) {
+                GetVariables.push( encodeURIComponent(property) + "=" + (get[property] ? encodeURIComponent(get[property]) : '') );
+            });
+            
+            // create compatible request object
+            if (window.ActiveXObject) this.xhr = new ActiveXObject();
+            else if (window.XMLHttpRequest) this.xhr = new XMLHttpRequest();
+            
+            // send request
+            // console.log('request: ' + _url + '?' + GetVariables.join('&'));
+            this.xhr.open(post ? 'POST' : 'GET', _url + '?' + GetVariables.join('&'), true);
+            this.xhr.send(PostVariables);
+            
+            return this;
+        } catch (e) {
+            console.log(e);
+        }
+    };
 }
 
-ElizaService.notify = function ( notice ) {
-    console.log( notice );
-    
-    var body = document.querySelector('body');
-    var wrapper = document.createElement('div');
-    wrapper.id = 'notification-wrapper';
-    wrapper.style.position = 'fixed';
-    wrapper.style.bottom = '3em';
-    wrapper.style.width = '100%';
-    wrapper.style.zIndex = 1;
-    
-    var notification = document.createElement('div');
-    notification.innerHTML  = notice;
-    notification.id = 'notification';
-    notification.style.width = '47%';
-    notification.style.margin = '0 auto';
-    notification.style.fontSize = '.7em';
-    notification.style.wordWrap = 'break-word';
-    notification.style.padding = '.3em';
-    notification.style.backgroundColor = '#ffffe6';
-    
-    wrapper.appendChild(notification)
-    body.appendChild(wrapper);
-    
-    window.setTimeout(function () {
-        notification.parentNode.removeChild(notification);
-    }, 3000);
-};    
-    
-ElizaService.ajax = function (url, get, post) {
-    try {
-        
-        var GetVariables = Array();
-        var PostVariables = post ? new FormData() : null;
-        
-        // encode data for query
-        if (post) for (var property in post)
-                PostVariables.append(property, post[property]);
-                
-        if (get) Object.keys(get).forEach(function (property) {
-            GetVariables.push( encodeURIComponent(property) + "=" + (get[property] ? encodeURIComponent(get[property]) : '') );
-        });
-        
-        // create compatible request object
-        if (window.ActiveXObject) var xhr = new ActiveXObject();
-        else if (window.XMLHttpRequest) var xhr = new XMLHttpRequest();
-        
-        // send request
-        xhr.open(post ? 'POST' : 'GET', url + '?' + GetVariables.join('&'), true);
-        xhr.send(PostVariables);
-        
-        return xhr;
-    } catch (e) {
-        console.log(e);
-    }
-};
-    
-ElizaService.prototype.query = function( params ) {
-    var Get = Array.prototype.push.apply(base_query, params);
-    this._request = ElizaService.ajax(this.service, Get, null);
-    
-    return this;
-}
-    
 ElizaService.prototype.response = function ( callback ) {
-    var _Service = this;
-    _Service._request.onreadystatechange = function () {
-        if (_Service._request.readyState > 3) {
+    var xhr = this.xhr;
+    this.xhr.onreadystatechange = function () {
+        if (xhr.readyState > 3) {
             try {
+                if (null != callback)
+                    callback(xhr.responseText);
             
-                if (null != JSON.parse(_Service._request.responseText).oops) {
-                    ElizaService.notify('<span style="font-weight: bold">Oops: </span>' + JSON.parse(_Service._request.responseText).oops);
-                    console.log(JSON.parse(_Service._request.responseText));
-                }
-                
-                else if (null != callback) {
-                    var CollectionFeed = new ElizaService.Collection();
-                
-                    response_feed = JSON.parse(_Service._request.responseText).feed;
-                    
-                    for (var feed in response_feed)
-                        if (response_feed[feed])
-                            CollectionFeed.append(
-                                new ElizaService.Feed(_Service, response_feed[feed]));
-                    
-                    callback(
-                        CollectionFeed, 
-                        JSON.parse(_Service._request.responseText).html);
-                }
                 
             } catch (e) {
                 console.log(e);
-                console.log(_Service._request.responseText);
+                console.log(xhr.responseText);
             }
         }
     };
 }
 
+
+//----------------------------------------------------------------------------//
+//                               sub-class Feed:                              //
+//                          implements feed handling                          //
+//----------------------------------------------------------------------------//    
+this.ElizaService.Feed = function( feed, feed_arguments ) {
+    // init eliza serivce at service.php
+    var _Service = new ElizaService(__file__.replace('ElizaService.js', '../service.php'));
+    this.Service = function () { return _Service; }
+    
+    // prepare base query
+    var _baseQuery = [];
+    this.baseQuery = function () { return _baseQuery; };
+    _baseQuery[feed] = null;
+    if (feed_arguments)
+        _baseQuery['args'] = Array.isArray(feed_arguments) ? feed_arguments : [];
+};
+
+ElizaService.Feed.prototype.dump = function () {
+    console.log(this);
+};
+
+
+    
+    
+ElizaService.Feed.prototype.query = function( params ) {
+    this.Service().request(Object.assign([], this.baseQuery(), params));
+    return this;
+};
+
+ElizaService.Feed.prototype.save = function () {
+    var Post = Array();
+    for (var property in this)
+        if (this.hasOwnProperty(property) 
+        && typeof this[property] != 'function')
+            Post[property] = this[property];
+        
+    this.Service().request(
+        Object.assign([], this.baseQuery(), {id:(this.Id ? this.Id : null)}), 
+        Post
+    );
+    
+    return this;
+};
+
+ElizaService.Feed.prototype.delete = function () {
+    if (this.Id)
+        this.Service().request(
+            Object.assign([], this.baseQuery(), {id:this.Id}), 
+            {}
+        );
+    
+    return this;
+};
+
+ElizaService.Feed.prototype.response = function ( callback ) {
+    var ThisFeed = this;
+    var Service = this.Service();
+    
+    this.Service().response(function ( response ) {
+        response = JSON.parse(response);
+    
+        if (null != response.oops) {
+            ElizaPlugin.notify('<strong>Oops: </strong>' + response.oops);
+            console.log(response);
+        
+        } else {
+            var Collection = new ElizaService.Collection();
+            
+            for (var feed in response.feed)
+                Collection.append(Object.assign(new ElizaService.Feed(), ThisFeed, response.feed[feed])); // mmhhh :-/
+                
+            callback(Collection, response.html);
+        }
+    });
+};
+    
+    
+    
+    
+    
 
 
 //----------------------------------------------------------------------------//
@@ -168,52 +192,7 @@ ElizaService.Collection.prototype.dump = function () {
 
 
     
-    
-
-//----------------------------------------------------------------------------//
-//                               sub-class Feed:                              //
-//                          implements feed handling                          //
-//----------------------------------------------------------------------------//    
-this.ElizaService.Feed = function( Service , properties ) {  
-    var _Service = Service;
-    this.Service = function () { return _Service; }
-    
-    for (var property in properties)
-        this[property] = properties[property];
-}
-
-ElizaService.Feed.prototype.dump = function () {
-    console.log(this);
-}
-
-ElizaService.Feed.prototype.save = function () {
-    this.Service().base_query['id'] = this.Id ? this.Id : null;
-    
-    var Post = Array();
-    for (var property in this)
-        if (this.hasOwnProperty(property) 
-        && typeof this[property] != 'function')
-            Post[property] = this[property];
-            
-    this.Service()._request = ElizaService.ajax(this.Service().url, this.Service().base_query, Post);
         
-    return this.Service();
-}
-
-ElizaService.Feed.prototype.delete = function () {
-    if (!this.Id) return;
-    
-    this.Service().base_query['id'] = this.Id;
-    
-    this.Service()._request = ElizaService.ajax(this.Service().url, this.Service().base_query, {});
-    
-    return this.Service();
-}
-    
-    
-    
-    
-    
     
     
 

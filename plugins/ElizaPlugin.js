@@ -37,6 +37,35 @@
             console.log( ElizaPlugin.prototype ); },
 
     };
+    
+    ElizaPlugin.notify = function ( notice ) {
+        console.log( notice );
+        
+        var body = document.querySelector('body');
+        var wrapper = document.createElement('div');
+        wrapper.id = 'notification-wrapper';
+        wrapper.style.position = 'fixed';
+        wrapper.style.bottom = '3em';
+        wrapper.style.width = '100%';
+        wrapper.style.zIndex = 1;
+        
+        var notification = document.createElement('div');
+        notification.innerHTML  = notice;
+        notification.id = 'notification';
+        notification.style.width = '47%';
+        notification.style.margin = '0 auto';
+        notification.style.fontSize = '.7em';
+        notification.style.wordWrap = 'break-word';
+        notification.style.padding = '.3em';
+        notification.style.backgroundColor = '#ffffe6';
+        
+        wrapper.appendChild(notification)
+        body.appendChild(wrapper);
+        
+        window.setTimeout(function () {
+            notification.parentNode.removeChild(notification);
+        }, 3000);
+    };    
 
 })();//---------------------------end ElizaPlugin.js--------------------------//
 //----------------------------------------------------------------------------//

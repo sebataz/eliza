@@ -1,8 +1,6 @@
 <?php include 'eliza.php';
 
-var_dump($_GET);
-var_dump($_POST);
-die();
+
 try {//-----------------------------------------------------------------------//
 //                               defines query                                //
 //----------------------------------------------------------------------------//
@@ -24,7 +22,7 @@ if (class_exists('eliza\\' . key($_GET))
     $feed_query_limit = eliza\GlobalContext::Get()->defaultValue('lmt');
     $feed_query_offset = eliza\GlobalContext::Get()->defaultValue('off');
 
-} else oops(NOT_DEFINED, key($_GET) ? key($_GET) : 'null');
+} else oops((key($_GET) ? key($_GET) : 'null') . ' is not a valid feed');
 ////////////////////////////////////////////////////////////////////////////////
 ///////// A VALID FEED MUST BE PROVIDED IN ORDER TO HANDLE A REQUEST! //////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +57,7 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
     // uploads all posted files
     $upload_path = !empty($feed_arguments) ? 
         $feed_arguments[0] . DS : 
-        'feeds' . strtolower($Feed->getClass()) . DS;
+        'feeds' . strtolower($Collection->first()->getClass()) . DS;
         
     foreach (eliza\GlobalContext::Files() as $Uploads)
         foreach ($Uploads as $Upload)
@@ -76,7 +74,8 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
             $Feed->deleteFromDisk();
         
         // saves feed to XML file
-        } elseif ($Feed instanceof eliza\XMLDocument) {
+        } elseif ($Feed instanceof eliza\XMLDocument
+        || $Feed instanceof eliza\HTMLDocument) {
             $Feed->mergeWith(eliza\GlobalContext::Post())->saveToDisk();
     
         }
