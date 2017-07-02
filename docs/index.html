@@ -5,11 +5,11 @@
         <title>eliza</title>
         
         <style>
-            body {font-family: 'Tahoma', sans-serif; color: #3f3f3f; line-height: 1.3em;}
+            body {margin: 0; font-family: 'Tahoma', sans-serif; color: #3f3f3f; line-height: 1.3em;}
             a, a:hover {text-decoration: none; color: #FF5C31; letter-spacing: -.1em;}
             p {margin: 1em 0; text-align: justify;}
             strong {font-weight: bold; letter-spacing: -.1em}
-            h3 {margin-top: 3.3em; margin-bottom: 1em; font-size: 1.7em; }
+            h3 {margin-top: 0; padding-top: 3.3em; margin-bottom: 1em; font-size: 1.7em; }
             h4 {margin-top: 2.3em; margin-bottom: 1em; margin-left: .3em; font-size: 1.3em;}
             h5 {margin-top: 1.7em; margin-bottom: 1em; margin-left: .7em;}
             h3, h4 {color: #0969A2; letter-spacing: -.1em}
@@ -22,7 +22,7 @@
             .index {margin: 0; padding: 0; list-style: none;}
             .index a {display: block; padding: 0 .7em; border-bottom: 1px solid #e0e0e0;}
             
-            div#documentation {margin: 3em 150px; max-width: 43em;}
+            div#documentation {margin: 0 150px; max-width: 43em;}
             
             p.note {background-color: #ffffe6; border: 2px solid #ffffc6; padding: .3em;}
         </style>
@@ -40,7 +40,7 @@
             <!-- #eliza -->
             <h3 id="eliza">eliza</h3>
             <p>eliza is a set of API designed to simplify the storage of information for web
-            sites and applications. The concept is <strong>kiss</strong> (Keep It Simple Stupid!) feed 
+            sites and applications. The concept is kiss (Keep It Simple Stupid!) feed 
             classes define how information is stored, which eliza uses to create 
             collections of feeds ready to be echoed.</p>
             
@@ -50,19 +50,31 @@
                 <li>eliza can handle feed requests addressed to the 
                 <strong>service.php</strong> file; the output can be configured 
                 to be either <kbd>JSON</kbd> or <kbd>XML</kbd>.</li>
-                <li><strong>ElizaService.js</strong> implements all the asynchronous 
-                calls to <kbd>service.php<kbd>.</li>
                 <li>eliza makes use of <strong>pseudo-tags</strong> in order to directly render collections 
                 into <kbd>HTML</kbd>.</li>
                 <li>eliza implements a basic check for privileges based on <strong>roles and 
                 permissions</strong>, configurable in the global <kbd>config.php</kbd>.</li>
                 <li>eliza has a simple <strong>buffering and caching</strong> system for your pages.</li>
-                <li>eliza already provides some types of feed that you can extend: <kbd>Node</kbd>, <kbd>File</kbd>, 
-                <kbd>Image</kbd>, <kbd>XMLDocument</kbd>.</li>
+                <li>eliza already provides some types of feed that you can extend: <kbd>File</kbd>, <kbd>FileContent</kbd>, 
+                <kbd>Image</kbd>, <kbd>XMLDocument</kbd>, <kbd>HTMLDocument</kbd>.</li>
+                <li><strong>ElizaService.js</strong> implements all the asynchronous 
+                calls to <kbd>service.php</kbd>.</li>
+                <li><strong>ElizaPlugin.js</strong> can be used to enrich the user interface
+                with ease.</li>
             </ul>
+            <!-- end #eliza -->
             
-            <h3>How she works</h3>
-            <p>Basically, all you need to work with eliza are two files, a <strong>feed class</strong> and 
+            
+            <!-- #usage -->
+            <h3 id="usage">Basic usage</h3>
+            <p>First of all, you need to include the class autoloader and some
+            basic definitions for eliza, you do this by including the main file
+            <kbd>eliza.php</kbd> found in the root directory of this project.</p>
+            <pre><code class="language-php">
+    require 'eliza/eliza.php';  // includes eliza class autoloader and base definitions
+            </code></pre>
+            
+            <p>Then, basically, all you need to work with eliza are two files, a <strong>feed class</strong> and 
             a <strong>html template or page</strong> (and some stored information, of course).</p>
             
             <p>An example of feed:</p>
@@ -74,8 +86,12 @@
             
             <p>An example of page:</p>
             <pre><code class="language-html">
-    &lt;?php include 'eliza.php'; ?&gt;
-    &lt;!DOCTYPE html&gt;
+    &lt;?php 
+    
+        include 'eliza.php'; 
+        eliza\Presentation::buffered();
+    
+    ?&gt;&lt;!DOCTYPE html&gt;
     &lt;html lang="en"&gt;
         &lt;head&gt;
             &lt;meta charset="utf-8"&gt;
@@ -85,8 +101,136 @@
         &lt;/body&gt;
     &lt;/html&gt;
             </code></pre>
-            <!-- end #eliza -->
+            <p class="note">The above is a working example with a page that will show a list of values 
+            stored into xml files. This may very well be, but you should be aware of 
+            the methods and interfaces that lie underneath if you wish to have more control 
+            over things (see <a href="#feeds">How to query feeds</a> and <a href="#collections">How to manage collectionse</a>).</p>
             
+            
+            
+            
+            
+            <!-- end #usage -->    
+            
+            
+            
+            
+            <!-- #feeds -->
+            <h3 id="feeds">How to query a feed</h3>
+            <p>There are three main contexts in which you may want to query a feed: inside
+            <strong>HTML</strong> content, from <strong>JavaScript</strong> or directly 
+            inside a <strong>PHP</strong> implementation.</p>
+            <h4>in PHP</h4>
+            <p>There are several PHP methods to invoke a feed collection, you may
+            wish to choose the one that suits you better. In any case, you should
+            remember that the origin implementation for the querying method is 
+            <kbd>::Feed($_args)</kbd>, defined by the feed you are invoking.</p>
+            
+            <p>When the feed name is known:</p>
+            <pre><code class="language-php">
+    File::Feed($_args); // invoked directly from feed class
+    eliza\Feed::File($_args) // loads feed, then calls the above method
+            </code></pre>
+            
+            <p>If the feed name changes dynamically (inside variable):</p>
+            <pre><code class="language-php">
+    eliza\Request::feed($_feed, $_args); // used to dynamically invoke feeds
+            </code></pre>
+            
+            <h4>in JavaScript</h4>
+            <p>It is possible to query a feed asynchronously using <kbd>plugins/ElizaService.js</kbd>
+            This JavaScript interface reflects the querying method and all the collection methods 
+            applicable.</p>
+            
+            <h4>in HTML</h4>
+            <p>Pseudo-tags are a simplified way to invoke and manage a collection 
+            of a particular feed. For example:</p>
+            <pre><code class="language-html">
+    [File /]{first} // will output the first file from the root directory
+            </code></pre>
+            <p>In order to use pseudo-tag correctly you have to make sure that the
+            feed you wish to invoke is a valid one (see <a href="#write-feeds">How to write a feed</a>).</p>
+            <p>Pseudo-tags use the square bracket notation, with a slash before the closing bracket, 
+            for the feed invocation and braces to apply collection methods (see <a href="#collections">How to manage collections</a>). 
+            The feed arguments are passed within the square brackets separated
+            by an empty space; while parameters for collection methods are passed within the
+            braces following the name of the method and a semi-colon, and, separated by a comma. Like so:</p>
+            <pre><code class="language-html">
+    [Feed arg1 arg2 /]{method1:arg1,arg2 method2:arg1,arg2}
+            </code></pre>
+            
+            
+            <h3 id="write-feeds">How to write a feed</h3>
+            <p>Writing a new feed is not a difficult endeavour, since a  feed
+            is basically the description of an item you wish to store, it will be
+            clearer further on, but you should already be familiar with it if you know
+            <kbd>OOP</kbd>. The most important aspect of a feed is the ability to 
+            query itself, in fact a querying method must be declared and implemented
+            in order for a feed to be a valid one.</p>
+            
+            <p>Another requirement for a feed to be valid is to extend <kbd>eliza\Feed</kbd>
+            class, which also provides a unique Id for the feed.</p>
+            
+            <h4>Querying method (<kbd>::Feed($_args)</kbd>)</h4>
+            <p>A feed class has to declare and implement its querying method, which should
+            return a collection of feeds of the self type (class in which the method is implemented).</p>
+            <p>The querying method must be declared <kbd>public static</kbd> in order for it to be accessible
+            by eliza.</p>
+            <pre><code class="language-php">
+    public static Feed($_args) {
+    
+        #1 create an empty collection
+        $Collection = new eliza\Collection();
+        
+        #2 add one or more feeds of the self type
+        $Collection->append(new self());
+        
+        #3 return the collection of feeds
+        return $Collection;
+    }        
+            </code></pre>
+            <p>You should, of course, model the implementation to your needs (e.g.:
+            database queries, service invocation, file access, ...). It is important, however,
+            that you remember to return a collection; the collection may be empty, but 
+            instantiated nonetheless.</p>
+            
+            <p class="note">If you do not wish to bother with the querying implementation
+            for your feeds you can always extend the provided basic feeds: 
+            <kbd>File</kbd>, <kbd>FileContent</kbd>, <kbd>Image</kbd>, <kbd>XMLDocument</kbd>, <kbd>HTMLDocument</kbd></p>
+            
+            <h4>Basic feeds</h4>
+            <p>Some basic feeds have already been implemented for you, these feeds offer some
+            basic functionality. Of course, you can extend these feeds in order to customize
+            the logic to your needs.</p>
+            <h5>eliza\File</h5>
+            <p><kbd>File</kbd> is used to list the content of a directory. <kbd>File</kbd> can also be 
+            used to describe any file stored on the accessible file system.</p>
+                
+            <h5>eliza\FileContent</h5>
+            <p><kbd>FileContent</kbd> extends <kbd>File</kbd> adding a method to read and write the content
+            of a particular file.</p>
+            <h5>eliza\Image</h5>
+            <p><kbd>Image</kbd> extends <kbd>File</kbd> providing the ability to generate a thumbnail in case
+            a file uses a recognized image format (i.e.: jpg, gif, png, bmp, ico). The 
+            HTML source generated by this feed class will show a thumbnail link to the
+            original image file.</p>
+            <h5>eliza\HTMLDocument</h5>
+            <p><kbd>HTMLDocument</kbd> extends <kbd>File</kbd> adding only a property which contains the content
+            of the file.</p>
+            <h5>eliza\XMLDocument</h5>
+            <p><kbd>XMLDocument</kbd> can be used to store multiple feeds of the same type,
+            every item is described by its own xml file.</p>
+            
+            <!-- end #feeds -->
+            
+            
+            <!-- #collections -->
+            <h3 id="collections">How to manage collections</h3>
+            <p>A collection is basically a way to neatly organize a list of item,
+            the collection interface offers many useful methods to manage your
+            feeds throughout an application or website.</p>
+            
+             <!-- end #collections -->          
             
             <!-- #classes -->
             <h3 id="classes">Classes</h3>
@@ -94,10 +238,10 @@
             
             <h4>eliza\GlobalContext</h4>
             <p>This is a single ton class holding a 
-            collection instance for all the <kbd>PHP</kbd> globally accessed variables 
+            collection of instances for all the <strong>PHP globally accessed variables</strong> 
             (i.e.: <kbd>$_GET</kbd>, <kbd>$_POST</kbd>, <kbd>$_FILES</kbd>, 
-            <kbd>$_SESSION</kbd>, <kbd>$_SERVER</kbd>) and in particular the global
-            configuration for eliza.</p>
+            <kbd>$_SESSION</kbd>, <kbd>$_SERVER</kbd>) and in particular the <strong>global
+            configuration</strong> for eliza.</p>
             <p>Global variables are accessible from anywhere in the code
             by invoking the <kbd>eliza\GlobalContext</kbd> class, and
             are read-only:</p>
@@ -107,7 +251,7 @@
     eliza\GlobalContext::Files()->upload; // returns $_FILES['upload']
     eliza\GlobalContext::Server()->HTTP_REFERER; // return $_SERVER['HTTP_REFERER']
             </code></pre>
-            <p>For <kbd>eliza\GlobalContext::Session()</kbd> things are, of course,
+            <p>For <kbd>::Session()</kbd> things are, of course,
             a bit different since you may need to set a session variable. This is
             done by passing an array as argument for the method <kbd>::Session()</kbd>.</p>
             <pre><code class="language-php">
@@ -116,7 +260,7 @@
         'UserId'=>'TheMaster'
     )); // sets value of $_SESSION['UserId']
             </code></pre>
-            <p class="note">Only the method <kbd>::Session()</kbd> can set variables
+            <p>Only the method <kbd>::Session()</kbd> can set variables
             in the global context. This method automatically starts a session if necessary.</p>
             <h5>Global configuration (config.php)</h5>
             <p>The global configuration is a Collection of values that can be
@@ -125,55 +269,50 @@
             <pre><code class="language-php">
     eliza\GlobalContext::Configuration()->Roles->eliza; // returns $cfg['Roles']['eliza']
             </code></pre>
-            <p>You can if you wish edit directly the <kbd>config.php</kbd> file 
+            <p class="note">You can if you wish edit directly the <kbd>config.php</kbd> file 
             found with eliza, however I recommend making a copy of the file and save 
             it in your document root, this way eliza will overwrite the default
             configuration with your own <kbd>config.php</kbd>. If a setting is not defined 
-            in your configuration the default is used.</kbd>
+            in your configuration then the default is used.</kbd>
+            
+            
             <h4>eliza\Presentation</h4>
+            <p>This class contains mainly utility methods for the presentation of
+            content within your pages or application. Two straightforward
+            methods for <strong>buffering and caching content</strong> can be called from this class:</p>
+            <pre><code class="language-php">
+    eliza\Presentation::buffered(); // buffers the output generated after this call
+    eliza\Presentation::cached(); // will buffer and cache the output generated after the call
+            </code></pre>
+            <p>But, the main role of this class is to parse a buffered output and intercept any <strong>pseudo-tag</strong>.
+            The method <kbd>::replaceHTMLFeedReference($_content_with_pseudo_tag)</kbd>
+            will, in fact, replace all pseudo-tags with some dynamically generated content.</p>
+            <p class="note">When a page is buffered using the <kbd>::buffered()</kbd> all pseudo-tags
+            will be automatically parsed.</p>
+            
             
             <h4>eliza\Request</h4>
+            <p>It is possible, using the method <kbd>::http($_url, $_request, $_method)</kbd>,
+            to send a request to a remote address; the method <kbd>::feed($_feed, $_args)</kbd>
+            is an alternative way to invoke feeds from a feed name.</p>
+            <p>A more important aspect of this class is the ability to manage privileges
+            throughout your application or website.</p>
+            <h5>roles and permissions</h5>
+            <p></p>
+            
+            
+            
+            <h4>Errors and exceptions</h4>
+            <p>Errors and exceptions can be fired by calling the method <kbd>oops($_message)</kbd>, and a 
+            <a href="../service.php">warning page</a> with report will be showed.</p>
             <!-- end #classes -->
-            
-            
-            <!-- #feeds -->
-            <h3 id="feeds">How to write a feed</h3>
-            <h3>Querying feeds</h3>
-            <p>All filter methods available are:
-                <ul>
-                    <li><strong>filterBy</strong>(by, val): filters a collection using property <strong>by</strong> and value <strong>val</strong></li>
-                    <li><strong>sortBy</strong>(srt, ord): sorts a collection for property <strong>srt</strong> in order <strong>ord</strong></li>
-                    <li><strong>limit</strong>(lmt, off): limits a collection to only <strong>lmt</strong> items starting from <strong>off</strong></li>
-                </ul>
-            </p>
-                
-               
-                
-                
-
-            
-            <!-- #usage -->
-            <h3 id="usage">Basic usage</h3>
-            <p>First of all, you need to include the class autoloader and some
-            basic definitions for eliza, you do this by including the main file
-            <kbd>eliza.php</kbd> found in the root directory of this project.</p>
-            <pre><code class="language-php">
-    require 'eliza/eliza.php';  // includes eliza class autoloader and base definitions
-            </code></pre>
-            <h3>Errors and exceptions</h3>
-            <p>Errors and exceptions can be fired by calling the method <strong>oops()</strong>, and a 
-            <a href="https://sebataz.ch/api/eliza/service.php">warning page</a> with report is called.</p>
-
-            <!-- end #usage -->                
-            
-            
             
             
             <!-- #versions -->
             <h3 id="versions">versions</h3>
             <ul>
                 <li><strong>beta</strong>: main features are being developed and tested
-                (see section <a href="#features" />What she features</a>).</li>
+                (see <a href="#features" />What she features</a>).</li>
             </ul>
 
             <h3>eliza was coded by</h3>
@@ -188,11 +327,12 @@
             <img id="logo" src="eliza.jpg" />
             <ul class="index">
                 <li class="index"><a href="#eliza">eliza</a></li>   
-                <li class="index"><a href="#classes">classes</a></li>
+                <li class="index"><a href="#usage">usage</a></li> 
                 <li class="index"><a href="#feeds">feeds</a></li>
                 <li class="index"><a href="#collections">collections</a></li>
+                <li class="index"><a href="#classes">classes</a></li>
                 <li class="index"><a href="#service">service</a></li>
-                <li class="index"><a href="#usage">basic usage</a></li> 
+                <li class="index"><a href="#plugins">plugins</a></li>
                 <li class="index"><a href="#versions">versions</a></li>    
             </ul>
         </div>
