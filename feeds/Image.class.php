@@ -26,10 +26,9 @@ class Image extends File implements CollectionHTML_I {
         
     public function toHTML() {
         return <<<EOT
-\n<div id="{$this->Id}" class="thumb file">
+\n<div id="{$this->Id}" class="thumb">
     <a href="{$this->Url}" target="_blank">
         <img src="{$this->Thumb()->Url}" alt="{$this->Name}"/>
-        <span class="filename">{$this->Filename}</span>
     </a>
 </div>\n
 EOT;

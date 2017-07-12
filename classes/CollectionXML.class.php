@@ -57,7 +57,7 @@ class CollectionXML extends CollectionJSON {
     
         foreach ($_Xml as $El) {
             $children = get_object_vars($El);
-        
+            
             if (!empty($children))
                 $array[$El->getName()][] = self::SimpleXMLToArray($El);
             
