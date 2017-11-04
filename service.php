@@ -87,7 +87,7 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
 //                                  fallback                                  //
 //----------------------------------------------------------------------------// 
     $buffer = eliza\Presentation::flush();
-    if (eliza\GlobalContext::Server()->defaultValue('HTTP_REFERER') && !DEBUG) {           
+    if (eliza\GlobalContext::Server()->defaultValue('HTTP_REFERER') && DEBUG) {           
         $Collection = new eliza\CollectionXML(array(
             'oops' => $O->getMessage(),
             'wtf' => $O->getTrace(), 

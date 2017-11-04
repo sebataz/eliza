@@ -43,7 +43,8 @@
         $_class = preg_replace('/(_I)$/', '', $_class);
         
         // defines class definition file and path to namespace
-        $class = @end(explode('\\', $_class)) . '.class.php';
+        $namespace = explode('\\', $_class);
+        $class = end($namespace) . '.class.php';
         
         // loads class definition
         if (file_exists(ELIZA . 'classes' . DS . $class))
