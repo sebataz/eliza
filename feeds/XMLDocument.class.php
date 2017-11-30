@@ -17,6 +17,7 @@ abstract class XMLDocument extends Feed {
     }
     
     // dude! this goes into XMLDocument, I believe!
+	// yep, done!
     public function saveToDisk() {
         if (!Request::hasPrivilege(array(), 'SaveFeed')) oops(PERMISSION_DENIED);
         if (DEBUG) oops('save new feed in ' . strtolower($this-getClass()));

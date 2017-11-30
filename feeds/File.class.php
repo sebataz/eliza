@@ -10,7 +10,7 @@ class File extends Feed {
     public $Datetime = 0;
     
     // use these ;)
-    public $Name = ''; // = $this->Id
+    public $Name = ''; // = $this->Id *(l. 48)
     public $Path = '';
     public $Url = '';
 

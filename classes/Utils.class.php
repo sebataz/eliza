@@ -31,6 +31,7 @@ class Utils {
             
             return $Collection;
         } catch (\PDOException $E) {
+			// returns true when query does not have a dataset but has succeded
             if ($E->getCode() == "HY000") // general error produced by cycling a non-dataset query
                 return true;
             else throw $E;        
