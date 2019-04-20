@@ -61,12 +61,13 @@ class Presentation {
                         // method and argument block are separated by a semi-colon ':',
                         // while arguments are separated by a comma ','
                         $feed_callback = explode(':', $collection_method);
+						
                         
                         // Make the method call. The method as of now can return both
                         // a feed collection or a single feed.
                         $CollectionFeed = call_user_func_array(
                             array($CollectionFeed, $feed_callback[0]), // $CollectionFeed->$feed_callback[0]
-                            explode(',', $feed_callback[1])); // $args = $feed_callback[1]
+                            explode(',', (count($feed_callback)>1)?$feed_callback[1]:1)); // $args = $feed_callback[1]
                     }
                 }
                 

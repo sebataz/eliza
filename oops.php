@@ -33,6 +33,9 @@
                 <?php if ($e instanceof \eliza\Oops): ?>
                     <h1 class="wtf">Wtf?</h1>
                     <div id="stacktrace"><?php $e->printStackTrace(); ?></div>
+                <?php else: ?>
+                    <h1 class="wtf">Wtf?</h1>
+                    <div id="stacktrace"><?php var_dump($e); ?></div>
                 <?php endif; ?>
             </div>
         </div>
