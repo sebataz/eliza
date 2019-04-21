@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class Object {
+class ElizaObject {
     public function __construct(array $array = array()) {
         foreach ($array as $prop => $value)
             $this->$prop = $value;

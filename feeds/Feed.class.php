@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-abstract class Feed extends Object {
+abstract class Feed extends ElizaObject {
     public $Id;
     
     public function __get($_prop){ oops(NOT_DEFINED_PROPERTY, array($this->getClass(), $_prop)); }
