@@ -24,9 +24,10 @@ class Collection extends \ArrayObject {
             return $first;
     }
     
-    public function append($_Object) {
-       parent::append($_Object);
-    }
+	// thinking about removing this method, might be an overstatement...
+    // public function append($_Object) {
+       // parent::append($_Object);
+    // }
     
     public function concat($_Collection) {
         if ($_Collection instanceof self)

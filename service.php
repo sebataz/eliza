@@ -106,22 +106,24 @@ eliza\Presentation::buffered();
         
 if ($Collection
 && eliza\GlobalContext::Configuration()->XMLResponse) {
-    header ('Content-Type: text/xml');
-    echo '<?xml version="1.0" encoding="UTF-8"?>'; 
     if ($Collection instanceof eliza\CollectionFeed)
-        echo sprintf('<Feed>%s</Feed>',
+        $xml = sprintf('<Feed>%s</Feed>',
             $Collection->XML());
-    else
-        echo $Collection->XML();
+	
+	// XML Output
+    echo '<?xml version="1.0" encoding="UTF-8"?>'; 
+    header ('Content-Type: text/xml');
+	echo $xml;
     
 } elseif ($Collection
 && !eliza\GlobalContext::Configuration()->XMLResponse) {
-    header ('Content-Type: application/json');
     if ($Collection instanceof eliza\CollectionFeed)
-        echo sprintf('{"feed":%s,"html":%s}',
+        $json = sprintf('{"feed":%s,"html":%s}',
             $Collection->JSON(),
             json_encode($Collection->HTML()));
-    else
-        echo $Collection->JSON();
+	
+	// JSON Output
+    header ('Content-Type: application/json');
+	echo $json;
 }//-------------------------------end service.php-----------------------------// 
 //----------------------------------------------------------------------------// 

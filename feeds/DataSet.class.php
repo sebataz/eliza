@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class Utils {
+class DataSset extends Feed {
     
     
     public static function queryDatabase($_query, $connection = 'Mysql') {

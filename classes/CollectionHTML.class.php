@@ -17,13 +17,13 @@ class CollectionHTML extends CollectionXML {
         foreach ($_Object as $key => $value) {
             $tag_open = '<span class="' 
                 . (is_string($key) ? strtolower($key) : '')
-                . ($value instanceof Object ? strtolower('feed ' . $value->getClass()) : '') . '">';
+                . ($value instanceof Feed ? strtolower('feed ' . $value->getClass()) : '') . '">';
             $tag_close = '</span>' . PHP_EOL;
         
             if ($value instanceof CollectionHTML_I)
                 $html .= $value->toHTML();
                 
-            elseif ($value instanceof Object)
+            elseif ($value instanceof Feed)
                 $html .= $tag_open . self::ObjectToHTML($value) . $tag_close;
                 
             elseif ($value instanceof CollectionHTML)

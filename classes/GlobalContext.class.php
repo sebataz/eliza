@@ -2,7 +2,7 @@
 
 namespace eliza;
 
-class GlobalContext extends Collection	 {
+class GlobalContext extends Collection {
     // prevents from setting any values in the global context
     public function offsetSet($_key, $_value) { }
     public function __set($_key, $_value) { }

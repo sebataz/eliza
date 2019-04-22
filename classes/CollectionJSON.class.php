@@ -6,7 +6,7 @@ interface CollectionJSON_I {
     public function toJSON();
 }
 
-class CollectionJSON extends CollectionQuery {
+class CollectionJSON extends Collection {
     public function __construct($_json = array()) {
 		if (static::isJSON($_json))
 			static::__construct(static::JSONToArray($_json));

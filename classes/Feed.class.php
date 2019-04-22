@@ -2,9 +2,9 @@
 
 namespace eliza;
 
-abstract class Feed extends ElizaObject {
+class Feed {
     public $Id;
-    
+	
     public function __get($_prop){ oops(NOT_DEFINED_PROPERTY, array($this->getClass(), $_prop)); }
     public function __set($_prop, $_val) { oops(NOT_DEFINED_PROPERTY, array($this->getClass(), $_prop)); }
     
@@ -15,9 +15,7 @@ abstract class Feed extends ElizaObject {
                 $this->$key = $_array[$key];
     }
     
-    public static function uniqueId() {
-        return time() . substr(microtime(),2,3);
-    }
+    
     
     public static function __callStatic ($_feed, $_args) {
         if (!is_subclass_of($_feed, 'eliza\\Feed')
@@ -29,6 +27,28 @@ abstract class Feed extends ElizaObject {
             
         if (class_exists('eliza\\' . $_feed))
             return call_user_func_array(array('eliza\\' . $_feed, 'Feed'), $_args);
+    }
+	
+    public static function uniqueId() { 
+		return time() . substr(microtime(),2,3); 
+	}
+    
+    public function mergeWith($_array = array()) {
+        if (is_object($_array)) $_array = get_object_vars($_array);
+        foreach ($_array as $prop => $value)
+            $this->$prop = $value;
+            
+        return $this;
+    }
+    
+    public function dump() {
+        if (DEBUG) var_dump($this);
+        else echo json_encode($this);
+    }
+	
+    public static function getClass($_with_namespace=FALSE) {
+        $class = str_replace('\\','',substr('\\' . get_called_class(), strrpos(get_called_class(), '\\')+1));
+        return $_with_namespace ? get_called_class() : $class;
     }
     
     // ACHTUNG: method below prevents infinite recursion if Feed::Feed() is called

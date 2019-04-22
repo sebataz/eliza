@@ -29,7 +29,7 @@ class CollectionXML extends CollectionJSON {
             if ($value instanceof CollectionXML_I)
                 $xml .= $tag_open . $value->toXML() . $tag_close . PHP_EOL;
         
-            elseif ($value instanceof Object)
+            elseif ($value instanceof Feed)
                 $xml .= $tag_open . self::ObjectToXML($value) . $tag_close . PHP_EOL;
                 
             elseif ($value instanceof CollectionXML)

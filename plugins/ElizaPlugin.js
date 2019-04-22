@@ -26,11 +26,11 @@
             document.getElementsByClassName( class_name )));
     };
 
-    // // Will I ever use it???
-    // ElizaPlugin.byTagName = function ( tag_name ) {
-        // return new ElizaPlugin([].slice.call(
-            // document.getElementsByTagName( tag_name )));
-    // };
+    // Will I ever use it???
+    ElizaPlugin.byTagName = function ( tag_name ) {
+        return new ElizaPlugin([].slice.call(
+            document.getElementsByTagName( tag_name )));
+    };
 
     ElizaPlugin.plugins = ElizaPlugin.prototype = {
         plugins: function () { 
