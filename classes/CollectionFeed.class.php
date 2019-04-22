@@ -2,7 +2,11 @@
 
 namespace eliza;
 
-class CollectionFeed extends CollectionHTML {
+interface CollectionFeed_I {
+	public function toString();
+}
+
+class CollectionFeed extends Collection {
     public function getBy($_property, $_value) {
         $array = array();
         
@@ -38,4 +42,9 @@ class CollectionFeed extends CollectionHTML {
         $this->exchangeArray(array_slice($array, $_offset, $_limit));
         return $this;
     }
+	
+	public function __call($_encoding, $_) {
+		$_encoding = ('eliza\Collection' . $_encoding);
+		return (new $_encoding((array)$this))->toString();
+	}
 }

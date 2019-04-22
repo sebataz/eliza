@@ -28,7 +28,6 @@ if (class_exists('eliza\\' . key($_GET))
 ////////////////////////////////////////////////////////////////////////////////
 
 
-
 //----------------------------------------------------------------------------//
 //                                handles GET                                 //
 //----------------------------------------------------------------------------//
@@ -88,7 +87,7 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
 //----------------------------------------------------------------------------// 
     $buffer = eliza\Presentation::flush();
     if (eliza\GlobalContext::Server()->defaultValue('HTTP_REFERER') && DEBUG) {           
-        $Collection = new eliza\CollectionXML(array(
+        $Collection = new eliza\CollectionFeed(array(
             'oops' => $O->getMessage(),
             'wtf' => $O->getTrace(), 
             'output-buffer' => $buffer,
@@ -103,7 +102,7 @@ if (eliza\GlobalContext::Server()->REQUEST_METHOD == 'POST') {
 //                                 echo stuff                                 //
 //----------------------------------------------------------------------------// 
 eliza\Presentation::buffered();
-        
+
 if ($Collection
 && eliza\GlobalContext::Configuration()->XMLResponse) {
     if ($Collection instanceof eliza\CollectionFeed)

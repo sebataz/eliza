@@ -6,8 +6,8 @@ interface CollectionHTML_I {
     public function toHTML();
 }
 
-class CollectionHTML extends CollectionXML {
-    public function HTML() {
+class CollectionHTML extends CollectionXML implements CollectionFeed_I {
+    public function toString() {
         return self::ObjectToHTML($this);
     }
     

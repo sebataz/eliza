@@ -22,20 +22,20 @@
                 <p>
                     Chances are that...
                     <ul>
-                        <?php if ($e->getMessage() != ''): ?>
-                        <li><?php echo $e->getMessage(); ?></li>
+                        <?php if ($Oops->getMessage() != ''): ?>
+                        <li><?php echo $Oops->getMessage(); ?></li>
                         <?php else: ?>
                         <li>the page you are seeking was not found</li>
                         <li>either the server or the site is undergoing maintenance work</li>
                         <?php endif; ?>
                     </ul>
                 </p><br /><br />
-                <?php if ($e instanceof \eliza\Oops): ?>
+                <?php if ($Oops instanceof \eliza\Oops): ?>
                     <h1 class="wtf">Wtf?</h1>
-                    <div id="stacktrace"><?php $e->printStackTrace(); ?></div>
+                    <div id="stacktrace"><?php $Oops->printStackTrace(); ?></div>
                 <?php else: ?>
                     <h1 class="wtf">Wtf?</h1>
-                    <div id="stacktrace"><?php var_dump($e); ?></div>
+                    <div id="stacktrace"><?php var_dump($Oops); ?></div>
                 <?php endif; ?>
             </div>
         </div>

@@ -78,8 +78,10 @@
 //                                   errors                                   //
 //----------------------------------------------------------------------------//
     error_reporting(E_ALL);
-    set_exception_handler(function ($e) {
-        include 'oops.php'; die();
+    set_exception_handler(function ($Oops) {
+		if ($Oops instanceof eliza\Oops) {
+			include 'oops.php'; die();
+		} else throw $Oops;
     });
     
     if (!function_exists('oops')) {

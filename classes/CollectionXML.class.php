@@ -6,7 +6,7 @@ interface CollectionXML_I {
     public function toXML();
 }
 
-class CollectionXML extends CollectionJSON {
+class CollectionXML extends CollectionFeed {
     public function __construct($_xml = array()) {
         if (is_array($_xml)) parent::__construct($_xml);
         if (is_string($_xml)) 
