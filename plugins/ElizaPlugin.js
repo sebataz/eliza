@@ -6,9 +6,9 @@
 //                         implements plugin manager                          //
 //----------------------------------------------------------------------------//
 
-    this.ElizaPlugin = function ( DOMElements ) { 
+    this.ElizaPlugin = function ( DOMElements ) {
         var _DOMElements = DOMElements;
-        this.DOMElement = function ( callback ) { 
+        this.DOMElement = function ( callback ) {
             _DOMElements.forEach(function (currentValue, index, array) {
                 if (currentValue)
                     callback.call(currentValue);
@@ -21,13 +21,13 @@
             document.getElementById( id )]);
     };
 
-    ElizaPlugin.byClassName = function ( class_name ) {
+    ElizaPlugin.byClass = function ( class_name ) {
         return new ElizaPlugin([].slice.call(
             document.getElementsByClassName( class_name )));
     };
 
     // Will I ever use it???
-    ElizaPlugin.byTagName = function ( tag_name ) {
+    ElizaPlugin.byTag = function ( tag_name ) {
         return new ElizaPlugin([].slice.call(
             document.getElementsByTagName( tag_name )));
     };

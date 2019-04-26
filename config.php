@@ -15,7 +15,7 @@
  **/
 
 // Privileges settings
-$cfg['Roles']['eliza'] =                    'eliza';
+$cfg['Role']['eliza'] =                    'eliza';
 
 $cfg['Permission']['SaveFile'] =            array('eliza'); /* permissions are used throughout eliza's core features */
 $cfg['Permission']['DeleteFile'] =          array('eliza'); /* permissions are used throughout eliza's core features */
