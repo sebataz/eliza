@@ -35,7 +35,10 @@ EOT;
     }
     
     final public static function createImageThumbnail($_url_to_image, $_thumb_size) {
-        $thumb_name =  md5($_url_to_image) . '_' . $_thumb_size . '.jpg';
+        $thumb_name =  pathinfo(basename($_url_to_image), PATHINFO_FILENAME) . '_' 
+			. md5($_url_to_image) . '_' 
+			. $_thumb_size . '.jpg';
+			
         $thumb_url = 'http://' . $_SERVER['HTTP_HOST'] . '/temp/thumb/' . $thumb_name;
         $path_to_thumb = TEMP . 'thumb' . DS . $thumb_name;
         
