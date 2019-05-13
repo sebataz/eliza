@@ -81,7 +81,7 @@ EOT;
             imagecopyresampled($thumb, $image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
 
             // save thumb
-            imagejpeg($thumb, $path_to_thumb, 100);
+            imagejpeg($thumb, $path_to_thumb, 80);
             imagedestroy($thumb);
         } else {
             list($thumb_width, $thumb_height) = getimagesize($path_to_thumb);
