@@ -19,7 +19,7 @@ class Image extends File implements CollectionHTML_I {
         } else oops($_path_to_file . ' is not an image');
     }
     
-    public function Thumb($_size = '500') {
+    public function Thumb($_size = '270') {
         if (preg_match('/ico/i', $this->Extension)) return $this;
         return self::createImageThumbnail($this->Url, $_size);
     }
