@@ -19,7 +19,7 @@ class Image extends File implements CollectionHTML_I {
         } else oops($_path_to_file . ' is not an image');
     }
     
-    public function Thumb($_size = '230') {
+    public function Thumb($_size = '500') {
         if (preg_match('/ico/i', $this->Extension)) return $this;
         return self::createImageThumbnail($this->Url, $_size);
     }
@@ -35,9 +35,8 @@ EOT;
     }
     
     final public static function createImageThumbnail($_url_to_image, $_thumb_size) {
-        $thumb_name =  pathinfo(basename($_url_to_image), PATHINFO_FILENAME) . '_' 
-			. md5($_url_to_image) . '_' 
-			. $_thumb_size . '.jpg';
+        $thumb_name = 'th' . $_thumb_size . '_'
+			. pathinfo(basename($_url_to_image), PATHINFO_FILENAME) . '.jpg';
 			
         $thumb_url = 'http://' . $_SERVER['HTTP_HOST'] . '/temp/thumb/' . $thumb_name;
         $path_to_thumb = TEMP . 'thumb' . DS . $thumb_name;
@@ -82,7 +81,7 @@ EOT;
             imagecopyresampled($thumb, $image, 0, 0, 0, 0, $thumb_width, $thumb_height, $image_width, $image_height);
 
             // save thumb
-            imagejpeg($thumb, $path_to_thumb);
+            imagejpeg($thumb, $path_to_thumb, 100);
             imagedestroy($thumb);
         } else {
             list($thumb_width, $thumb_height) = getimagesize($path_to_thumb);
