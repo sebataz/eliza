@@ -11,7 +11,7 @@ class FileContent extends File implements CollectionHTML_I {
             return file_get_contents($this->AbsolutePath);
         
         } else {
-            if (!Request::hasPrivilege(array(), 'SaveFile')) oops(PERMISSION_DENIED);
+            //if (!Request::hasPrivilege(array(), 'SaveFile')) oops(PERMISSION_DENIED);
             if (DEBUG) oops('write content to file ' . $this->Path);
             
             if (!file_exists(dirname($this->AbsolutePath)))
