@@ -20,9 +20,11 @@ class Request {
     }
     
     public static function hasPrivilege($_roles = array(), $_permission = null) {
+		// if I GET a lock
         if (GlobalContext::Get()->offsetExists('lock')) 
             GlobalContext::Session(array('lock' => GlobalContext::Get()->lock));
 		
+		// if I POST a lock
         elseif (GlobalContext::Post()->offsetExists('lock')) 
             GlobalContext::Session(array('lock' => GlobalContext::Post()->lock));
     

@@ -44,7 +44,10 @@ class CollectionFeed extends Collection {
     }
 	
 	public function __call($_encoding, $_) {
-		$_encoding = ('eliza\Collection' . $_encoding);
-		return (new $_encoding((array)$this))->toString();
+		$encoding = ('eliza\Collection' . $_encoding);
+		
+		if (!class_exists($enconding)) oops('The collection enconding ' . $_encoding . ' is not implemented.');
+			
+		return (new $encoding((array)$this))->toString();
 	}
 }

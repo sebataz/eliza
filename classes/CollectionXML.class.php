@@ -15,7 +15,7 @@ class CollectionXML extends CollectionFeed {
             parent::__construct(static::SimpleXMLToArray($_xml));
     }
 
-    public function XML() {
+    public function toString() {
         return self::ObjectToXML($this);
     }
     
